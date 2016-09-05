@@ -21,20 +21,6 @@ var testSchema = new mongoose.Schema({
 
 var TestData = mongoose.model("User", testSchema);
 
-
-// var newData = [
-// 	{name: "John Frades", description: "Student"},
-// 	{name: "Mike Joe", description: "Staff"}
-// ];
-
-// TestData.create(newData, function(err, newD){
-// 	if (err){
-// 		console.log(err);
-// 	} else {
-// 		console.log(newD);
-// 	}
-// });
-
 //GET ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -50,10 +36,6 @@ app.get("/new", function(req, res) {
 	res.render("new");
 });
 
-// app.get("/index", function(req, res){
-//  res.render("users");
-// });
-
 
 //SHOW pictures
 app.get("/index", function(req, res){
@@ -62,6 +44,17 @@ app.get("/index", function(req, res){
 			console.log(err);
 		} else {
 			res.render("users", {allUsers: allUsers});
+		}
+	});
+});
+
+//SHOW more info
+app.get("/index/:id", function(req,res){
+	TestData.findById(req.params.id, function(err, userID){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("profile", {userID: userID});
 		}
 	});
 });
