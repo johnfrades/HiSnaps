@@ -1,0 +1,28 @@
+<% include partials/header %>
+
+
+
+<div class="container" id="index">
+  <div class="jumbotron">
+    <h1>Check here the user profiles</h1>
+
+   	<a href="/new" class="btn btn-lg btn-primary">Add new User</a>
+  </div>
+
+  	<div class="row text-center" id="indexForm">
+	<% allUsers.forEach(function(newUsers){ %>
+
+			<div class="col-md-3">
+				<div class="thumbnail">
+					<img src="<%= newUsers.image %>">
+					<div class="caption">
+						<h2><%= newUsers.name %></h2>
+					</div>
+				</div>
+			</div>
+	<% }); %>
+	</div>
+</div>
+
+
+<% include partials/footer %>

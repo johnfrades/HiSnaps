@@ -1,0 +1,25 @@
+#buttonSubmit {
+	float: right;
+	margin-left: 10px;
+	margin-top: 10px;
+	margin-right: 15px;
+}
+
+#buttonBack {
+	margin-top: 10px;
+	margin-left: 14px;
+}
+
+#index {
+	margin-top: 40px;
+}
+
+#newForm {
+	width: 35%;
+	margin: 200px auto;
+}
+
+#indexForm {
+	display: flex;
+	flex-wrap: wrap;
+}
