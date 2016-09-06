@@ -4,22 +4,20 @@
 
 <div class="container" id="index">
   <div class="jumbotron">
-    <h1>Check here the user profiles</h1>
+    <h1>User Profiles</h1>
 
-   	<a href="/new" class="btn btn-lg btn-primary">Add new User</a>
+   	<a href="/new" class="ui inverted red button huge" id="addUserButton">Add new User</a>
   </div>
 
   	<div class="row text-center" id="indexForm">
 	<% allUsers.forEach(function(newUsers){ %>
-
 			<div class="col-md-3">
 				<div class="thumbnail">
 					<img src="<%= newUsers.image %>">
 					<div class="caption">
 						<h2><%= newUsers.name %></h2>
 					</div>
-					<a href="/index/<%= newUsers._id %>" class="btn btn-xs btn-primary">More info</a>
-
+					<a href="/index/<%= newUsers._id %>" class="ui inverted blue button large">More Info</a>
 				</div>
 			</div>
 	<% }); %>
@@ -28,3 +26,7 @@
 
 
 <% include partials/footer %>
+
+
+
+

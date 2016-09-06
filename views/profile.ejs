@@ -7,11 +7,31 @@
 	<div class="col-md-9">
 		<div class="thumbnail">
 			<img src="<%= userID.image %>">
-			<div class="caption"><h4>Profile of: <%= userID.name %></h4></div>
+			<div class="caption text-center"><h2><%= userID.name %></h2>
+			<span> <a href="/index/<%= userID._id%>/edit" class="ui inverted brown button">Edit Profile</a></span>
+			</div>
 		</div>
 		<div class="well">
-			<a href="#" class="btn btn-md btn-success btn-block">Add a comment</a>
-			
+			<a href="/index/<%= userID._id %>/comments/new" class="btn btn-md btn-success btn-block">Add a comment</a>
+			<h2 id="commentField">Comments</h2>
+				<% userID.comments.forEach(function(theComment){ %>
+					<div class="row">
+						<div class="col-md-12">
+							<table id="tableComments">
+								 <tr>
+									<td>
+									<strong>
+										<%= theComment.name %>
+									</strong>
+									<span class="pull-right"> 
+									     <%= theComment.date %>	
+									</span><br> <%= theComment.text%></td>
+									<br>
+								</tr>
+							</table>
+						</div>
+					</div>
+				<% }); %>
 		</div>
 	</div>
 </div>

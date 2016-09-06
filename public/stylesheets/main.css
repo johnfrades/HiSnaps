@@ -30,7 +30,24 @@
 
 }
 
+#commentForm {
+	margin: 100px auto;
+}
+
 #indexForm {
 	display: flex;
 	flex-wrap: wrap;
+}
+
+#commentField {
+	text-align: center;
+}
+
+#tableComments {
+	width: 100%;
+}
+
+#editForm {
+	margin: 100px auto;
+	background-color: #6dde6f;
 }
