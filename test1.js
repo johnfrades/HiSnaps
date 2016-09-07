@@ -72,7 +72,7 @@ app.get("/index/:id/edit", function(req, res) {
 	});
 });
 
-//SHOW pictures
+
 app.get("/index", function(req, res){
 	TestData.find({}, function(err, allUsers){
 		if(err) {
@@ -82,6 +82,7 @@ app.get("/index", function(req, res){
 		}
 	});
 });
+
 
 
 //SHOW more info and comments
@@ -102,7 +103,6 @@ app.post("/index/:id/comments", function(req, res){
 			console.log(err);
 		} else {
 			Comment.create(req.body.comment, function(err, theComment){
-				console.log(req.body.comment);
 				if (err) {
 					console.log(err);
 				} else {

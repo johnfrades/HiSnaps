@@ -17,7 +17,14 @@
 					<div class="caption">
 						<h2><%= newUsers.name %></h2>
 					</div>
-					<a href="/index/<%= newUsers._id %>" class="ui inverted blue button large">More Info</a>
+					<div class="ui labeled button" tabindex="0">
+					  <a class="ui blue basic button" href="/index/<%= newUsers._id %>">
+					    <i class="write icon"></i> See comments
+					  </a>
+					  <a class="ui basic left pointing blue label">
+					    <%= newUsers.comments.length %>
+					  </a>
+					</div>
 				</div>
 			</div>
 	<% }); %>
@@ -25,7 +32,16 @@
 </div>
 
 
+
+
+
+
+
 <% include partials/footer %>
+
+
+
+
 
 
 
