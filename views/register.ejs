@@ -1,0 +1,38 @@
+<% include partials/header %>
+<script type="text/javascript" src="javascripts/checkPass.js"></script>
+
+<div class="container" id="regForm">
+<div class="container" id="newForm2">
+<h1>Register a new account</h1>
+
+ <form action="/index" method="POST">
+		<div class="form-group">
+			<label class="control-label">Username</label>
+				<div>
+					<input type="text" name="username" class="form-control" id="newNameForm" required>
+				</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label">Password</label>
+			<div>
+				<input type="text" name="password1" class="form-control" id="pass1" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label">Confirm Password</label>
+			<div>
+				<input type="text" name="password2" class="form-control" id="pass2" onkeyup="checkPass(); return false" required>
+				<span id="confirmMessage" class="confirmMessage"></span>
+			</div>
+		</div>
+	<div class="form-group">
+		<button class="fluid ui inverted green button" disabled="true" id="buttonSubmit">Submit</button>
+	</div>
+ </form>
+<a href="/index" class="fluid ui inverted red button"> Go Back</a>
+</div>
+
+</div>
+
+
+<% include partials/footer %>

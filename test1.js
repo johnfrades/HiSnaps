@@ -6,6 +6,7 @@ var moment = require("moment");
 var passport = require("passport");
 var passportLocal = require("passport-local");
 var methodOverride = require("method-override");
+var passportLocalMongoose = require("passport-local-mongoose");
 
 
 app.set("view engine", "ejs");
@@ -38,13 +39,33 @@ var commentSchema = new mongoose.Schema ({
 	date: String
 });
 
+var loginSchema = new mongoose.Schema ({
+	username: String,
+	password: String
+});
+
+loginSchema.plugin(passportLocalMongoose);
+
 var TestData = mongoose.model("User", testSchema);
 var Comment = mongoose.model("Comment", commentSchema);
+var LoginUser = mongoose.model("Loginuser", loginSchema);
 
 var nowDateAndTime = moment().format("l , LT")
 
 
+//Passport authentication
+// app.use(require("express-session")({
+// 	secret: "John",
+// 	resave: false,
+// 	saveUninitialized: false
+// }));
 
+// app.use(passport.initialize());
+// app.use(passport.session);
+// passport.use(new passportLocal(LoginUser.authenticate()));
+// passport.serializeUser(LoginUser.serializeUser());
+// passport.deserializeUser(LoginUser.deserializeUser());
+// ends here
 
 
 //GET ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -83,6 +104,10 @@ app.get("/index", function(req, res){
 	});
 });
 
+
+app.get("/register", function(req, res){
+	res.render("register");
+});
 
 
 //SHOW more info and comments
@@ -165,8 +190,6 @@ app.put("/index/:id", function(req, res){
 		}
 	})
 })
-
-
 
 
 

@@ -1,9 +1,3 @@
-#buttonSubmit {
-	float: right;
-	margin-left: 10px;
-	margin-top: 10px;
-
-}
 
 #profileShow {
 
@@ -20,7 +14,7 @@
 }
 
 #newForm {
-	background-color: #75ccef;
+
 	margin: 100px auto;
 }
 
@@ -49,5 +43,9 @@
 
 #editForm {
 	margin: 100px auto;
-	background-color: #6dde6f;
+
+}
+
+#newForm {
+	margin: 100px auto;
 }

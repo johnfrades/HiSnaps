@@ -8,7 +8,13 @@
 		<div class="thumbnail">
 			<img src="<%= userID.image %>">
 			<div class="caption text-center"><h2><%= userID.name %></h2>
-			<span> <a href="/index/<%= userID._id%>/edit" class="ui inverted brown button">Edit Profile</a></span>
+			    <form action="/index/<%= userID._id%>/edit" method="GET">
+   				 <button class="ui inverted brown button huge">
+		  			<i class="configure icon"></i>
+		  			Edit profile
+					</button>
+					</form>
+			
 			</div>
 		</div>
 		<div class="well">
