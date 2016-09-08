@@ -30,9 +30,14 @@
         <li><a href="/about">About</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+      
+      <% if(!currentUser) { %>
+        <li><a href="/login">Login</a></li>
         <li><a href="/register">Register</a></li>
-        <li><a href="#">Login</a></li>
+      <% } else { %>
+        <li><a href="/register">Signed in as: <%= currentUser.username %></a></li>
+        <li><a href="/logout">Logout</a></li>
+      <% } %>
       
       </ul>
     </div><!-- /.navbar-collapse -->

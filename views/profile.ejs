@@ -27,11 +27,13 @@
 								 <tr>
 									<td>
 									<strong>
-										<%= theComment.name %>
+										<%= theComment.name.username %>
 									</strong>
 									<span class="pull-right"> 
 									     <%= theComment.date %>	
-									</span><br> <%= theComment.text%></td>
+									</span>
+									<br><%= theComment.text%> <a href="/index/<%= userID._id %>/comments/<%= theComment._id %>/edit" class="compact ui inverted blue button">Edit</a>
+									</td>
 									<br>
 								</tr>
 							</table>

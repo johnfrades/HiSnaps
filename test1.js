@@ -34,7 +34,13 @@ var testSchema = new mongoose.Schema({
 });
 
 var commentSchema = new mongoose.Schema ({
-	name: String,
+	name: {
+		id: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Loginuser"
+		},
+		username: String
+	},
 	text: String,
 	date: String
 });
@@ -54,18 +60,25 @@ var nowDateAndTime = moment().format("l , LT")
 
 
 //Passport authentication
-// app.use(require("express-session")({
-// 	secret: "John",
-// 	resave: false,
-// 	saveUninitialized: false
-// }));
+app.use(require("express-session")({
+	secret: "John",
+	resave: false,
+	saveUninitialized: false
+}));
 
-// app.use(passport.initialize());
-// app.use(passport.session);
-// passport.use(new passportLocal(LoginUser.authenticate()));
-// passport.serializeUser(LoginUser.serializeUser());
-// passport.deserializeUser(LoginUser.deserializeUser());
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new passportLocal(LoginUser.authenticate()));
+passport.serializeUser(LoginUser.serializeUser());
+passport.deserializeUser(LoginUser.deserializeUser());
 // ends here
+
+
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+});
+
 
 
 //GET ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,6 +108,7 @@ app.get("/index/:id/edit", function(req, res) {
 
 
 app.get("/index", function(req, res){
+
 	TestData.find({}, function(err, allUsers){
 		if(err) {
 			console.log(err);
@@ -121,27 +135,10 @@ app.get("/index/:id", function(req,res){
 	});
 });
 
-app.post("/index/:id/comments", function(req, res){
-	
-	TestData.findById(req.params.id, function(err, foundUser){
-		if (err) {
-			console.log(err);
-		} else {
-			Comment.create(req.body.comment, function(err, theComment){
-				if (err) {
-					console.log(err);
-				} else {
-					theComment.save();
-					foundUser.comments.push(theComment);
-					foundUser.save();
-					console.log(theComment);
-					res.redirect("/index/" + foundUser._id);
-				}
-			});
-		}
-	});
-});
 
+
+
+//shows the form to add new comment
 app.get("/index/:id/comments/new", function(req, res){
 	TestData.findById(req.params.id, function(err, userID){
 		if (err) {
@@ -151,6 +148,29 @@ app.get("/index/:id/comments/new", function(req, res){
 		}
 	});
 });
+
+//shows the form to edit the comment
+app.get("/index/:id/comments/:comment_id/edit", function(req, res){
+	Comment.findById(req.params.comment_id, function(err, foundComment){
+		if (err) {
+			console.log(err);
+		} else {
+			res.render("editcomment", {theComment: foundComment, userID: req.params.id, nowDateAndTime: nowDateAndTime});
+		}
+	});
+});
+
+//Shows the login form
+app.get("/login", function(req, res){
+	res.render("login");
+});
+
+
+//SHOWS the logout form
+app.get("/logout", function(req, res){
+	req.logout();
+	res.redirect("/index");
+})
 
 
 //POST ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -176,6 +196,45 @@ app.post("/index", function(req, res){
 
 });
 
+app.post("/index/:id/comments", function(req, res){
+	TestData.findById(req.params.id, function(err, foundUser){
+		if (err) {
+			console.log(err);
+		} else {
+			Comment.create(req.body.comment, function(err, theComment){
+				if (err) {
+					console.log(err);
+				} else {
+					theComment.date = nowDateAndTime;
+					theComment.name.id = req.user._id;
+					theComment.name.username = req.user.username;
+					theComment.save();
+					foundUser.comments.push(theComment);
+					foundUser.save();
+					res.redirect("/index/" + foundUser._id);
+				}
+			});
+		}
+	});
+});
+
+
+app.post("/register", function(req, res){
+	var newUser = new LoginUser({username: req.body.username});
+	LoginUser.register(newUser, req.body.password1, function(err, user){
+		if (err) {
+			return res.render("register");
+		} else {
+			res.redirect("/index");
+		}
+	});
+});
+
+
+app.post("/login", passport.authenticate("local", {
+	successRedirect: "/index",
+	failureRedirect: "/login"
+}));
 
 
 //EDIT route
@@ -185,11 +244,23 @@ app.put("/index/:id", function(req, res){
 		if(err){
 			console.log(err);
 		} else {
-			console.log(updateUser);
 			res.redirect("/index/" + updateUser._id);
 		}
 	})
 })
+
+//EDIT comment
+app.put("/index/:id/comments/:comment_id", function(req, res){
+	Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updateComment){
+		if(err) {
+			console.log(err);
+			res.redirect("back");
+		} else {
+			res.redirect("/index/" + req.params.id);
+		}
+	});
+});
+
 
 
 

@@ -5,7 +5,7 @@
 <div class="container" id="newForm2">
 <h1>Register a new account</h1>
 
- <form action="/index" method="POST">
+ <form action="/register" method="POST">
 		<div class="form-group">
 			<label class="control-label">Username</label>
 				<div>
@@ -15,13 +15,13 @@
 		<div class="form-group">
 			<label class="control-label">Password</label>
 			<div>
-				<input type="text" name="password1" class="form-control" id="pass1" required>
+				<input type="password" name="password1" class="form-control" id="pass1" required>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="control-label">Confirm Password</label>
 			<div>
-				<input type="text" name="password2" class="form-control" id="pass2" onkeyup="checkPass(); return false" required>
+				<input type="password" name="password2" class="form-control" id="pass2" onkeyup="checkPass(); return false" required>
 				<span id="confirmMessage" class="confirmMessage"></span>
 			</div>
 		</div>
