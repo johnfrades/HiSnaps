@@ -25,6 +25,14 @@ mongoosedb.once('open', function(){
 var testSchema = new mongoose.Schema({
 	name: String,
 	image: String,
+	author: {
+		id: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Loginuser"
+		},
+			username: String
+	},
+
 	comments: [
 		{
 		type: mongoose.Schema.Types.ObjectId,
@@ -34,7 +42,7 @@ var testSchema = new mongoose.Schema({
 });
 
 var commentSchema = new mongoose.Schema ({
-	name: {
+	author: {
 		id: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Loginuser"
@@ -92,7 +100,7 @@ app.get("/about", function(req, res){
 	res.render("about");
 });
 
-app.get("/new", function(req, res) {
+app.get("/new", isLoggedIn, function(req, res) {
 	res.render("new");
 });
 
@@ -108,7 +116,6 @@ app.get("/index/:id/edit", function(req, res) {
 
 
 app.get("/index", function(req, res){
-
 	TestData.find({}, function(err, allUsers){
 		if(err) {
 			console.log(err);
@@ -139,7 +146,7 @@ app.get("/index/:id", function(req,res){
 
 
 //shows the form to add new comment
-app.get("/index/:id/comments/new", function(req, res){
+app.get("/index/:id/comments/new", isLoggedIn, function(req, res){
 	TestData.findById(req.params.id, function(err, userID){
 		if (err) {
 			console.log(err);
@@ -178,10 +185,14 @@ app.get("/logout", function(req, res){
 app.post("/index", function(req, res){
 	var name = req.body.name;
 	var image = req.body.image;
-
+	var author = {
+			id: req.user._id,
+			username: req.user.username
+	}
 	var userData = {
 		name: name,
-		image: image
+		image: image,
+		author: author
 	}
 
 	TestData.create(userData, function(err, newlyCreatedUser){
@@ -189,7 +200,6 @@ app.post("/index", function(req, res){
 			console.log(err);
 			res.redirect("/new");
 		} else {
-			console.log(newlyCreatedUser);
 			res.redirect("/index");
 		}
 	});
@@ -206,8 +216,8 @@ app.post("/index/:id/comments", function(req, res){
 					console.log(err);
 				} else {
 					theComment.date = nowDateAndTime;
-					theComment.name.id = req.user._id;
-					theComment.name.username = req.user.username;
+					theComment.author.id = req.user._id;
+					theComment.author.username = req.user.username;
 					theComment.save();
 					foundUser.comments.push(theComment);
 					foundUser.save();
@@ -261,6 +271,43 @@ app.put("/index/:id/comments/:comment_id", function(req, res){
 	});
 });
 
+
+app.delete("/index/:id", function(req, res){
+	TestData.findByIdAndRemove(req.params.id, function(err){
+		if(err) {
+			console.log(err);
+			res.redirect("/index/" + req.params.id);
+		} else {
+			console.log("Successfully deleted!");
+			res.redirect("/index");
+		}
+	})
+})
+
+app.delete("/index/:id/comments/:comment_id", function(req, res){
+	Comment.findByIdAndRemove(req.params.comment_id, function(err){
+		if(err) {
+			console.log(err);
+			res.redirect("/index/");
+		} else {
+			console.log("Comment successfully deleted!");
+			res.redirect("back");
+		}
+	});
+});
+
+
+
+
+
+
+function isLoggedIn(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	} else {
+		res.redirect("/login");
+	}
+}
 
 
 

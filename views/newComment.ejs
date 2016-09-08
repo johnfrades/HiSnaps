@@ -1,7 +1,7 @@
 <% include partials/header %>
 
-<div class="container" id="commentForm">
-<div class="container" id="newForm2">
+<div class="container" id="newForm">
+
 <h1>Submit a new comment</h1>
 
  <form action="/index/<%= userID._id %>/comments" method="POST">
@@ -18,6 +18,6 @@
 		<a href="/index/<%= userID._id %>" class="fluid ui inverted red button">Go Back</a>
 </div>
 
-</div>
+
 
 <% include partials/footer %>

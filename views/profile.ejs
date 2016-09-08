@@ -6,43 +6,56 @@
 	</div>
 	<div class="col-md-9">
 		<div class="thumbnail">
+		<div class="text-center"><h2><%= userID.name %></h2>
+		
 			<img src="<%= userID.image %>">
-			<div class="caption text-center"><h2><%= userID.name %></h2>
-			    <form action="/index/<%= userID._id%>/edit" method="GET">
-   				 <button class="ui inverted brown button huge">
+			<p><em>Submitted by: <strong><%= userID.author.username %></strong> </em></p>
+			
+			</div>
+
+				<div style="text-align:center;">
+				 <form action="/index/<%= userID._id%>/edit" method="GET" id="profileForm">
+   				 <button class="ui grey button tiny">
 		  			<i class="configure icon"></i>
 		  			Edit profile
 					</button>
 					</form>
-			
-			</div>
+				<form action="/index/<%= userID._id%>?_method=DELETE" method="POST" id="profileForm">
+   				 <button class="negative ui button tiny">
+		  			<i class="configure icon"></i>
+		  			Delete profile
+					</button>
+					</form>
+				</div>
 		</div>
-		<div class="well">
-			<a href="/index/<%= userID._id %>/comments/new" class="btn btn-md btn-success btn-block">Add a comment</a>
-			<h2 id="commentField">Comments</h2>
+
+		
+		
+
+		<div class="well well-sm clearfix" id="commentField">
+			
+			<h2 class="text-left">Comments<a href="/index/<%= userID._id %>/comments/new" class="btn btn-xs btn-success pull-right">Add a comment</a></h2>
 				<% userID.comments.forEach(function(theComment){ %>
 					<div class="row">
 						<div class="col-md-12">
-							<table id="tableComments">
-								 <tr>
-									<td>
-									<strong>
-										<%= theComment.name.username %>
-									</strong>
-									<span class="pull-right"> 
-									     <%= theComment.date %>	
-									</span>
-									<br><%= theComment.text%> <a href="/index/<%= userID._id %>/comments/<%= theComment._id %>/edit" class="compact ui inverted blue button">Edit</a>
-									</td>
-									<br>
-								</tr>
-							</table>
-						</div>
+					<form action="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE" method="POST">
+					<div class="panel panel-primary">
+					  <div class="panel-heading text-left text-uppercase">
+					<%= theComment.author.username%>---(<%= theComment.date %>)
+						<button class="btn btn-xs btn-danger">Delete</button>
+					</form>
+						
+					  </div>
+					  <div class="panel-body text-left">
+					    <%= theComment.text %>
+					  </div>
+					</div>
+					  </div>
 					</div>
 				<% }); %>
 		</div>
+		</div>
 	</div>
-</div>
 </div>	
 
 

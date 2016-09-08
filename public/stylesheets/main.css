@@ -14,14 +14,8 @@
 }
 
 #newForm {
-
+	width: 40%;
 	margin: 100px auto;
-}
-
-#newForm2 {
-	width: 60%;
-	margin: 100px auto;
-
 }
 
 #commentForm {
@@ -48,4 +42,18 @@
 
 #newForm {
 	margin: 100px auto;
+}
+
+#commentField {
+	margin-top: 20px;
+}
+
+
+#textLeft {
+	text-align: left;
+}
+
+
+#profileForm {
+	display:inline-block;
 }

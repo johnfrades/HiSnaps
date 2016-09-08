@@ -1,7 +1,7 @@
 <% include partials/header %>
 
-<div class="container" id="editForm">
-<div class="container" id="newForm2">
+<div class="container" id="newForm">
+
 <h1>Edit profile for "<%= editUser.name %>"</h1>
 
  <form action="/index/<%= editUser._id %>?_method=PUT" method="POST">
@@ -24,5 +24,5 @@
 <a href="/index" class="fluid ui inverted red button"> Go Back</a>
 </div>
 
-</div>
+
 <% include partials/footer %>
