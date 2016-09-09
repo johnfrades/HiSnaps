@@ -15,19 +15,23 @@
 
 				<div style="text-align:center;">
 				 <form action="/index/<%= userID._id%>/edit" method="GET" id="profileForm">
+   		<% if(currentUser && userID.author.id.equals(currentUser._id)){ %>
    				 <button class="ui grey button tiny">
 		  			<i class="configure icon"></i>
 		  			Edit profile
 					</button>
 					</form>
 				<form action="/index/<%= userID._id%>?_method=DELETE" method="POST" id="profileForm">
-   				 <button class="negative ui button tiny">
-		  			<i class="configure icon"></i>
-		  			Delete profile
-					</button>
+		   				 <button class="negative ui button tiny">
+				  			<i class="configure icon"></i>
+				  			Delete profile
+							</button>
+		<% } %>
 					</form>
 				</div>
 		</div>
+
+		
 
 		
 		
@@ -36,13 +40,16 @@
 			
 			<h2 class="text-left">Comments<a href="/index/<%= userID._id %>/comments/new" class="btn btn-xs btn-success pull-right">Add a comment</a></h2>
 				<% userID.comments.forEach(function(theComment){ %>
+				<% console.log(theComment);%>
 					<div class="row">
 						<div class="col-md-12">
 					<form action="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE" method="POST">
 					<div class="panel panel-primary">
 					  <div class="panel-heading text-left text-uppercase">
 					<%= theComment.author.username%>---(<%= theComment.date %>)
-						<button class="btn btn-xs btn-danger">Delete</button>
+							<% if(currentUser && theComment.author.id.equals(currentUser._id)){ %>
+								<button class="btn btn-xs btn-danger">Delete</button>
+							<% } %>
 					</form>
 						
 					  </div>

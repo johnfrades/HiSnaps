@@ -82,6 +82,8 @@ passport.deserializeUser(LoginUser.deserializeUser());
 // ends here
 
 
+
+//This will populate the variable "currentUser = req.user(which is the current logged-in user)" to all EJS files
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
     next();
@@ -272,7 +274,7 @@ app.put("/index/:id/comments/:comment_id", function(req, res){
 });
 
 
-app.delete("/index/:id", function(req, res){
+app.delete("/index/:id", checkUserOwnership, function(req, res){
 	TestData.findByIdAndRemove(req.params.id, function(err){
 		if(err) {
 			console.log(err);
@@ -284,7 +286,7 @@ app.delete("/index/:id", function(req, res){
 	})
 })
 
-app.delete("/index/:id/comments/:comment_id", function(req, res){
+app.delete("/index/:id/comments/:comment_id", checkCommentOwnership, function(req, res){
 	Comment.findByIdAndRemove(req.params.comment_id, function(err){
 		if(err) {
 			console.log(err);
@@ -295,17 +297,68 @@ app.delete("/index/:id/comments/:comment_id", function(req, res){
 		}
 	});
 });
+	// TestData.find({req.params.comment_id}).remove().exec(function(err){
+	// 	if(err) {
+	// 		console.log(err);
+	// 		res.redirect("/index");
+	// 	} else {
+	// 		res.redirect("back");
+	// 	}
+	// });
 
 
 
 
 
 
+//FUNCTION to check if the user is logged in to do specific actions such as Adding users, adding comments
 function isLoggedIn(req, res, next){
 	if(req.isAuthenticated()){
 		return next();
 	} else {
 		res.redirect("/login");
+	}
+}
+
+
+//Middleware to check if the author of the comment is the same to the loggedin user.
+function checkCommentOwnership(req, res, next) {
+	if(req.isAuthenticated()){
+		Comment.findById(req.params.comment_id, function(err, foundCommentID){
+			if(err) {
+				res.redirect("back");
+			} else {
+				if(foundCommentID.author.id.equals(req.user._id)){
+					next();
+				} else {
+					console.log("you aren't the author of the comment!");
+					res.redirect("back");
+				}
+			}
+		});
+	} else {
+		res.redirect("back");
+	}
+}
+
+
+//Middleware function that checks if the author of the submitted user is the same on the one who logged in
+function checkUserOwnership(req, res, next) {
+	if(req.isAuthenticated()) {
+		TestData.findById(req.params.id, function(err, foundUserID){
+			if(err){
+				res.redirect("back");
+			} else {
+				if(foundUserID.author.id.equals(req.user._id)){
+					next();
+				} else {
+					console.log("you aren't the author of this picture!");
+					res.redirect("back");
+				}
+			}
+		});
+	} else {
+		res.redirect("back");
 	}
 }
 
