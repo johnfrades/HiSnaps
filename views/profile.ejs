@@ -40,7 +40,6 @@
 			
 			<h2 class="text-left">Comments<a href="/index/<%= userID._id %>/comments/new" class="btn btn-xs btn-success pull-right">Add a comment</a></h2>
 				<% userID.comments.forEach(function(theComment){ %>
-				<% console.log(theComment);%>
 					<div class="row">
 						<div class="col-md-12">
 					<form action="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE" method="POST">

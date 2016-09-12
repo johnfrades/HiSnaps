@@ -142,6 +142,7 @@ function updateNicknames() {
 
 
 app.get("/", function(req, res){
+
 	res.render("index", {title: "The index Page!!!!"});
 });
 
@@ -338,29 +339,36 @@ app.delete("/index/:id", checkUserOwnership, function(req, res){
 	})
 })
 
+
+
+commentSchema.pre('remove', function (next) {
+  this.model('User').update(
+    { comments: this }, 
+    { $pull: { comments: this._id } }, 
+    { multi: true }
+  ).exec(next)
+});
+
 app.delete("/index/:id/comments/:comment_id", checkCommentOwnership, function(req, res){
-	Comment.findByIdAndRemove(req.params.comment_id, function(err){
+	Comment.findById(req.params.comment_id, function(err, comment){
 		if(err) {
 			console.log(err);
 			res.redirect("/index/");
 		} else {
+			comment.remove();
 			console.log("Comment successfully deleted!");
 			res.redirect("back");
 		}
 	});
 });
 
-// commentSchema.pre('update', function (next) {
-//   this.model('User').update(
-//     { comments: this }, 
-//     { $pull: { comments: this._id } }, 
-//     { multi: true }
-//   ).exec(next)
-// });
+
+
 
 // app.delete('/index/:id/comments/:comment_id', function (req, res) {
 //   Comment.findById(req.params.comment_id, function(comment){
-//   		comment.update();
+//   		console.log(comment);
+//   		comment.remove();
 //   		console.log("comment succesfully deleted!");
 //   		res.redirect("back");
 //   	});
