@@ -100,11 +100,12 @@ app.use(function(req, res, next){
 
 
 io.sockets.on('connection', function(socket){
-	socket.on('new user', function(data, callback){
+	socket.on('new user', function(data){
+		console.log(data);
 		if(nicknames.indexOf(data) != -1) {
-			callback(false);
+
 		} else {
-			callback(true);
+
 			socket.nickname = data;
 			nicknames.push(socket.nickname);
 			updateNicknames();
@@ -133,8 +134,6 @@ function updateNicknames() {
 }
 
 });
-
-
 
 
 

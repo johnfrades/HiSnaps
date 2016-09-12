@@ -2,26 +2,27 @@
 
 jQuery(function($){
 	var socket = io.connect();
-	var $nickForm = $("#setNick");
-	var $nickBox = $("#nickname");
 	var $users = $("#users");
 	var $messageForm = $("#send-message");
 	var $messageBox = $("#message");
 	var $chat = $("#chat");
+	var $currentUser = $("#current")
 
 
-	$nickForm.submit(function(e){
-		e.preventDefault();
-		socket.emit('new user', $nickBox.val(), function(data){
-			if(data){
-				$("#nickWrap").hide();
-				$("#contentWrap").show();
-			} else {
-				alert("Username already exists! Try other name.");
-			}
-		});
-		$nickBox.val("");
-	});
+	// $nickForm.submit(function(e){
+	// 	e.preventDefault();
+	// 	socket.emit('new user', $nickBox.val(), function(data){
+	// 		if(data){
+	// 			$("#nickWrap").hide();
+	// 			$("#contentWrap").show();
+	// 		} else {
+	// 			alert("Username already exists! Try other name.");
+	// 		}
+	// 	});
+	// 	$nickBox.val("");
+	// });
+
+	socket.emit('new user', $currentUser.text());
 
 	socket.on("usernames", function(data){
 		$users.html(data.join("<br>"));
