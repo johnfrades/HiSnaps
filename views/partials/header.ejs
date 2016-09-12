@@ -5,6 +5,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.css">
+  <script src="https://use.fontawesome.com/c9bda6e802.js"></script>
 </head>
 <body>
 
@@ -19,7 +20,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">User Profiles</a>
+      <a class="navbar-brand" href="#"><i class="fa fa-users" aria-hidden="true"></i> User Profiles</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -36,7 +37,7 @@
         <li><a href="/register">Register</a></li>
       <% } else { %>
         <li><a href="#">Signed in as: <%= currentUser.username %></a></li>
-        <li><a href="#">Chat</a></li>
+        <li><a href="/chat">Chat</a></li>
         <li><a href="/logout">Logout</a></li>
       <% } %>
       

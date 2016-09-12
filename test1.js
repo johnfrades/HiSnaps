@@ -1,5 +1,7 @@
 var express = require("express");
 var app = express();
+var server = require("http").createServer(app);
+var io = require("socket.io").listen(server);
 var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 var moment = require("moment");
@@ -7,6 +9,12 @@ var passport = require("passport");
 var passportLocal = require("passport-local");
 var methodOverride = require("method-override");
 var passportLocalMongoose = require("passport-local-mongoose");
+
+
+
+//temporary to store names to the array
+var nicknames = [];
+
 
 
 app.set("view engine", "ejs");
@@ -88,6 +96,45 @@ app.use(function(req, res, next){
     res.locals.currentUser = req.user;
     next();
 });
+
+
+
+io.sockets.on('connection', function(socket){
+	socket.on('new user', function(data, callback){
+		if(nicknames.indexOf(data) != -1) {
+			callback(false);
+		} else {
+			callback(true);
+			socket.nickname = data;
+			nicknames.push(socket.nickname);
+			updateNicknames();
+		}
+	});
+
+
+
+	socket.on('send message', function(data){
+		io.sockets.emit("new message", {msg: data, nick: socket.nickname});
+		});
+
+	socket.on("disconnect", function(data){
+	if(!socket.nickname){
+		return;
+	} else {
+		nicknames.splice(nicknames.indexOf(socket.nickname), 1);
+		updateNicknames();
+	}
+	});
+
+//Socket.io function
+
+function updateNicknames() {
+	io.sockets.emit('usernames', nicknames);
+}
+
+});
+
+
 
 
 
@@ -180,6 +227,11 @@ app.get("/logout", function(req, res){
 	req.logout();
 	res.redirect("/index");
 })
+
+
+app.get("/chat", function(req, res){
+	res.render("chat");
+});
 
 
 //POST ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -297,14 +349,23 @@ app.delete("/index/:id/comments/:comment_id", checkCommentOwnership, function(re
 		}
 	});
 });
-	// TestData.find({req.params.comment_id}).remove().exec(function(err){
-	// 	if(err) {
-	// 		console.log(err);
-	// 		res.redirect("/index");
-	// 	} else {
-	// 		res.redirect("back");
-	// 	}
-	// });
+
+// commentSchema.pre('update', function (next) {
+//   this.model('User').update(
+//     { comments: this }, 
+//     { $pull: { comments: this._id } }, 
+//     { multi: true }
+//   ).exec(next)
+// });
+
+// app.delete('/index/:id/comments/:comment_id', function (req, res) {
+//   Comment.findById(req.params.comment_id, function(comment){
+//   		comment.update();
+//   		console.log("comment succesfully deleted!");
+//   		res.redirect("back");
+//   	});
+//   });
+
 
 
 
@@ -364,6 +425,6 @@ function checkUserOwnership(req, res, next) {
 
 
 
-app.listen(3000, function(){
+server.listen(3000, function(){
 	console.log("Server started! Listening on port 3000");
 });
