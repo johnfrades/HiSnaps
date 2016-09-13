@@ -9,11 +9,23 @@ var passport = require("passport");
 var passportLocal = require("passport-local");
 var methodOverride = require("method-override");
 var passportLocalMongoose = require("passport-local-mongoose");
+var multer = require("multer");
+var storage = multer.diskStorage({
+	destination: function(req, file, cb){
+		cb(null, './uploads')
+	},
+	filename: function(req, file, cb){
+		cb(null, file.fieldname + '-' + Date.now())
+	}
+});
+//handles the uploading file
+var uploading = multer({ storage: storage }).single('userPhoto');
 
 
 
 //temporary to store names to the array
 var nicknames = [];
+
 
 
 
@@ -63,7 +75,9 @@ var commentSchema = new mongoose.Schema ({
 
 var loginSchema = new mongoose.Schema ({
 	username: String,
-	password: String
+	password: String,
+	firstname: String,
+	lastname: String
 });
 
 loginSchema.plugin(passportLocalMongoose);
@@ -101,15 +115,10 @@ app.use(function(req, res, next){
 
 io.sockets.on('connection', function(socket){
 	socket.on('new user', function(data){
-		console.log(data);
-		if(nicknames.indexOf(data) != -1) {
-
-		} else {
-
+		console.log(data + " connected to chatroom");
 			socket.nickname = data;
 			nicknames.push(socket.nickname);
 			updateNicknames();
-		}
 	});
 
 
@@ -172,6 +181,17 @@ app.get("/index", function(req, res){
 			res.render("users", {allUsers: allUsers});
 		}
 	});
+});
+
+app.get("/profile/:id", function(req, res){
+	LoginUser.findById(req.params.id, function(err, userProfile){
+		if(err){
+			console.log(err);
+			res.redirect("back");
+		} else {
+			res.render("loginprofile", {userProfile: userProfile});
+		}
+	});	
 });
 
 
@@ -284,7 +304,7 @@ app.post("/index/:id/comments", function(req, res){
 
 
 app.post("/register", function(req, res){
-	var newUser = new LoginUser({username: req.body.username});
+	var newUser = new LoginUser({username: req.body.username, firstname: req.body.firstname, lastname: req.body.lastname});
 	LoginUser.register(newUser, req.body.password1, function(err, user){
 		if (err) {
 			return res.render("register");
@@ -300,6 +320,19 @@ app.post("/login", passport.authenticate("local", {
 	failureRedirect: "/login"
 }));
 
+
+app.get('/upload', function(req, res){
+	res.render("upload");
+});
+
+app.post('../public/uploads', function(req, res){
+	uploading(req, res, function(err){
+		if(err){
+			return res.end("error uploading file");
+		} 
+		res.end("file is uploaded!");
+	});
+});
 
 //EDIT route
 
