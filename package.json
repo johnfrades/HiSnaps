@@ -4,8 +4,8 @@
   "description": "",
   "main": "test1.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node test1.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+
   },
   "author": "John Frades",
   "license": "ISC",
