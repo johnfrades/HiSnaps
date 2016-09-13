@@ -6,15 +6,45 @@
 
 
 
-<div id="contentWrap">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<div class="container">
+	<div id="contentWrap">
 <div id="chatWrap">
 <div id="chat"></div>
-<form id="send-message">
-	<input size="35" id="message" required>
-	<input type="submit">
-</form>
 </div>
-<div id="users"></div>
+
+	<form id="send-message">
+	<div class="input-group">
+		<input id="message" class="form-control" required>
+		<span class="input-group-btn"><input type="submit" class="btn btn-success" value="Submit"></span>
+	</div>
+	</form>
+</div>
+
+
+<div id="users">
+	<h3> participants: </h3>
+</div>
+
+</div>
 </div>
 
 

@@ -61,24 +61,33 @@
 
 
 
-
-
-
-
-
-#chat {
-	height: 500px;
-}
-
-#contentWrap {
+#theInput {
+		bottom: 0;
+	width: 80%;
+	height: 5%;
 
 }
+
+
+
+
 
 #chatWrap {
-	float: left;
-	border: 2px green solid;
+	width: 100%;
+	height: 500px;
+	border: 1px black solid;
 }
 
 #chat {
 	overflow: auto;
 }
+
+#message {
+
+}
+
+
+
+
+
+

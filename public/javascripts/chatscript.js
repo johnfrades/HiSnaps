@@ -24,9 +24,9 @@ jQuery(function($){
 
 	socket.emit('new user', $currentUser.text());
 
+
 	socket.on("usernames", function(data){
-		$users.html(data.join("<br>"));
-		$chat.append('<b>' + data + '</b>' + " has joined to the chatroom!" + '<br>');
+		$users.html(data.join(", "));
 	});
 
 

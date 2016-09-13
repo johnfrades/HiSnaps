@@ -34,7 +34,8 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 
-mongoose.connect("mongodb://localhost/userProfiles3");
+//mongoose.connect("mongodb://localhost/userProfiles3");
+mongoose.connect("mongodb://admin:admin@ds029426.mlab.com:29426/deploy1");
 var mongoosedb = mongoose.connection
 mongoosedb.on('error', console.error.bind(console, 'connection error: '));
 mongoosedb.once('open', function(){
@@ -113,6 +114,7 @@ app.use(function(req, res, next){
 
 
 
+
 io.sockets.on('connection', function(socket){
 	socket.on('new user', function(data){
 		console.log(data + " connected to chatroom");
@@ -120,7 +122,6 @@ io.sockets.on('connection', function(socket){
 			nicknames.push(socket.nickname);
 			updateNicknames();
 	});
-
 
 
 	socket.on('send message', function(data){
@@ -465,6 +466,6 @@ function checkUserOwnership(req, res, next) {
 
 
 
-server.listen(3000, function(){
+server.listen(process.env.PORT, process.env.IP, function(){
 	console.log("Server started! Listening on port 3000");
 });
