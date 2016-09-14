@@ -9,17 +9,17 @@ var passport = require("passport");
 var passportLocal = require("passport-local");
 var methodOverride = require("method-override");
 var passportLocalMongoose = require("passport-local-mongoose");
-var multer = require("multer");
-var storage = multer.diskStorage({
-	destination: function(req, file, cb){
-		cb(null, './uploads')
-	},
-	filename: function(req, file, cb){
-		cb(null, file.fieldname + '-' + Date.now())
-	}
-});
+// var multer = require("multer");
+// var storage = multer.diskStorage({
+// 	destination: function(req, file, cb){
+// 		cb(null, './uploads')
+// 	},
+// 	filename: function(req, file, cb){
+// 		cb(null, file.fieldname + '-' + Date.now())
+// 	}
+// });
 //handles the uploading file
-var uploading = multer({ storage: storage }).single('userPhoto');
+//var uploading = multer({ storage: storage }).single('userPhoto');
 
 
 
@@ -78,7 +78,8 @@ var loginSchema = new mongoose.Schema ({
 	username: String,
 	password: String,
 	firstname: String,
-	lastname: String
+	lastname: String,
+	image: String
 });
 
 loginSchema.plugin(passportLocalMongoose);
@@ -305,7 +306,19 @@ app.post("/index/:id/comments", function(req, res){
 
 
 app.post("/register", function(req, res){
-	var newUser = new LoginUser({username: req.body.username, firstname: req.body.firstname, lastname: req.body.lastname});
+	var regUsername = req.body.username;
+	var regFirstname = req.body.firstname;
+	var regLastname = req.body.lastname;
+	var regImage = req.body.image
+
+	var regUser = {
+		username: regUsername,
+		firstname: regFirstname,
+		lastname: regLastname,
+		image: regImage
+	}
+
+	var newUser = new LoginUser(regUser);
 	LoginUser.register(newUser, req.body.password1, function(err, user){
 		if (err) {
 			return res.render("register");

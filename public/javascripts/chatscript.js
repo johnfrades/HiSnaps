@@ -6,7 +6,10 @@ jQuery(function($){
 	var $messageForm = $("#send-message");
 	var $messageBox = $("#message");
 	var $chat = $("#chat");
-	var $currentUser = $("#current")
+	var $currentUser = $("#current");
+	var $image = $(".special-img");
+	var theImage = $(".special-img").attr('src');
+	var classImage = $(".special-img").attr('class');
 
 
 	// $nickForm.submit(function(e){
@@ -37,6 +40,6 @@ jQuery(function($){
 	});
 
 	socket.on('new message', function(data){
-		$chat.append('<b>' + data.nick + ": " + '</b>' + data.msg + '<br>');
+		$chat.append('<b>' + data.nick + ": " + '</b>' + data.msg + '</br>');
 	});
 });
