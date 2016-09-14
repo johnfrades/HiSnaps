@@ -34,8 +34,8 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 
-mongoose.connect("mongodb://localhost/userProfiles3");
-//mongoose.connect("mongodb://admin:admin@ds029426.mlab.com:29426/deploy1");
+//mongoose.connect("mongodb://localhost/userProfiles3");
+mongoose.connect("mongodb://admin:admin@ds029426.mlab.com:29426/deploy1");
 var mongoosedb = mongoose.connection
 mongoosedb.on('error', console.error.bind(console, 'connection error: '));
 mongoosedb.once('open', function(){
@@ -472,6 +472,10 @@ function checkUserOwnership(req, res, next) {
 
 
 
-server.listen(3000, function(){
+// server.listen(3000, function(){
+// 	console.log("Server started! Listening on port 3000");
+// });
+
+server.listen(process.env.PORT, process.env.IP, function(){
 	console.log("Server started! Listening on port 3000");
 });
