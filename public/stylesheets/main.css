@@ -104,4 +104,12 @@
 	height: 30px;
 }
 
+#new-pic-button {
+padding: 10px 20px 10px 20px;
 
+}
+
+#see-comments-button {
+	padding-right: 15px;
+	padding-left: 15px;
+}

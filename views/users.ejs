@@ -3,12 +3,12 @@
 
 
 <div class="container" id="index">
-  <div class="jumbotron">
-    <h1>User Profiles</h1>
+  <div class="jumbotron text-center" style="background-color: transparent  !important">
+    <h1>Pictures submitted by the users</h1>
     <form action="/new" method="GET">
-    <button class="ui inverted blue button massive">
-		  <i class="add user icon"></i>
-		  Add user
+    <button class="ui inverted red button massive" id="new-pic-button">
+		  <i class="fa fa-camera-retro" aria-hidden="true"></i>
+		  Add picture
 	</button>
 	</form>
   </div>
@@ -22,10 +22,10 @@
 						<h2><%= newUsers.name %></h2>
 					</div>
 					<div class="ui labeled button" tabindex="0">
-					  <a class="ui blue basic button" href="/index/<%= newUsers._id %>">
-					    <i class="write icon"></i> See comments
+					  <a class="ui red button" href="/index/<%= newUsers._id %>" id="see-comments-button">
+					    <i class="fa fa-comments" aria-hidden="true"></i> See comments
 					  </a>
-					  <a class="ui basic left pointing blue label">
+					  <a class="ui inverted left pointing black label">
 					    <%= newUsers.comments.length %>
 					  </a>
 					</div>

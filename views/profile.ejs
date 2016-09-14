@@ -45,7 +45,7 @@
 					<form action="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE" method="POST">
 					<div class="panel panel-primary">
 					  <div class="panel-heading text-left text-uppercase">
-					<%= theComment.author.username%>---(<%= theComment.date %>)
+					<img src="<%= theComment.author.image %>" class="img-circle special-img"><%= theComment.author.username%>---(<%= theComment.date %>)
 							<% if(currentUser && theComment.author.id.equals(currentUser._id)){ %>
 								<button class="btn btn-xs btn-danger">Delete</button>
 							<% } %>

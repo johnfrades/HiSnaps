@@ -68,7 +68,8 @@ var commentSchema = new mongoose.Schema ({
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Loginuser"
 		},
-		username: String
+		username: String,
+		image: String
 	},
 	text: String,
 	date: String
@@ -294,6 +295,7 @@ app.post("/index/:id/comments", function(req, res){
 					theComment.date = nowDateAndTime;
 					theComment.author.id = req.user._id;
 					theComment.author.username = req.user.username;
+					theComment.author.image = req.user.image;
 					theComment.save();
 					foundUser.comments.push(theComment);
 					foundUser.save();
@@ -337,15 +339,6 @@ app.post("/login", passport.authenticate("local", {
 
 app.get('/upload', function(req, res){
 	res.render("upload");
-});
-
-app.post('../public/uploads', function(req, res){
-	uploading(req, res, function(err){
-		if(err){
-			return res.end("error uploading file");
-		} 
-		res.end("file is uploaded!");
-	});
 });
 
 //EDIT route
