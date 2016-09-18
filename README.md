@@ -5,4 +5,12 @@ Initial function and UI of the social networking project!
 -added gravatar to login users
 -added gravatar to comments
 
+
+
+//Sept 15, 2016
+-refactor the login page
+-refactor the add comment page
+-fixed registration form ui
+
+
 -John Frades
