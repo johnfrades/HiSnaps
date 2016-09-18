@@ -2,7 +2,7 @@
 <div class="container" id="profileShow">
 <div class="row">
 	<div class="col-md-3">
-		
+
 	</div>
 	<div class="col-md-9">
 		<div class="thumbnail">
@@ -36,29 +36,56 @@
 		
 		
 
-		<div class="well well-sm clearfix" id="commentField">
+<div class="well well-sm clearfix">
 			
-			<h2 class="text-left">Comments<a href="/index/<%= userID._id %>/comments/new" class="btn btn-xs btn-success pull-right">Add a comment</a></h2>
+
+<div id="commentsDiv">
+	<h3 class="ui dividing header">Comments</h3>
+</div>
+
 				<% userID.comments.forEach(function(theComment){ %>
-					<div class="row">
-						<div class="col-md-12">
-					<form action="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE" method="POST">
-					<div class="panel panel-primary">
-					  <div class="panel-heading text-left text-uppercase">
-					<img src="<%= theComment.author.image %>" class="img-circle special-img"><%= theComment.author.username%>---(<%= theComment.date %>)
-							<% if(currentUser && theComment.author.id.equals(currentUser._id)){ %>
-								<button class="btn btn-xs btn-danger">Delete</button>
-							<% } %>
-					</form>
-						
-					  </div>
-					  <div class="panel-body text-left">
-					    <%= theComment.text %>
-					  </div>
-					</div>
-					  </div>
-					</div>
+
+<div class="ui comments">
+  <div class="comment">
+
+    <a class="avatar" href="/profile/<%= theComment.author.id %>">
+      <img src="<%= theComment.author.image %>">
+    </a>
+    <div class="content">
+      <a class="author" href="/profile/<%= theComment.author.id %>"><%= theComment.author.username%></a>
+      <div class="metadata">
+        <span class="date"><%= theComment.date %></span>
+      </div>
+      <div class="text">
+         <%= theComment.text %>
+      </div>
+      <div class="actions">
+        <a class="reply">Reply</a>
+			<% if(currentUser && theComment.author.id.equals(currentUser._id)){ %>
+        <span><form action="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE" method="POST"><button class="btn btn-danger btn-xs">Delete</button></form></span>
+        	<% } %>
+      </div>
+    </div>
+  </div>
+</div>
 				<% }); %>
+
+
+
+<% if(currentUser){ %>
+<form action="/index/<%= userID._id %>/comments" method="POST">
+<div class="ui fluid action input">
+<input type="text" class="form-control" name="comment[text]" placeholder="Add comment..." >
+<button class="btn btn-primary btn-xs">
+Send<i class="send icon"></i>
+</button>
+</div>			      
+</form>
+<% } else { %>
+	<div class="alert alert-danger" role="alert">Login to submit a comment</div>
+<% } %>
+
+
 		</div>
 		</div>
 	</div>

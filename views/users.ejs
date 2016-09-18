@@ -21,14 +21,11 @@
 					<div class="caption">
 						<h2><%= newUsers.name %></h2>
 					</div>
-					<div class="ui labeled button" tabindex="0">
-					  <a class="ui red button" href="/index/<%= newUsers._id %>" id="see-comments-button">
-					    <i class="fa fa-comments" aria-hidden="true"></i> See comments
-					  </a>
-					  <a class="ui inverted left pointing black label">
-					    <%= newUsers.comments.length %>
-					  </a>
-					</div>
+					<form action="/index/<%= newUsers._id %>" method="GET">
+					  	<button class="btn btn-primary">
+  						<i class="fa fa-comments" aria-hidden="true"></i> Comments <span class="badge"><%= newUsers.comments.length %></span>
+						</button>
+					</form>
 				</div>
 			</div>
 	<% }); %>
