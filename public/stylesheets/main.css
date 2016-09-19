@@ -58,9 +58,6 @@
 
 }
 
-#newForm {
-	margin: 100px auto;
-}
 
 #commentField {
 	margin-top: 20px;
@@ -82,8 +79,15 @@
 	margin-top: 5px;
 }
 
+#searchform {
+	margin-top: 5px;
+	float: center;
+}
 
 
+.ui.comments .comment .author {
+	color: blue !important;
+}
 
 #theInput {
 		bottom: 0;
@@ -93,6 +97,20 @@
 }
 
 
+.editdelete-inline {
+	display:inline-flex;
+}
+
+.deletecomment {
+	color: red;
+}
+
+
+
+#loginregisterbutton {
+	margin-top: 7px;
+	margin-right: 10px;
+}
 
 
 
@@ -136,4 +154,33 @@ padding: 10px 20px 10px 20px;
 #see-comments-button {
 	padding-right: 15px;
 	padding-left: 15px;
+}
+
+
+.theinput {
+	display: none;
+}
+
+.submitEditedComment {
+	display: none;
+}
+
+.deleteBTN {
+	color: red !important;
+}
+
+.editBTN {
+	color: blue !important;
+}
+
+.replyBTN {
+	color: black !important;
+}
+
+.smallModal {
+	height: 220px;
+}
+
+.userCommentId {
+	display: none;
 }

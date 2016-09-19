@@ -1,4 +1,10 @@
 <% include partials/header %>
+<script src="/javascripts/jquery-3.1.0.js"></script>
+
+
+
+
+
 <div class="container" id="profileShow">
 <div class="row">
 	<div class="col-md-3">
@@ -31,7 +37,6 @@
 				</div>
 		</div>
 
-		
 
 		
 		
@@ -43,32 +48,49 @@
 	<h3 class="ui dividing header">Comments</h3>
 </div>
 
-				<% userID.comments.forEach(function(theComment){ %>
-
+<% userID.comments.forEach(function(theComment){ %>
 <div class="ui comments">
-  <div class="comment">
 
+  <div class="comment">
     <a class="avatar" href="/profile/<%= theComment.author.id %>">
       <img src="<%= theComment.author.image %>">
     </a>
     <div class="content">
-      <a class="author" href="/profile/<%= theComment.author.id %>"><%= theComment.author.username%></a>
+
+      <a class="author authorname" href="/profile/<%= theComment.author.id %>"><%= theComment.author.username%></a>
       <div class="metadata">
-        <span class="date"><%= theComment.date %></span>
+        <span class="date"><%= theComment.date %>
       </div>
       <div class="text">
-         <%= theComment.text %>
+         <h5 class='thetext'> <%= theComment.text %> </h5> 
+
+         <form action="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=PUT" method="POST" class="submitEditedComment">
+
+         	<div class="ui mini action input">
+	  			<input type="text" class="theinput" name="comment[text]">
+	  			<button class="ui icon blue button">
+	    		<i class="chevron right icon"></i>
+	  			</button>
+			</div>
+         </form>
       </div>
+
       <div class="actions">
-        <a class="reply">Reply</a>
-			<% if(currentUser && theComment.author.id.equals(currentUser._id)){ %>
-        <span><form action="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE" method="POST"><button class="btn btn-danger btn-xs">Delete</button></form></span>
-        	<% } %>
+        <a class="replyBTN">Reply<i class="reply icon"></i></a>
+        <% if(currentUser && theComment.author.id.equals(currentUser._id)){ %>
+	        <a class="deleteBTN" href="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE">Delete<i class="trash outline icon"></i></a>
+	        <a class="editBTN">Edit<i class="edit icon"></i></a>
+	        <p class="userCommentId"><%= theComment._id %></p>
+        <% } %>
       </div>
     </div>
   </div>
 </div>
-				<% }); %>
+
+		<% }); %>
+
+
+
 
 
 
@@ -82,10 +104,8 @@ Send<i class="send icon"></i>
 </div>			      
 </form>
 <% } else { %>
-	<div class="alert alert-danger" role="alert">Login to submit a comment</div>
+	<div class="alert alert-danger" role="alert"><span><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></span> / <span><a href="#" data-toggle="modal" data-target="#registerModal">Register</a></span> to submit a comment</div>
 <% } %>
-
-
 		</div>
 		</div>
 	</div>
@@ -94,4 +114,15 @@ Send<i class="send icon"></i>
 
 
 
+
+
+
+
+
+
+
+
+<script src="../javascripts/jquery-3.1.0.js"></script>
+<script type="text/javascript" src="../javascripts/checkPass.js"></script>
+<script type="text/javascript" src="../javascripts/myjquery.js"></script>
 <% include partials/footer %>

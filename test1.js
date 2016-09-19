@@ -34,6 +34,25 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 
+//This handles the DELETE method override on the "anchor tags"
+app.use( function( req, res, next ) {
+    // this middleware will call for each requested
+    // and we checked for the requested query properties
+    // if _method was existed
+    // then we know, clients need to call DELETE request instead
+    if ( req.query._method == 'DELETE' ) {
+        // change the original METHOD
+        // into DELETE method
+        req.method = 'DELETE';
+        // and set requested url to /user/12
+        req.url = req.path;
+    }       
+    next(); 
+});
+
+
+
+
 mongoose.connect("mongodb://localhost/userProfiles3");
 //mongoose.connect("mongodb://admin:admin@ds029426.mlab.com:29426/deploy1");
 var mongoosedb = mongoose.connection
@@ -105,6 +124,7 @@ passport.use(new passportLocal(LoginUser.authenticate()));
 passport.serializeUser(LoginUser.serializeUser());
 passport.deserializeUser(LoginUser.deserializeUser());
 // ends here
+
 
 
 
@@ -362,7 +382,7 @@ app.put("/index/:id/comments/:comment_id", function(req, res){
 			console.log(err);
 			res.redirect("back");
 		} else {
-			res.redirect("/index/" + req.params.id);
+			res.redirect("back");
 		}
 	});
 });

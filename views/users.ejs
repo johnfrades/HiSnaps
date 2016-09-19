@@ -5,13 +5,17 @@
 <div class="container" id="index">
   <div class="jumbotron text-center" style="background-color: transparent  !important">
     <h1>Pictures submitted by the users</h1>
-    <form action="/new" method="GET">
-    <button class="ui inverted red button massive" id="new-pic-button">
+    <% if(currentUser){ %>
+    <button data-toggle="modal" data-target="#addModal" class="ui inverted red button massive" id="new-pic-button">
 		  <i class="fa fa-camera-retro" aria-hidden="true"></i>
 		  Add picture
 	</button>
-	</form>
+	<% } else { %>
+	<div class="alert alert-danger" role="alert"><span><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></span> / <span><a href="#" data-toggle="modal" data-target="#registerModal">Register</a></span> to submit a picture</div>
+	  <% } %>
   </div>
+
+
 
   	<div class="row text-center" id="indexForm">
 <% allUsers.forEach(function(newUsers){ %>
@@ -34,6 +38,33 @@
 
 
 
+<!--LOGIN FORM Modal//Bootstrap 3 -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Login</h4>
+      </div>
+      <div class="modal-body">
+      <!--Modal text body starts here-->
+        
+        <form action="/index" method="POST" id="loginform">
+          <label>Name</label>
+          <input type="text" name="name" class="form-control" id="newNameForm" required>
+          <label>Image URL</label>
+          <input type="text" name="image" class="form-control" id="newImageForm" required>
+      <!--Modal text body ends here-->
+      </div>
+      <div class="modal-footer">
+          <button class="ui inverted green button">Add</button>
+        </form>
+      <button type="button" class="ui inverted red button" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
