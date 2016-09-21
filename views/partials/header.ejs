@@ -34,13 +34,16 @@
           <a data-toggle="modal" data-target="#registerModal" class="ui black tiny button">Register</a>    
         </div>
       <% } else { %>
-      <li><form class="form-inline" id="searchform">
-      <input type="text" class="form-control" placeholder="Search people">
+      <li><form class="form-inline" id="searchform" action="/searchresult" method="POST">
+      <input type="text" class="form-control" placeholder="Search people" name="thename" id="searchinput">
       <button type="submit" class="btn btn-default">Submit</button>
       </form></li>
         <li><a href="/profile/<%= currentUser._id%>" id="current"><img src="<%= currentUser.image %>" class="profile-image special-img"><%= currentUser.username %></a></li>
         <li><a href="/chat">Chat</a></li>
         <li><a href="/logout">Logout</a></li>
+
+
+
       <% } %>
       </ul>
 

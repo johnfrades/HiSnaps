@@ -278,6 +278,40 @@ app.get("/chat", function(req, res){
 });
 
 
+
+
+//Search profile
+app.get("/searchresult", function(req, res){
+	LoginUser.find({"firstname":"pepe"}, function(err, searchUser){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("searchprofile", {foundUser: searchUser});
+			console.log(searchUser);
+		}
+	});
+});
+
+//searches the loginusers database
+app.post("/searchresult", function(req, res){
+	var thename = req.body.thename;
+	LoginUser.find({
+		$or: [
+
+			{"firstname": thename},
+			{"lastname": thename}
+		]
+	}, function(err, searchedUser){
+		if(err){
+			console.log(err);
+			res.redirect("back");
+		} else {
+			res.render("searchprofile", {foundUser: searchedUser});
+		}
+	});
+});
+
+
 //POST ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 app.post("/index", function(req, res){

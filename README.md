@@ -21,4 +21,8 @@ Initial function and UI of the social networking project!
 -added delete and edit on comment page
 
 
+//Sept 21,2016
+-added a search function for users
+
+
 -John Frades
