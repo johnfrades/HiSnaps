@@ -24,6 +24,21 @@ $(".editBTN").click(function(){
 
 
 
+//Liked button
+$(".likeicon").on('click', function(){
+if($(this).css("color") === "rgb(0, 0, 255)"){
+  $(this).css("color", "black");
+  $(this).animate({fontSize: "15px"});
+  $("#likedtxt").remove();
+} else {
+  $(this).css("color", "blue");
+  $(this).append("<span id='likedtxt'>Liked</span>");
+  $(this).animate({fontSize: "18px"});
+}  
+});
+
+
+
 
 
 });

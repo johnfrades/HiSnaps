@@ -46,6 +46,11 @@ app.use( function( req, res, next ) {
         req.method = 'DELETE';
         // and set requested url to /user/12
         req.url = req.path;
+    } else {
+    	if(req.query._method == 'POST'){
+    		req.method = 'POST';
+    		req.url = req.path
+    	}
     }       
     next(); 
 });
@@ -65,6 +70,7 @@ mongoosedb.once('open', function(){
 var testSchema = new mongoose.Schema({
 	name: String,
 	image: String,
+	likes: Number,
 	author: {
 		id: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -280,26 +286,17 @@ app.get("/chat", function(req, res){
 
 
 
-//Search profile
-app.get("/searchresult", function(req, res){
-	LoginUser.find({"firstname":"pepe"}, function(err, searchUser){
-		if(err) {
-			console.log(err);
-		} else {
-			res.render("searchprofile", {foundUser: searchUser});
-			console.log(searchUser);
-		}
-	});
-});
 
-//searches the loginusers database
+//POST ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//Search function for users
 app.post("/searchresult", function(req, res){
 	var thename = req.body.thename;
 	LoginUser.find({
 		$or: [
 
-			{"firstname": thename},
-			{"lastname": thename}
+			{"firstname": {$regex: thename, $options: 'i'}},
+			{"lastname": {$regex: thename, $options: 'i'}}
 		]
 	}, function(err, searchedUser){
 		if(err){
@@ -312,7 +309,8 @@ app.post("/searchresult", function(req, res){
 });
 
 
-//POST ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Add likes to the database
+
 
 app.post("/index", function(req, res){
 	var name = req.body.name;

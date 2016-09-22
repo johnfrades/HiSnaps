@@ -17,24 +17,41 @@
 
 
 
-  	<div class="row text-center" id="indexForm">
+
+
+<div class="row text-center">
 <% allUsers.forEach(function(newUsers){ %>
-			<div class="col-md-3">
-				<div class="thumbnail">
-					<img src="<%= newUsers.image %>">
-					<div class="caption">
-						<h2><%= newUsers.name %></h2>
-					</div>
-					<form action="/index/<%= newUsers._id %>" method="GET">
-					  	<button class="btn btn-primary">
-  						<i class="fa fa-comments" aria-hidden="true"></i> Comments <span class="badge"><%= newUsers.comments.length %></span>
-						</button>
-					</form>
-				</div>
-			</div>
-	<% }); %>
-	</div>
+  <div class="col-md-3">
+  <div class="ui card">
+    <div class="image">
+      <img src="<%= newUsers.image %>">
+    </div>
+    <div class="content">
+      <a class="header" href="/index/<%= newUsers._id %>"><%= newUsers.name %></a>
+      <div class="meta">
+        <span class="date">Joined in 2013</span>
+      </div>
+      <div class="description">
+        Kristy is an art director living in New York.
+      </div>
+    </div>
+    <div class="extra content">
+      <a class="likeicon">
+      <i class="fa fa-thumbs-o-up" aria-hidden="true" ></i>
+      </a>
+      <a id="comments">
+        <%= newUsers.comments.length %> Comments 
+      </a>
+       <a id="likes">
+        <%= newUsers.comments.length %> Likes 
+      </a>
+    </div>
+  </div>
 </div>
+<% }); %>
+</div>
+
+
 
 
 
