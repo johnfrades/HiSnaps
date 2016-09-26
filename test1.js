@@ -9,6 +9,20 @@ var passport = require("passport");
 var passportLocal = require("passport-local");
 var methodOverride = require("method-override");
 var passportLocalMongoose = require("passport-local-mongoose");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // var multer = require("multer");
 // var storage = multer.diskStorage({
 // 	destination: function(req, file, cb){
@@ -375,7 +389,8 @@ app.post("/register", function(req, res){
 	var regUsername = req.body.username;
 	var regFirstname = req.body.firstname;
 	var regLastname = req.body.lastname;
-	var regImage = req.body.image
+	var regImage = req.body.image;
+
 
 	var regUser = {
 		username: regUsername,

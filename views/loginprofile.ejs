@@ -4,13 +4,15 @@
 
 <div class="container">
 
-<h1 class="text-center">Welcome to <em> <%= userProfile.username %> </em> profile page!</h1>
+<h1 class="text-center profileText">Welcome to <em> <%= userProfile.username %> </em> profile page!</h1>
 <% console.log(userProfile);%>
 
-<h2 class="text-center">First Name: <%= userProfile.firstname%> </h2>
-<h2 class="text-center">Last Name: <%= userProfile.lastname%> </h2>
-<img class="img-responsive profileImage" src="<%= userProfile.image %>">
 
+
+<img class="img-thumbnail profileImage" src="<%= userProfile.image %>">
+<span>
+	<h2 class="text-center profileText" style="display: inline-block"><%= userProfile.firstname %> <%= userProfile.lastname %></h2>
+</span>
 
 </div>
 

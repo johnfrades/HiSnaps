@@ -25,4 +25,7 @@ Initial function and UI of the social networking project!
 -added a search function for users
 
 
+//Sept 26, 2016
+-Major fix on the UI --still not finish
+
 -John Frades
