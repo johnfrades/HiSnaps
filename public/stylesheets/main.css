@@ -1,3 +1,27 @@
+body {
+
+
+
+
+
+
+
+
+
+
+background: #780206 !important; /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #780206 , #061161) !important; /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #780206 , #061161) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        
+}
+
+
+
+
+
+
+
+
 #commentsDiv {
 	margin-bottom: 20px;
 }
@@ -80,8 +104,9 @@
 }
 
 #searchform {
-	margin-top: 5px;
-	float: center;
+	margin-top: 8px;
+	margin-right: 400px;
+
 }
 
 
@@ -147,7 +172,11 @@
 }
 
 #new-pic-button {
-padding: 10px 20px 10px 20px;
+padding: 10px 15px 10px 13px;
+
+}
+
+#new-pic-button:hover {
 
 }
 
@@ -186,8 +215,8 @@ padding: 10px 20px 10px 20px;
 }
 
 
-.img-responsive {
-	background-size: cover;
+#profilePic {
+	margin-top: 20px;
 }
 
 #comments, #likes {
@@ -199,7 +228,121 @@ padding: 10px 20px 10px 20px;
 	margin-right: 7px;
 }
 
-.likeicon {
-	float: left;
-	color: gray;
+
+.authorProfileImage {
+border-bottom: 0.7px solid #999999 !important;
+padding: 8px !important;
+}
+
+.authorImage {
+	width: 30px;
+	margin: 10px 0px  0px 0px;
+}
+
+.authorProfile {
+
+
+	padding-bottom: 10px;
+	border-bottom: 1px solid #999999;
+}
+
+.authorName {
+	margin-left: 7px;
+	margin-top: 5px;
+	color: blue;
+}
+
+.date {
+	float: right;
+	margin-top: 15px;
+	font-size: 10px;
+}
+
+.pictureContent {
+	margin-top: 20px !important;
+}
+
+#theHeader {
+	color: white;
+}
+
+#cameraIcon {
+	margin-right: 5px;
+}
+
+
+.theDiv1 {
+	background-color: #dee0e0;
+	width: 380px;
+	height: 570px;
+	margin-bottom: 20px;
+	margin-right: 10px;
+}
+
+.theDiv2 {
+
+	width: 350px;
+	height: 390px;
+}
+
+.theDiv3 {
+	font-size: 20px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
+.theDivFooter {
+	border-top: 1px solid #999999;
+
+}
+
+.commentFooter {
+	float: right;
+	margin-top: 20px;
+}
+
+.fa.fa-arrow-up {
+	margin-top: 20px;
+	margin-left: 10px;
+}
+
+.fa.fa-arrow-down {
+	margin-left: 10px;
+}
+
+.thePictures {
+	width: 100%;
+	height: 100%;
+}
+
+.picDescription {
+	margin-top: 10px;
+}
+
+.upicon, .downicon {
+	font-size: 19px;
+}
+
+.authorImageOnProfile {
+
+	width: 50px;
+	margin: 10px 0px  0px 0px;
+}
+
+.authorUsername {
+	font-size: 20px;
+}
+
+#profileName {
+	font-size: 30px;
+}
+
+#divAuthorUsername {
+	border-bottom: 1px dashed black;
+}
+
+#sidebarText {
+	font-size: 30px;
+	color: white;
+	font-weight: 700;
 }

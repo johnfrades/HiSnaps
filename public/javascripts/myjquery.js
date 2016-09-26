@@ -25,19 +25,41 @@ $(".editBTN").click(function(){
 
 
 //Liked button
-$(".likeicon").on('click', function(){
-if($(this).css("color") === "rgb(0, 0, 255)"){
+// $(".likeicon").on('click', function(){
+// if($(this).css("color") === "rgb(0, 255, 0)"){
+//   $(this).css("color", "black");
+//   $(this).animate({fontSize: "15px"});
+//   $(this).text($(".likedtxt").text().substring(5));
+//   $(this).append('<a class="likeicon"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>')
+// } else {
+//   $(this).css("color", "green");
+//   $(this).append("<span class='likedtxt'>Liked</span>");
+//   $(this).animate({fontSize: "18px"});
+// }  
+// });
+
+
+$(".upicon").on('click', function(){
+if($(this).css("color") === "rgb(0, 255, 0)"){
   $(this).css("color", "black");
-  $(this).animate({fontSize: "15px"});
-  $("#likedtxt").remove();
+  $(this).animate({fontSize: "19px"});
+  
 } else {
-  $(this).css("color", "blue");
-  $(this).append("<span id='likedtxt'>Liked</span>");
-  $(this).animate({fontSize: "18px"});
+  $(this).css("color", "rgb(0, 255, 0)");
+  $(this).animate({fontSize: "23px"});
 }  
 });
 
-
+$(".downicon").on('click', function(){
+if($(this).css("color") === "rgb(255, 0, 0)"){
+  $(this).css("color", "black");
+  $(this).animate({fontSize: "19px"});
+  
+} else {
+  $(this).css("color", "rgb(255, 0, 0)");
+  $(this).animate({fontSize: "23px"});
+}  
+});
 
 
 

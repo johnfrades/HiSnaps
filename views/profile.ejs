@@ -8,17 +8,26 @@
 <div class="container" id="profileShow">
 <div class="row">
 	<div class="col-md-3">
-
+	<ul id="sidebarText">
+		<li>Text 1</li>
+		<li>Text 2</li>
+		<li>Text 3</li>
+	</ul>
 	</div>
 	<div class="col-md-9">
 		<div class="thumbnail">
-		<div class="text-center"><h2><%= userID.name %></h2>
-		
-			<img src="<%= userID.image %>">
-			<p><em>Submitted by: <strong><%= userID.author.username %></strong> </em></p>
-			
+			<div class="text-center">
+				<span>
+					<img src="<%= userID.author.image%>" class="img-circle authorImageOnProfile">
+				</span>
+				<div id="divAuthorUsername">
+					<span id="authorUsername">
+						<strong><%= userID.author.username %></strong>
+					</span>
+				</div>
+					<img src="<%= userID.image %>" id="profilePic">
+					<p id="profileName"><em><strong><%= userID.name %></strong> </em></p>
 			</div>
-
 				<div style="text-align:center;">
 				 <form action="/index/<%= userID._id%>/edit" method="GET" id="profileForm">
    		<% if(currentUser && userID.author.id.equals(currentUser._id)){ %>
@@ -36,7 +45,6 @@
 					</form>
 				</div>
 		</div>
-
 
 		
 		

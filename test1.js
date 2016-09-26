@@ -71,12 +71,15 @@ var testSchema = new mongoose.Schema({
 	name: String,
 	image: String,
 	likes: Number,
+	description: String,
+	date: String,
 	author: {
 		id: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Loginuser"
 		},
-			username: String
+			username: String,
+			image: String,
 	},
 
 	comments: [
@@ -105,6 +108,7 @@ var loginSchema = new mongoose.Schema ({
 	password: String,
 	firstname: String,
 	lastname: String,
+	description: String,
 	image: String
 });
 
@@ -115,6 +119,8 @@ var Comment = mongoose.model("Comment", commentSchema);
 var LoginUser = mongoose.model("Loginuser", loginSchema);
 
 var nowDateAndTime = moment().format("l , LT")
+var picturesDateAndTime = moment().format('lll');
+var pictures2DateAndTime = moment().startOf('hour').fromNow();
 
 
 //Passport authentication
@@ -180,7 +186,6 @@ function updateNicknames() {
 
 
 app.get("/", function(req, res){
-
 	res.render("index", {title: "The index Page!!!!"});
 });
 
@@ -309,20 +314,25 @@ app.post("/searchresult", function(req, res){
 });
 
 
-//Add likes to the database
+//Add likes to the database --pending--
 
 
 app.post("/index", function(req, res){
 	var name = req.body.name;
 	var image = req.body.image;
+	var description = req.body.description;
+	var datetimeSubmitted = picturesDateAndTime;
 	var author = {
 			id: req.user._id,
-			username: req.user.username
+			username: req.user.username,
+			image: req.user.image
 	}
 	var userData = {
 		name: name,
 		image: image,
-		author: author
+		author: author,
+		description: description,
+		date: datetimeSubmitted
 	}
 
 	TestData.create(userData, function(err, newlyCreatedUser){

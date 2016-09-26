@@ -4,11 +4,11 @@
 
 <div class="container" id="index">
   <div class="jumbotron text-center" style="background-color: transparent  !important">
-    <h1>Pictures submitted by the users</h1>
+    <h1 id="theHeader">Browse our submitted pictures</h1>
     <% if(currentUser){ %>
-    <button data-toggle="modal" data-target="#addModal" class="ui inverted red button massive" id="new-pic-button">
-		  <i class="fa fa-camera-retro" aria-hidden="true"></i>
-		  Add picture
+    <button data-toggle="modal" data-target="#addModal" class="ui inverted white button massive" id="new-pic-button" >
+		  <i id="cameraIcon" class="fa fa-camera-retro" aria-hidden="true"></i>
+	     Submit a picture
 	</button>
 	<% } else { %>
 	<div class="alert alert-danger" role="alert"><span><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></span> / <span><a href="#" data-toggle="modal" data-target="#registerModal">Register</a></span> to submit a picture</div>
@@ -19,34 +19,32 @@
 
 
 
-<div class="row text-center">
+<div class="row">
 <% allUsers.forEach(function(newUsers){ %>
-  <div class="col-md-3">
-  <div class="ui card">
-    <div class="image">
-      <img src="<%= newUsers.image %>">
-    </div>
-    <div class="content">
-      <a class="header" href="/index/<%= newUsers._id %>"><%= newUsers.name %></a>
-      <div class="meta">
-        <span class="date">Joined in 2013</span>
-      </div>
-      <div class="description">
-        Kristy is an art director living in New York.
-      </div>
-    </div>
-    <div class="extra content">
-      <a class="likeicon">
-      <i class="fa fa-thumbs-o-up" aria-hidden="true" ></i>
-      </a>
-      <a id="comments">
-        <%= newUsers.comments.length %> Comments 
-      </a>
-       <a id="likes">
-        <%= newUsers.comments.length %> Likes 
-      </a>
-    </div>
+
+  <div class="col-md-3 theDiv1">
+  <div class="authorProfile">
+    <a href="/profile/<%= newUsers.author.id %>">
+      <img src="<%= newUsers.author.image%>" class="img-circle authorImage" >
+      <span class="authorName"><%= newUsers.author.username %></span>
+    </a>
+    <span class="date"><%= newUsers.date %></span>
   </div>
+  <a href="/index/<%= newUsers._id %>">
+  <div class="theDiv2">
+    <img src="<%= newUsers.image %>" class="thePictures">
+  </div>
+      <div class="theDiv3 text-center">
+        <span><strong><%= newUsers.name %></strong></span>
+      </div>
+    </a>
+  <span class="picDescription"><em><%= newUsers.description %></em></span>
+  <div class="theDivFooter">
+      <i class="fa fa-arrow-up upicon" style="font-size: 19px" aria-hidden="true"><strong>0</strong></i>
+      <i class="fa fa-arrow-down downicon" style="font-size: 19px" aria-hidden="true"><strong>0</strong></i>
+    <span class="commentFooter"><%= newUsers.comments.length %>  Comments</span>
+  </div>
+
 </div>
 <% }); %>
 </div>
@@ -61,7 +59,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Login</h4>
+        <h4 class="modal-title" id="myModalLabel">Submit a picture</h4>
       </div>
       <div class="modal-body">
       <!--Modal text body starts here-->
@@ -71,6 +69,8 @@
           <input type="text" name="name" class="form-control" id="newNameForm" required>
           <label>Image URL</label>
           <input type="text" name="image" class="form-control" id="newImageForm" required>
+          <label>Description</label>
+          <input type="text" name="description" class="form-control" id="newImageForm" maxlength="100" required>
       <!--Modal text body ends here-->
       </div>
       <div class="modal-footer">
