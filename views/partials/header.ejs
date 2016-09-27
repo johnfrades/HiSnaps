@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>website testing #1</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -16,22 +16,23 @@
 <body>
 
 
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-default navbar-fixed-top navbar-static-top" id="myNavBar">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#" style="font-family: 'Architects Daughter', cursive;"><i class="fa fa-smile-o" aria-hidden="true"></i> MySelfie</a>
-    </div>
+    <div class='row' id="navRow">
+      
+    
 
     <!-- Collect the nav links, forms, and other content for toggling -->
 
       <ul class="nav navbar-nav">
-        <li><a href="/" class="hvr-underline-reveal">Home</a></li>
-        <li><a href="/index" class="hvr-underline-reveal">Users</a></li>
-        <li><a href="/about" class="hvr-underline-reveal">About</a></li>
-      </ul>
+        <li class="navItem"><a href="/" class="hvr-underline-reveal navTxt">Home</a></li>
+        <li class="navItem"><a href="/index" class="hvr-underline-reveal navTxt">Users</a></li>
+        <li class="navItem"><a href="/about" class="hvr-underline-reveal navTxt">About</a></li>
+        <li class="navItem2"><a href="#" style="font-family: 'Architects Daughter', cursive;" class="navTxt"> MySelfie<i class="fa fa-smile-o" aria-hidden="true"></i></a></li>
+      
 
-      <ul class="nav navbar-nav navbar-right">
+      
       
       <% if(!currentUser) { %>
       
@@ -40,28 +41,28 @@
           <a data-toggle="modal" data-target="#registerModal" class="ui black tiny button">Register</a>    
         </div>
       <% } else { %>
-      <li>
+      <!--<li>
         <form class="form-inline" id="searchform" action="/searchresult" method="POST">
           <input type="text" class="form-control" placeholder="Search people" name="thename" id="searchinput">
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
-      </li>
-        <li>
-          <a href="/profile/<%= currentUser._id%>" id="current"><img src="<%= currentUser.image %>" class="profile-image special-img"><%= currentUser.username %>
+      </li> -->
+        <li class="navItem">
+          <a href="/profile/<%= currentUser._id%>" id="current"><img src="<%= currentUser.image %>" class="profile-image special-img navTxt"><%= currentUser.username %>
           </a>
         </li>
-        <li>
-          <a href="/chat" class="hvr-underline-reveal">Chat</a>
+        <li class="navItem">
+          <a href="/chat" class="hvr-underline-reveal  navTxt">Chat</a>
         </li>
-        <li>
-          <a href="/logout" class="hvr-underline-reveal">Logout</a>
+        <li class="navItem">
+          <a href="/logout" class="hvr-underline-reveal navItem navTxt">Logout</a>
         </li>
-
+        </div>
 
 
       <% } %>
-      </ul>
-
+      
+</ul>
   </div><!-- /.container-fluid -->
 </nav>
 

@@ -28,4 +28,7 @@ Initial function and UI of the social networking project!
 //Sept 26, 2016
 -Major fix on the UI --still not finish
 
+//Sept 27, 2016
+-Refactor the users UI and the Navbar design
+
 -John Frades

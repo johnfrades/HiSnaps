@@ -361,7 +361,7 @@ app.post("/register", function(req, res){
 
 app.post("/login", passport.authenticate("local", {
 	successRedirect: "back",
-	failureRedirect: "/login"
+	failureRedirect: "back"
 }));
 
 

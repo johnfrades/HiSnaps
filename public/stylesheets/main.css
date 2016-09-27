@@ -2,6 +2,39 @@ body {
 
 }
 
+.navbar-default {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+#navRow {
+	margin: 0 auto;
+	max-width: 60rem;
+	width: 100%;
+}
+
+.navTxt {
+	color: white !important; 
+}
+
+
+.navItem {
+	width: 100px;
+	text-align: center;
+	color: white !important;
+	font-weight: 700;
+}
+
+.navItem2 {
+	width: 150px;
+	text-align: center;
+	background-color: rgba(170, 0, 0, 0.5);
+}
+
+
+#jumbotronHeader {
+	background: transparent;
+	margin-top: 30px;
+}
 
 
 #commentsDiv {
@@ -26,6 +59,7 @@ body {
 #profileShow {
 
 	margin: 0 auto;
+	margin-top: 100px;
 }
 
 #buttonBack {
@@ -91,7 +125,7 @@ body {
 
 #searchform {
 	margin-top: 8px;
-	margin-right: 400px;
+	margin-right: 40px;
 
 }
 
@@ -204,6 +238,7 @@ padding: 10px 15px 10px 13px;
 
 #profilePic {
 	margin-top: 20px;
+	width:100%;
 }
 
 #comments, #likes {
@@ -342,3 +377,6 @@ box-shadow: 0px 0px 22px 6px rgba(0,0,0,0.75);
 	font-weight: 700;
 }
 
+.fa.fa-smile-o {
+	margin-left: 10px;
+}
