@@ -16,13 +16,6 @@ var passportLocalMongoose = require("passport-local-mongoose");
 
 
 
-
-
-
-
-
-
-
 // var multer = require("multer");
 // var storage = multer.diskStorage({
 // 	destination: function(req, file, cb){
@@ -198,28 +191,18 @@ function updateNicknames() {
 
 //GET ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
+//Home page
 app.get("/", function(req, res){
-	res.render("index", {title: "The index Page!!!!"});
+	res.render("index");
 });
 
+
+//About page
 app.get("/about", function(req, res){
 	res.render("about");
 });
 
-app.get("/new", isLoggedIn, function(req, res) {
-	res.render("new");
-});
 
-app.get("/index/:id/edit", function(req, res) {
-	TestData.findById(req.params.id, function(err, editUser){
-		if(err){
-			console.log(err);
-		} else {
-			res.render("editProfile", {editUser: editUser});
-		}
-	});
-});
 
 
 app.get("/index", function(req, res){
@@ -244,10 +227,6 @@ app.get("/profile/:id", function(req, res){
 });
 
 
-app.get("/register", function(req, res){
-	res.render("register");
-});
-
 
 //SHOW more info and comments
 app.get("/index/:id", function(req,res){
@@ -258,36 +237,6 @@ app.get("/index/:id", function(req,res){
 			res.render("profile", {userID: userID, nowDateAndTime: nowDateAndTime});
 		}
 	});
-});
-
-
-
-
-//shows the form to add new comment
-app.get("/index/:id/comments/new", isLoggedIn, function(req, res){
-	TestData.findById(req.params.id, function(err, userID){
-		if (err) {
-			console.log(err);
-		} else {
-			res.render("newComment", {userID: userID, nowDateAndTime: nowDateAndTime});
-		}
-	});
-});
-
-//shows the form to edit the comment
-app.get("/index/:id/comments/:comment_id/edit", function(req, res){
-	Comment.findById(req.params.comment_id, function(err, foundComment){
-		if (err) {
-			console.log(err);
-		} else {
-			res.render("editcomment", {theComment: foundComment, userID: req.params.id, nowDateAndTime: nowDateAndTime});
-		}
-	});
-});
-
-//Shows the login form
-app.get("/login", function(req, res){
-	res.render("login");
 });
 
 

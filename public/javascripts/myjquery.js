@@ -45,7 +45,7 @@ if($(this).css("color") === "rgb(0, 255, 0)"){
   $(this).animate({fontSize: "19px"});
   
 } else {
-  $(this).css("color", "rgb(0, 255, 0)");
+  $(this).css("color", 'rgb(0, 255, 0)');
   $(this).animate({fontSize: "23px"});
 }  
 });

@@ -1,24 +1,6 @@
 body {
 
-
-
-
-
-
-
-
-
-
-background: #780206 !important; /* fallback for old browsers */
-background: -webkit-linear-gradient(to left, #780206 , #061161) !important; /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to left, #780206 , #061161) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        
 }
-
-
-
-
-
 
 
 
@@ -52,7 +34,11 @@ background: linear-gradient(to left, #780206 , #061161) !important; /* W3C, IE 1
 }
 
 #index {
+	background-color: red;
 	margin-top: 40px;
+	margin-left: 50px;
+	margin-right: 50px;
+	margin-bottom: 30px;
 }
 
 #newForm {
@@ -248,7 +234,7 @@ padding: 8px !important;
 .authorName {
 	margin-left: 7px;
 	margin-top: 5px;
-	color: blue;
+
 }
 
 .date {
@@ -261,27 +247,34 @@ padding: 8px !important;
 	margin-top: 20px !important;
 }
 
-#theHeader {
-	color: white;
-}
+
 
 #cameraIcon {
 	margin-right: 5px;
 }
 
 
-.theDiv1 {
-	background-color: #eee;
-	width: 380px;
-	height: 570px;
-	margin-bottom: 20px;
-	margin-right: 10px;
+.theDiv {
 	margin-left: 20px;
+	margin-right: 20px;
 }
 
-.theDiv2 {
-
+.theDiv1 {
+	background-color: white;
 	width: 350px;
+	height: 570px;
+	margin-bottom: 30px;
+	margin-right: 15px;
+	margin-left: 15px;
+
+-webkit-box-shadow: 0px 0px 22px 6px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 22px 6px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 22px 6px rgba(0,0,0,0.75);
+}
+
+
+
+.theDiv2 {
 	height: 390px;
 }
 
@@ -294,11 +287,13 @@ padding: 8px !important;
 .theDivFooter {
 	border-top: 1px solid #999999;
 
+
 }
 
 .commentFooter {
 	float: right;
 	margin-top: 20px;
+
 }
 
 .fa.fa-arrow-up {
@@ -343,10 +338,7 @@ padding: 8px !important;
 
 #sidebarText {
 	font-size: 30px;
-	color: white;
+
 	font-weight: 700;
 }
 
-.profileText {
-	color: white;
-}

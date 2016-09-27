@@ -14,7 +14,6 @@ var testSchema = new mongoose.Schema({
 			username: String,
 			image: String,
 	},
-
 	comments: [
 		{
 		type: mongoose.Schema.Types.ObjectId,
