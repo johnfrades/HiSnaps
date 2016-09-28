@@ -1,24 +1,73 @@
 body {
+	background-color: #e5e6e9 !important;
+}
 
+.container {
+width: 1550px !important;
+
+}
+
+
+.media:first-child {
+    margin-top: 1rem;
+}
+
+.media-body {
+	width: 100px;
+    font-size: 30px;
+    color: white;
+    font-family: 'Carrois Gothic SC';
+    vertical-align: middle;
+}
+
+.media-body a {
+	color: white;
+}
+
+.media-object {
+	width: 50px;
+	height: 50px;
 }
 
 .navbar-default {
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(16, 218, 36, 0.44);
 }
 
 #navRow {
-	margin: 0 auto;
-	max-width: 60rem;
+	margin: 1em auto;
+	max-width: 50rem;
 	width: 100%;
+}
+
+#navUsername {
+	color: white;
 }
 
 .navTxt {
 	color: white !important; 
+	font-size: 22px;
 }
 
+.navTxtProfile {
+	color: blue !important; 
+}
 
 .navItem {
+	width: 120px;
+	text-align: center;
+	color: white !important;
+	font-weight: 700;
+}
+
+.navItemButton {
 	width: 100px;
+	text-align: center;
+	color: white !important;
+	margin-top: 10px;
+}
+
+.navItemProfile {
+	width: 170px;
 	text-align: center;
 	color: white !important;
 	font-weight: 700;
@@ -123,12 +172,19 @@ body {
 	margin-top: 5px;
 }
 
+#loginProfile {
+	margin-top: 50px;
+}
+
 #searchform {
-	margin-top: 8px;
-	margin-right: 40px;
+	margin-top: 22px;
+	margin-right: 14px;
 
 }
 
+#searchProfile {
+	margin-top: 100px;
+}
 
 .ui.comments .comment .author {
 	color: blue !important;
@@ -172,9 +228,7 @@ body {
 
 
 
-.profileImage {
 
-}
 
 
 .special-img {
@@ -254,10 +308,16 @@ padding: 10px 15px 10px 13px;
 .authorProfileImage {
 border-bottom: 0.7px solid #999999 !important;
 padding: 8px !important;
+
+}
+
+.profileImage {
+	margin: 0 auto;
 }
 
 .authorImage {
 	width: 30px;
+	height: 30px;
 	margin: 10px 0px  0px 0px;
 }
 

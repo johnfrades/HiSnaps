@@ -2,7 +2,7 @@
 
 
 
-<div class="container">
+<div class="container" id="mainContainer">
   <div class="jumbotron text-center" id="jumbotronHeader">
     <h1 id="theHeader" style="font-family: 'Carrois Gothic SC'">Snap a Selfie. <br> Share with the world.</h1>
     <% if(currentUser){ %>
@@ -21,8 +21,7 @@
 
 <div class="row container">
 <% allUsers.forEach(function(newUsers){ %>
-
-  <div class="col-lg-4 col-md-3 theDiv1 hvr-float-shadow">
+  <div class="col-lg-3 col-md-3 theDiv1 hvr-grow-shadow">
   <div class="authorProfile">
     <a href="/profile/<%= newUsers.author.id %>">
       <img src="<%= newUsers.author.image%>" class="img-circle authorImage" >
@@ -44,7 +43,6 @@
       <i class="fa fa-arrow-down downicon" style="font-size: 19px" aria-hidden="true"><strong>0</strong></i>
     <span class="commentFooter"><%= newUsers.comments.length %>  Comments</span>
   </div>
-
 </div>
 <% }); %>
 </div>
@@ -63,8 +61,8 @@
       </div>
       <div class="modal-body">
       <!--Modal text body starts here-->
-        
-        <form action="/index" method="POST" id="loginform">
+        <% if(currentUser){ %>
+        <form action="/profile/<%= currentUser._id %>" method="POST" id="loginform">
           <label>Name</label>
           <input type="text" name="name" class="form-control" id="newNameForm" required>
           <label>Image URL</label>
@@ -76,6 +74,7 @@
       <div class="modal-footer">
           <button class="ui inverted green button">Add</button>
         </form>
+        <% } %>
       <button type="button" class="ui inverted red button" data-dismiss="modal">Close</button>
         
       </div>

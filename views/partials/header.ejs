@@ -18,6 +18,33 @@
 
 <nav class="navbar navbar-default navbar-fixed-top navbar-static-top" id="myNavBar">
   <div class="container-fluid">
+    <% if(currentUser){ %>
+      <ul class="nav navbar-nav">
+      <li>
+          <div class="media">
+            <div class="media-left">
+              <a href="/profile/<%= currentUser._id %>">
+                <img class="media-object" src="<%= currentUser.image %>">
+              </a>
+            </div>
+            <div class="media-body">
+              <a href="/profile/<%= currentUser._id %>" id="navUsername">
+                <%= currentUser.username %>
+              </a>
+            </div>
+          </div>
+        </li>
+    </ul>
+    <ul class="nav navbar-right">
+        <li>
+        <form class="form-inline" id="searchform" action="/searchresult" method="POST">
+          <input type="text" class="form-control" placeholder="Search people" name="thename" id="searchinput">
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+      </li>
+      </ul>
+    <% } %>
+    
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class='row' id="navRow">
       
@@ -26,38 +53,36 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
 
       <ul class="nav navbar-nav">
-        <li class="navItem"><a href="/" class="hvr-underline-reveal navTxt">Home</a></li>
-        <li class="navItem"><a href="/index" class="hvr-underline-reveal navTxt">Users</a></li>
-        <li class="navItem"><a href="/about" class="hvr-underline-reveal navTxt">About</a></li>
-        <li class="navItem2"><a href="#" style="font-family: 'Architects Daughter', cursive;" class="navTxt"> MySelfie<i class="fa fa-smile-o" aria-hidden="true"></i></a></li>
+        <li class="navItem"><a href="/" class="hvr-back-pulse navTxt">Home</a></li>
+
+        <li class="navItem"><a href="/about" class="hvr-back-pulse navTxt">About</a></li>
+        <li class="navItem2"><a href="/index" style="font-family: 'Architects Daughter', cursive;" class="navTxt"> MySelfie</a></li>
       
 
       
       
       <% if(!currentUser) { %>
       
-        <div id="loginregisterbutton">
-          <button data-toggle="modal" data-target="#loginModal" class="ui green tiny button">Login</button>
-          <a data-toggle="modal" data-target="#registerModal" class="ui black tiny button">Register</a>    
-        </div>
+     
+          <li class="navItemButton">
+            <button data-toggle="modal" data-target="#loginModal" class="ui green tiny button">Login</button>
+          </li>
+          <li class="navItemButton">
+            <a data-toggle="modal" data-target="#registerModal" class="ui black tiny button">Register</a>
+          </li>    
+
       <% } else { %>
-      <!--<li>
-        <form class="form-inline" id="searchform" action="/searchresult" method="POST">
-          <input type="text" class="form-control" placeholder="Search people" name="thename" id="searchinput">
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-      </li> -->
+      
+        
         <li class="navItem">
-          <a href="/profile/<%= currentUser._id%>" id="current"><img src="<%= currentUser.image %>" class="profile-image special-img navTxt"><%= currentUser.username %>
-          </a>
+          <a href="/chat" class="hvr-back-pulse  navTxt">Chat</a>
         </li>
         <li class="navItem">
-          <a href="/chat" class="hvr-underline-reveal  navTxt">Chat</a>
+          <a href="/logout" class="hvr-back-pulse navItem navTxt">Logout</a>
         </li>
-        <li class="navItem">
-          <a href="/logout" class="hvr-underline-reveal navItem navTxt">Logout</a>
-        </li>
+        
         </div>
+        
 
 
       <% } %>

@@ -88,7 +88,6 @@ var testSchema = new mongoose.Schema({
 			username: String,
 			image: String,
 	},
-
 	comments: [
 		{
 		type: mongoose.Schema.Types.ObjectId,
@@ -116,7 +115,14 @@ var loginSchema = new mongoose.Schema ({
 	firstname: String,
 	lastname: String,
 	description: String,
-	image: String
+	image: String,
+	dateJoined: String,
+	authorSelfies: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User"
+		}
+	]
 });
 
 loginSchema.plugin(passportLocalMongoose);
@@ -128,6 +134,7 @@ var LoginUser = mongoose.model("Loginuser", loginSchema);
 var nowDateAndTime = moment().format("l , LT")
 var picturesDateAndTime = moment().format('lll');
 var pictures2DateAndTime = moment().startOf('hour').fromNow();
+var joinDate = moment().format("LL");
 
 
 //Passport authentication
@@ -215,8 +222,19 @@ app.get("/index", function(req, res){
 	});
 });
 
+// app.get("/profile/:id", function(req, res){
+// 	LoginUser.findById(req.params.id, function(err, userProfile){
+// 		if(err){
+// 			console.log(err);
+// 			res.redirect("back");
+// 		} else {
+// 			res.render("loginprofile", {userProfile: userProfile});
+// 		}
+// 	});	
+// });
+
 app.get("/profile/:id", function(req, res){
-	LoginUser.findById(req.params.id, function(err, userProfile){
+	LoginUser.findById(req.params.id).populate("authorSelfies").exec(function(err, userProfile){
 		if(err){
 			console.log(err);
 			res.redirect("back");
@@ -225,6 +243,7 @@ app.get("/profile/:id", function(req, res){
 		}
 	});	
 });
+
 
 
 
@@ -280,17 +299,23 @@ app.post("/searchresult", function(req, res){
 //Add likes to the database --pending--
 
 
-app.post("/index", function(req, res){
-	var name = req.body.name;
-	var image = req.body.image;
-	var description = req.body.description;
-	var datetimeSubmitted = picturesDateAndTime;
-	var author = {
+
+
+
+//Binds the newlycreated selfie to the Loginuser
+
+app.post("/profile/:id", function(req, res){
+		var name = req.body.name;
+		var image = req.body.image;
+		var description = req.body.description;
+		var datetimeSubmitted = picturesDateAndTime;
+		var author = {
 			id: req.user._id,
 			username: req.user.username,
 			image: req.user.image
-	}
-	var userData = {
+					}
+
+		var userData = {
 		name: name,
 		image: image,
 		author: author,
@@ -298,15 +323,23 @@ app.post("/index", function(req, res){
 		date: datetimeSubmitted
 	}
 
-	TestData.create(userData, function(err, newlyCreatedUser){
-		if(err) {
+
+	LoginUser.findById(req.params.id, function(err, theLoginUser){
+		if (err){
 			console.log(err);
-			res.redirect("/new");
 		} else {
-			res.redirect("/index");
+			TestData.create(userData, function(err, newSelfie){
+				if(err){
+					console.log(err);
+				} else {
+					newSelfie.save();
+					theLoginUser.authorSelfies.push(newSelfie);
+					theLoginUser.save();
+					res.redirect("/index");
+				}
+			});
 		}
 	});
-
 });
 
 app.post("/index/:id/comments", function(req, res){
@@ -335,17 +368,16 @@ app.post("/index/:id/comments", function(req, res){
 
 
 app.post("/register", function(req, res){
-	var regUsername = req.body.username;
-	var regFirstname = req.body.firstname;
-	var regLastname = req.body.lastname;
-	var regImage = req.body.image;
+
 
 
 	var regUser = {
-		username: regUsername,
-		firstname: regFirstname,
-		lastname: regLastname,
-		image: regImage
+		username: req.body.username,
+		firstname: req.body.firstname,
+		lastname: req.body.lastname,
+		image: req.body.image,
+		dateJoined: joinDate,
+		description: req.body.description
 	}
 
 	var newUser = new LoginUser(regUser);

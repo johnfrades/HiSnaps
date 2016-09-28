@@ -2,17 +2,34 @@
 
 
 
-<div class="container">
-
-<h1 class="text-center profileText">Welcome to <em> <%= userProfile.username %> </em> profile page!</h1>
-<% console.log(userProfile);%>
-
-
+<div class="container" id="loginProfile">
 
 <img class="img-thumbnail profileImage" src="<%= userProfile.image %>">
-<span>
-	<h2 class="text-center profileText" style="display: inline-block"><%= userProfile.firstname %> <%= userProfile.lastname %></h2>
-</span>
+
+<div style="border: 2px solid black" class="text-center">
+	<h1><%= userProfile.firstname %> <%= userProfile.lastname %> Selfies!</h1>
+</div>
+
+<div class="row">
+<% userProfile.authorSelfies.forEach(function(mySelfies){ %>
+
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="<%= mySelfies.image %>" alt="...">
+      <div class="caption">
+        <h3><%= mySelfies.name %></h3>
+        <p><%= mySelfies.description %></p>
+        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+      </div>
+    </div>
+  </div>
+<% }); %>
+</div>
+
+
+
+
+
 
 </div>
 

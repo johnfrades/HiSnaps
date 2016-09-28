@@ -3,7 +3,7 @@
 
 
 
-<div class="container">	
+<div class="container" id="searchProfile">	
 
 <div class="row">
 <% foundUser.forEach(function(theUser){ %>
@@ -14,18 +14,20 @@
     <img src="<%= theUser.image %>">
   </div>
   <div class="content">
-    <a class="header" href="/profile/<%= theUser._id%>"><%= theUser.firstname %> <%= theUser.lastname %> </a>
+    <a class="header text-center" href="/profile/<%= theUser._id%>"><%= theUser.firstname %> <%= theUser.lastname %> </a> <br>
     <div class="meta">
-      <span class="date">Joined in 2013</span>
+      <span>Joined date: <%= theUser.dateJoined %></span>
     </div>
     <div class="description">
-      Kristy is an art director living in New York.
+      <%= theUser.description %>
     </div>
   </div>
   <div class="extra content">
-    <a>
+    <a href="/profile/<%= theUser._id %>">
       <i class="user icon"></i>
-      22 Friends
+        Selfies: <%= theUser.authorSelfies.length %> 
+
+    
     </a>
   </div>
 </div>

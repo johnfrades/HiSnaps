@@ -31,4 +31,8 @@ Initial function and UI of the social networking project!
 //Sept 27, 2016
 -Refactor the users UI and the Navbar design
 
+/Sept 28, 2016
+-Bind the "TestData" schema into the LoginUser schema
+-refactor the UI
+
 -John Frades

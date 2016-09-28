@@ -1427,14 +1427,16 @@
   animation-name: hvr-back-pulse;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
-  -webkit-animation-delay: 0.5s;
-  animation-delay: 0.5s;
+  -webkit-animation-delay: 0.05s;
+  animation-delay: 0.05s;
   -webkit-animation-timing-function: linear;
   animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
-  background-color: #2098d1;
-  background-color: #2098d1;
+  /*background-color: #2098d1;
+  background-color: #2098d1;*/
+  background-color: black;
+  background-color: black;
   color: white;
 }
 
@@ -1942,7 +1944,7 @@
   backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
-  background: #e1e1e1;
+  background: #e1e1e1; 
   -webkit-transition-property: color;
   transition-property: color;
   -webkit-transition-duration: 0.3s;
@@ -1956,7 +1958,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: #2098d1;
+  background: #2098d1; 
   -webkit-transform: scale(0);
   transform: scale(0);
   -webkit-transition-property: transform;
@@ -2765,7 +2767,7 @@
   vertical-align: middle;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  /*box-shadow: 0 0 1px rgba(0, 0, 0, 0); */
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
@@ -2776,8 +2778,8 @@
 }
 .hvr-grow-shadow:hover, .hvr-grow-shadow:focus, .hvr-grow-shadow:active {
   box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 /* Box Shadow Outset */

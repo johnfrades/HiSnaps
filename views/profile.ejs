@@ -18,11 +18,11 @@
 		<div class="thumbnail">
 			<div class="text-center">
 				<span>
-					<img src="<%= userID.author.image%>" class="img-circle authorImageOnProfile">
+					<a href="/profile/<%= userID.author.id %>"><img src="<%= userID.author.image%>" class="img-circle authorImageOnProfile"></a>
 				</span>
 				<div id="divAuthorUsername">
 					<span id="authorUsername">
-						<strong><%= userID.author.username %></strong>
+						<a href="/profile/<%= userID.author.id %>"><strong><%= userID.author.username %></strong></a>
 					</span>
 				</div>
 					<img src="<%= userID.image %>" id="profilePic">
