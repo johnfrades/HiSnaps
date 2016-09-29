@@ -11,22 +11,12 @@ var methodOverride = require("method-override");
 var passportLocalMongoose = require("passport-local-mongoose");
 
 
+var path = require('path');
+var formidable = require('formidable');
+var fs = require('fs');
 
 
 
-
-
-// var multer = require("multer");
-// var storage = multer.diskStorage({
-// 	destination: function(req, file, cb){
-// 		cb(null, './uploads')
-// 	},
-// 	filename: function(req, file, cb){
-// 		cb(null, file.fieldname + '-' + Date.now())
-// 	}
-// });
-//handles the uploading file
-//var uploading = multer({ storage: storage }).single('userPhoto');
 
 
 
@@ -209,6 +199,9 @@ app.get("/about", function(req, res){
 	res.render("about");
 });
 
+app.get("/upload", function(req, res){
+	res.render("upload");
+});
 
 
 
@@ -222,16 +215,27 @@ app.get("/index", function(req, res){
 	});
 });
 
-// app.get("/profile/:id", function(req, res){
-// 	LoginUser.findById(req.params.id, function(err, userProfile){
-// 		if(err){
-// 			console.log(err);
-// 			res.redirect("back");
-// 		} else {
-// 			res.render("loginprofile", {userProfile: userProfile});
-// 		}
-// 	});	
-// });
+app.get("/indexascsort", function(req, res){
+	TestData.find({}, function(err, allUsers){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("users", {allUsers: allUsers});
+		}
+	}).sort({comments: 1});
+});
+
+app.get("/indexdescsort", function(req, res){
+	TestData.find({}, function(err, allUsers){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("users", {allUsers: allUsers});
+		}
+	}).sort({comments: -1});
+});
+
+
 
 app.get("/profile/:id", function(req, res){
 	LoginUser.findById(req.params.id).populate("authorSelfies").exec(function(err, userProfile){
@@ -275,6 +279,62 @@ app.get("/chat", function(req, res){
 
 
 //POST ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//upload file ~~~~~~~~~~~~~~~~~~~~~~~~
+
+app.post('/upload', function(req, res){
+
+  // create an incoming form object
+  var form = new formidable.IncomingForm();
+
+  // specify that we want to allow the user to upload multiple files in a single request
+  form.multiples = true;
+
+  // store all uploads in the /uploads directory
+  form.uploadDir = path.join(__dirname, '/uploads');
+
+  // every time a file has been uploaded successfully,
+  // rename it to it's orignal name
+  form.on('file', function(field, file) {
+    fs.rename(file.path, path.join(form.uploadDir, file.name));
+    console.log(file.name);
+  });
+
+  // log any errors that occur
+  form.on('error', function(err) {
+    console.log('An error has occured: \n' + err);
+  });
+
+  // once all the files have been uploaded, send a response to the client
+  form.on('end', function() {
+    res.end('success');
+  });
+
+  // parse the incoming request containing the form data
+  form.parse(req);
+
+});
+
+
+
+//end here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Search function for users
 app.post("/searchresult", function(req, res){

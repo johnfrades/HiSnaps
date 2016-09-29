@@ -2,6 +2,19 @@ body {
 	background-color: #e5e6e9 !important;
 }
 
+
+
+
+#myNavs{
+	margin-bottom: 30px;
+	margin-left: 15px;
+}
+
+ul.nav.nav-tabs li {
+	font-size: 20px;
+	color:red !important;
+}
+
 .container {
 width: 1550px !important;
 

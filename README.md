@@ -35,4 +35,7 @@ Initial function and UI of the social networking project!
 -Bind the "TestData" schema into the LoginUser schema
 -refactor the UI
 
+//Sept 30, 2016
+- Added file upload functionality
+
 -John Frades

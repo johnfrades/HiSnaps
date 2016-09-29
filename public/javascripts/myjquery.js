@@ -63,6 +63,15 @@ if($(this).css("color") === "rgb(255, 0, 0)"){
 
 
 
+$(".freshNav").on('click', function(){
+  $(".hotNav").removeClass("active");
+  $(".leastNav").removeClass("active");
+  $(this).addClass("active")
+});
+
+
+
+
 });
 
 
