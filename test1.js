@@ -291,7 +291,7 @@ app.post('/upload', function(req, res){
   form.multiples = true;
 
   // store all uploads in the /uploads directory
-  form.uploadDir = path.join(__dirname, '/uploads');
+  form.uploadDir = path.join(__dirname, '/public/uploads');
 
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
@@ -321,7 +321,26 @@ app.post('/upload', function(req, res){
 
 
 
+app.post("/register", function(req, res){
 
+	var regUser = {
+		username: req.body.username,
+		firstname: req.body.firstname,
+		lastname: req.body.lastname,
+		image: req.body.image,
+		dateJoined: joinDate,
+		description: req.body.description
+	}
+
+	var newUser = new LoginUser(regUser);
+	LoginUser.register(newUser, req.body.password1, function(err, user){
+		if (err) {
+			return res.render("register");
+		} else {
+			res.redirect("/index");
+		}
+	});
+});
 
 
 
@@ -427,28 +446,6 @@ app.post("/index/:id/comments", function(req, res){
 });
 
 
-app.post("/register", function(req, res){
-
-
-
-	var regUser = {
-		username: req.body.username,
-		firstname: req.body.firstname,
-		lastname: req.body.lastname,
-		image: req.body.image,
-		dateJoined: joinDate,
-		description: req.body.description
-	}
-
-	var newUser = new LoginUser(regUser);
-	LoginUser.register(newUser, req.body.password1, function(err, user){
-		if (err) {
-			return res.render("register");
-		} else {
-			res.redirect("/index");
-		}
-	});
-});
 
 
 app.post("/login", passport.authenticate("local", {

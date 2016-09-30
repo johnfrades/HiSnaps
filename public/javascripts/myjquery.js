@@ -1,6 +1,26 @@
+//Password Verification
+function checkPass(){ 
+  var pass1 = document.getElementById('pass1');
+  var pass2 = document.getElementById('pass2');
+  var message = document.getElementById('confirmMessage');
+  var btn = document.querySelector('#buttonSubmit');
+
+    if(pass1.value == pass2.value){
+      btn.disabled = false;
+      pass2.style.backgroundColor = "#66cc66";
+      message.style.color = "#66cc66";
+      message.innerHTML = "Passwords Matched!"
+    }else{
+      btn.disabled = true;
+      pass2.style.backgroundColor = "#ff6666";
+      message.style.color = "#ff6666";
+      message.innerHTML = "Passwords Do Not Match!"
+     }
+} 
+
+
+
 $( document ).ready(function() {
-
-
 
 //Edit comment MODAL
 $(".editBTN").click(function(){
@@ -67,6 +87,47 @@ $(".freshNav").on('click', function(){
   $(".hotNav").removeClass("active");
   $(".leastNav").removeClass("active");
   $(this).addClass("active")
+});
+
+var $imageData = '';
+
+$('#upload-input').change(function(){
+
+  var files = $(this).get(0).files;
+
+  if (files.length > 0){
+    // create a FormData object which will be sent as the data payload in the
+    // AJAX request
+    var formData = new FormData();
+
+    // loop through all the selected files and add them to the formData object
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+
+      // add the files to formData object for the data payload
+      formData.append('uploads[]', file, file.name);
+      $imageData = formData;
+    }
+   }
+});
+
+$("#buttonSubmit").click(function(){
+$.ajax({
+      url: '/upload',
+      type: 'POST',
+      data: $imageData,
+      processData: false,
+      contentType: false,
+      success: function(data){
+          console.log('upload successful!\n' + data);
+      },
+      xhr: function() {
+        // create an XMLHttpRequest
+        var xhr = new XMLHttpRequest();
+
+      return xhr;
+      }
+    });
 });
 
 

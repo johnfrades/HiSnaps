@@ -36,6 +36,7 @@ Initial function and UI of the social networking project!
 -refactor the UI
 
 //Sept 30, 2016
-- Added file upload functionality
+- Added file upload functionality, saves to /public/uploads
+-->next goal, to retrieve the locally upload filename to bind it to users avatar
 
 -John Frades
