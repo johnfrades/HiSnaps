@@ -6,7 +6,7 @@
   <div class="jumbotron text-center" id="jumbotronHeader">
     <h1 id="theHeader" style="font-family: 'Carrois Gothic SC'">Snap a Selfie. <br> Share with the world.</h1>
     <% if(currentUser){ %>
-    <button data-toggle="modal" data-target="#addModal" class="ui inverted blue button massive" id="new-pic-button" >
+    <button data-toggle="modal" data-target="#addModal" class="ui linkedin button massive" id="new-pic-button" >
 		  <i id="cameraIcon" class="fa fa-camera-retro " aria-hidden="true"></i>
 	     Share a selfie
 	</button>
@@ -19,11 +19,13 @@
 
 
 
+
+
 <div class="row container">
 <ul class="nav nav-tabs" id="myNavs">
-  <li class="freshNav" id="freshNav" role="presentation"><a href="/index">Fresh</a></li>
-  <li class="hotNav" role="presentation"><a href="/indexdescsort">Hot</a></li>
-  <li class="leastNav" role="presentation"><a href="/indexascsort">Least Comments</a></li>
+  <li class="freshNav" id="freshNav" role="presentation"><a href="#">Fresh</a></li>
+  <li class="hotNav" role="presentation"><a href="#">Hot</a></li>
+  <li class="leastNav" role="presentation"><a href="#">Least Comments</a></li>
 </ul>
 <% allUsers.forEach(function(newUsers){ %>
   <div class="col-lg-3 col-md-3 theDiv1 hvr-grow-shadow">

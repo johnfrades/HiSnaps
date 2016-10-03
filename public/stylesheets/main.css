@@ -207,9 +207,11 @@ width: 1550px !important;
 		bottom: 0;
 	width: 80%;
 	height: 5%;
-
 }
 
+#theHeader {
+	margin-top: 60px;
+}
 
 .editdelete-inline {
 	display:inline-flex;

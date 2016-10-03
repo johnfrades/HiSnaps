@@ -235,6 +235,16 @@ app.get("/indexdescsort", function(req, res){
 	}).sort({comments: -1});
 });
 
+app.get("/indexfresh", function(req, res){
+	TestData.find({}, function(err, allUsers){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("users", {allUsers: allUsers});
+		}
+	}).sort({date: -1});
+});
+
 
 
 app.get("/profile/:id", function(req, res){
@@ -344,20 +354,10 @@ app.post("/register", function(req, res){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 //Search function for users
 app.post("/searchresult", function(req, res){
 	var thename = req.body.thename;
+	console.log(thename);
 	LoginUser.find({
 		$or: [
 

@@ -20,7 +20,61 @@ function checkPass(){
 
 
 
+
+
+
+
 $( document ).ready(function() {
+
+$(".hotNav").on('click', function(){
+  $.ajax({
+    type: 'GET',
+    url: '/indexdescsort',
+    success: function(data){
+      $("#mainContainer").html(data);
+    }
+  });
+});
+
+$(".leastNav").on('click', function(){
+  $.ajax({
+    type: 'GET',
+    url: '/indexascsort',
+    success: function(data){
+      $("#mainContainer").html(data);
+    }
+  });
+});
+
+$(".freshNav").on('click', function(){
+  $.ajax({
+    type: 'GET',
+    url: '/indexfresh',
+    success: function(data){
+      $("#mainContainer").html(data);
+    }
+  });
+});
+
+
+$("#searchform").on('submit', function(e){
+  e.preventDefault();
+
+  var searchInp = $("#searchinput");
+  console.log(searchInp.val());
+
+  $.ajax({
+    url: '/searchresult',
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({ thename: searchInp.val() }),
+    success: function(response){
+      console.log(response);
+      searchInp.val('');
+    }
+  });
+});
+
 
 //Edit comment MODAL
 $(".editBTN").click(function(){
