@@ -28,7 +28,9 @@
   <li class="leastNav" role="presentation"><a href="#">Least Comments</a></li>
 </ul>
 <% allUsers.forEach(function(newUsers){ %>
+
   <div class="col-lg-3 col-md-3 theDiv1 hvr-grow-shadow">
+
   <div class="authorProfile">
     <a href="/profile/<%= newUsers.author.id %>">
       <img src="<%= newUsers.author.image%>" class="img-circle authorImage" >
@@ -51,6 +53,7 @@
     <span class="commentFooter"><%= newUsers.comments.length %>  Comments</span>
   </div>
 </div>
+
 <% }); %>
 </div>
 
@@ -71,11 +74,11 @@
         <% if(currentUser){ %>
         <form action="/profile/<%= currentUser._id %>" method="POST" id="loginform">
           <label>Name</label>
-          <input type="text" name="name" class="form-control" id="newNameForm" required>
+            <input type="text" name="name" class="form-control" id="newNameForm" required>
           <label>Image URL</label>
-          <input type="text" name="image" class="form-control" id="newImageForm" required>
+            <input type="text" name="image" class="form-control" id="newImageForm" required>
           <label>Description</label>
-          <input type="text" name="description" class="form-control" id="newImageForm" maxlength="100" required>
+            <input type="text" name="description" class="form-control" id="newImageForm" maxlength="100" required>
       <!--Modal text body ends here-->
       </div>
       <div class="modal-footer">

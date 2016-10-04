@@ -57,23 +57,23 @@ $(".freshNav").on('click', function(){
 });
 
 
-$("#searchform").on('submit', function(e){
-  e.preventDefault();
+// $("#searchform").on('submit', function(e){
+//   e.preventDefault();
 
-  var searchInp = $("#searchinput");
-  console.log(searchInp.val());
+//   var searchInp = $("#searchinput");
+//   console.log(searchInp.val());
 
-  $.ajax({
-    url: '/searchresult',
-    method: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify({ thename: searchInp.val() }),
-    success: function(response){
-      console.log(response);
-      searchInp.val('');
-    }
-  });
-});
+//   $.ajax({
+//     url: '/searchresult',
+//     method: 'POST',
+//     contentType: 'application/json',
+//     data: JSON.stringify({ thename: searchInp.val() }),
+//     success: function(response){
+//       console.log(response);
+//       searchInp.val('');
+//     }
+//   });
+// });
 
 
 //Edit comment MODAL

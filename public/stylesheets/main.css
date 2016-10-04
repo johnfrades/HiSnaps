@@ -2,7 +2,28 @@ body {
 	background-color: #e5e6e9 !important;
 }
 
+.authorprofileInfo {
+	text-align: center;
+	font-size: 30px;
+}
 
+.authorPostedSelfies {
+	text-align: center;
+	font-size: 40px;
+}
+
+.selfiePosted {
+	margin-top: 51px;
+	padding-top: 25px;
+	border: 2px solid black;
+}
+
+.profileInfo {
+	margin-top: 50px;
+	border: 2px black solid;
+	height: 800px;
+	width: 350px;
+}
 
 
 #myNavs{
@@ -43,7 +64,7 @@ width: 1550px !important;
 }
 
 .navbar-default {
-	background-color: rgba(16, 218, 36, 0.44);
+	background-color: rgba(0, 0, 0, 0.6);
 }
 
 #navRow {
@@ -186,7 +207,7 @@ width: 1550px !important;
 }
 
 #loginProfile {
-	margin-top: 50px;
+	margin-top: 100px;
 }
 
 #searchform {
@@ -231,6 +252,7 @@ width: 1550px !important;
 
 
 #chatWrap {
+	margin-top: 100px;
 	width: 100%;
 	height: 500px;
 	border: 1px black solid;
@@ -240,9 +262,6 @@ width: 1550px !important;
 #chat {
 	overflow: auto;
 }
-
-
-
 
 
 
@@ -327,7 +346,10 @@ padding: 8px !important;
 }
 
 .profileImage {
-	margin: 0 auto;
+	margin-top: 20px;
+	margin-left: 22px;
+	width: 300px;
+	height: 300px;
 }
 
 .authorImage {
@@ -359,6 +381,7 @@ padding: 8px !important;
 
 
 
+
 #cameraIcon {
 	margin-right: 5px;
 }
@@ -377,9 +400,6 @@ padding: 8px !important;
 	margin-right: 15px;
 	margin-left: 15px;
 
--webkit-box-shadow: 0px 0px 22px 6px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 22px 6px rgba(0,0,0,0.75);
-box-shadow: 0px 0px 22px 6px rgba(0,0,0,0.75);
 }
 
 
@@ -448,10 +468,26 @@ box-shadow: 0px 0px 22px 6px rgba(0,0,0,0.75);
 
 #sidebarText {
 	font-size: 30px;
-
 	font-weight: 700;
 }
 
 .fa.fa-smile-o {
 	margin-left: 10px;
+}
+
+
+.theIndex1 {
+	height: 353px;
+	width: 100%;
+	background-color: #b2ff4f;
+}
+.theIndex2 {
+	height: 353px;
+	width: 100%;
+	background-color: #ff724f;
+}
+.theIndex3 {
+	height: 354px;
+	width: 100%;
+	background-color: #4fd5ff;
 }

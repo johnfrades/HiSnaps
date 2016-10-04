@@ -39,4 +39,11 @@ Initial function and UI of the social networking project!
 - Added file upload functionality, saves to /public/uploads
 -->next goal, to retrieve the locally upload filename to bind it to users avatar
 
+//Oct 4, 2016
+-Trashed the local file upload
+-changes on loginuser profile page
+ -added delete function
+ -edit function still on testing
+ -shows the selfies posted on author
+
 -John Frades

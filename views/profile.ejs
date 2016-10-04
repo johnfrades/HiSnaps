@@ -18,32 +18,38 @@
 		<div class="thumbnail">
 			<div class="text-center">
 				<span>
-					<a href="/profile/<%= userID.author.id %>"><img src="<%= userID.author.image%>" class="img-circle authorImageOnProfile"></a>
+					<a href="/profile/<%= userID.author.id %>">
+						<img src="<%= userID.author.image %>" class="img-circle authorImageOnProfile">
+					</a>
 				</span>
 				<div id="divAuthorUsername">
 					<span id="authorUsername">
-						<a href="/profile/<%= userID.author.id %>"><strong><%= userID.author.username %></strong></a>
+						<a href="/profile/<%= userID.author.id %>">
+							<strong>
+								<%= userID.author.username %>
+							</strong>
+						</a>
 					</span>
 				</div>
 					<img src="<%= userID.image %>" id="profilePic">
-					<p id="profileName"><em><strong><%= userID.name %></strong> </em></p>
-
+					<p id="profileName">
+						<em><strong><%= userID.name %></strong> </em>
+					</p>
 					<%= userID.description %>
 			</div>
-				<div style="text-align:center;">
+
+			<div>
    		<% if(currentUser && userID.author.id.equals(currentUser._id)){ %>
-   				 <button class="ui secondary button tiny" data-toggle="modal" data-target="#editModal">
-		  			<i class="configure icon"></i>
-		  			Edit profile
-					</button>
-				<form action="/index/<%= userID._id%>?_method=DELETE" method="POST" id="profileForm">
-		   				 <button class="negative ui button tiny">
-				  			<i class="configure icon"></i>
-				  			Delete profile
-							</button>
+   			 <button class="ui brown button tiny" data-toggle="modal" data-target="#editModal">
+		  			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+			 </button>
+			 <form action="/index/<%= userID._id%>?_method=DELETE" method="POST" id="profileForm">
+		   		<button class="negative ui button tiny">
+				  	<i class="fa fa-minus" aria-hidden="true"></i>
+				</button>
 		<% } %>
-					</form>
-				</div>
+			 </form>
+			</div>
 		</div>
 
 		
@@ -79,9 +85,17 @@
       <div class="actions">
         <a class="replyBTN">Reply<i class="reply icon"></i></a>
         <% if(currentUser && theComment.author.id.equals(currentUser._id)){ %>
-	        <a class="deleteBTN" href="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE">Delete<i class="trash outline icon"></i></a>
-	        <a class="editBTN">Edit<i class="edit icon"></i></a>
-	        <p class="userCommentId"><%= theComment._id %></p>
+	        <a class="deleteBTN" href="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE">
+	        	Delete
+	        	<i class="trash outline icon"></i>
+	        </a>
+	        <a class="editBTN">
+		        Edit
+		        <i class="edit icon"></i>
+	        </a>
+	        <p class="userCommentId">
+	        	<%= theComment._id %>	
+	        </p>
         <% } %>
       </div>
     </div>
@@ -99,7 +113,7 @@
 	<form action="/index/<%= userID._id %>/comments" method="POST">
 		<div class="ui fluid action input">
 			<input type="text" class="form-control" name="comment[text]" placeholder="Add comment..." >
-			<button class="btn btn-primary btn-xs">Send<i class="send icon"></i>
+			<button class="btn btn-primary btn-xs"><i class="send icon"></i>
 			</button>
 		</div>			      
 	</form>

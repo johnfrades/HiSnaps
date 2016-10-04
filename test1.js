@@ -16,7 +16,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 
 
-
+var PORT = 3000 || process.env.PORT;
 
 
 
@@ -242,7 +242,7 @@ app.get("/indexfresh", function(req, res){
 		} else {
 			res.render("users", {allUsers: allUsers});
 		}
-	}).sort({date: -1});
+	}).sort({date: 1});
 });
 
 
@@ -253,6 +253,7 @@ app.get("/profile/:id", function(req, res){
 			console.log(err);
 			res.redirect("back");
 		} else {
+
 			res.render("loginprofile", {userProfile: userProfile});
 		}
 	});	
@@ -357,7 +358,7 @@ app.post("/register", function(req, res){
 //Search function for users
 app.post("/searchresult", function(req, res){
 	var thename = req.body.thename;
-	console.log(thename);
+	console.log(req.body);
 	LoginUser.find({
 		$or: [
 
@@ -465,6 +466,7 @@ app.put("/index/:id", function(req, res){
 		if(err){
 			console.log(err);
 		} else {
+			console.log(updateUser);
 			res.redirect("/index/" + updateUser._id);
 		}
 	})
@@ -483,20 +485,33 @@ app.put("/index/:id/comments/:comment_id", function(req, res){
 });
 
 
+//pre-schema to remove also the selfie on the loginuser data to update the number of selfies by author
+testSchema.pre('remove', function (next) {
+  this.model('Loginuser').update(
+    { authorSelfies: this }, 
+    { $pull: { authorSelfies: this._id } }, 
+    { multi: true }
+  ).exec(next)
+});
+
 app.delete("/index/:id", checkUserOwnership, function(req, res){
-	TestData.findByIdAndRemove(req.params.id, function(err){
+	TestData.findByIdAndRemove(req.params.id, function(err, selfie){
 		if(err) {
 			console.log(err);
 			res.redirect("/index/" + req.params.id);
 		} else {
+			selfie.remove();
 			console.log("Successfully deleted!");
-			res.redirect("/index");
+			res.redirect("back");
 		}
 	})
 })
 
 
 
+
+
+//pre-schema where the comment will also remove on the testuser schema to update the comment count
 commentSchema.pre('remove', function (next) {
   this.model('User').update(
     { comments: this }, 
@@ -517,21 +532,6 @@ app.delete("/index/:id/comments/:comment_id", checkCommentOwnership, function(re
 		}
 	});
 });
-
-
-
-
-// app.delete('/index/:id/comments/:comment_id', function (req, res) {
-//   Comment.findById(req.params.comment_id, function(comment){
-//   		console.log(comment);
-//   		comment.remove();
-//   		console.log("comment succesfully deleted!");
-//   		res.redirect("back");
-//   	});
-//   });
-
-
-
 
 
 
@@ -589,7 +589,7 @@ function checkUserOwnership(req, res, next) {
 
 
 
-server.listen(3000, function(){
+server.listen(PORT, function(){
 	console.log("Server started! Listening on port 3000");
 });
 
