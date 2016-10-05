@@ -247,6 +247,19 @@ app.get("/indexfresh", function(req, res){
 
 
 
+// app.get("/profile/:id", function(req, res){
+// 	LoginUser.findById(req.params.id).populate("authorSelfies").exec(function(err, userProfile){
+// 		if(err){
+// 			console.log(err);
+// 			res.redirect("back");
+// 		} else {
+
+// 			res.render("loginprofile", {userProfile: userProfile});
+// 		}
+// 	});	
+// });
+
+
 app.get("/profile/:id", function(req, res){
 	LoginUser.findById(req.params.id).populate("authorSelfies").exec(function(err, userProfile){
 		if(err){
@@ -254,7 +267,7 @@ app.get("/profile/:id", function(req, res){
 			res.redirect("back");
 		} else {
 
-			res.render("loginprofile", {userProfile: userProfile});
+			res.render("loginuserprofile", {userProfile: userProfile});
 		}
 	});	
 });

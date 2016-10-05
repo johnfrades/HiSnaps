@@ -1,0 +1,63 @@
+<% include partials/header %>
+
+
+
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<span class="avatar"><img src="<%= userProfile.image %>" alt="" /></span>
+						<h1 class="authorprofileInfo"><%= userProfile.firstname %> <%= userProfile.lastname %></h1>
+						<ul class="icons">
+							<li><a href="#" class="icon style2 fa-twitter" id="twitterIcon"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon style2 fa-facebook" id="facebookIcon"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon style2 fa-instagram" id="instagramIcon"><span class="label">Instagram</span></a></li>
+							<li><a href="#" class="icon style2 fa-envelope-o" id="emailIcon"><span class="label">Email</span></a></li>
+						</ul>
+					</header>
+					<hr class='style-four'>
+
+
+				<!-- Main -->
+					<section id="main">
+
+						<!-- Thumbnails -->
+							<div class="row">
+							<% userProfile.authorSelfies.forEach(function(mySelfie){ %>
+									<div class="col-sm-6 col-md-4">
+										<div class="thumbnail">
+										<a href="/index/<%= mySelfie._id %>">
+											<h2 class="text-center" id="selfieName"><%= mySelfie.name %></h2>
+											<img src="<%= mySelfie.image %>">
+											<div class="caption">
+												<p id="selfieDescription"><%= mySelfie.description %></p>
+												<hr>
+												<p class="selfieComments"> <%= mySelfie.comments.length %> Comments</p>
+										</a>
+						<% if(currentUser && mySelfie.author.id.equals(currentUser._id)){ %>
+				          <form action="/index/<%= mySelfie._id %>?_method=DELETE" method="POST" id="profileForm">
+				            <button class="negative ui button tiny">
+				                <i class="fa fa-minus" aria-hidden="true"></i>
+				            </button>
+				          </form>
+				          <% }; %>
+
+											</div>
+										</div>
+									</div>
+								
+							<% }); %>
+							</div>
+								
+					</section>
+					<hr class="style-four">
+				<!-- Footer -->
+					<footer id="footer">
+					<h1 style="color: white">Footer Text</h1>
+					</footer>
+
+			</div>
+
+<% include partials/footer %>

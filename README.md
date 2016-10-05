@@ -46,4 +46,8 @@ Initial function and UI of the social networking project!
  -edit function still on testing
  -shows the selfies posted on author
 
+
+//Oct 5
+-refactor UI on profile author page
+
 -John Frades
