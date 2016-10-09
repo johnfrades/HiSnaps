@@ -50,4 +50,8 @@ Initial function and UI of the social networking project!
 //Oct 5
 -refactor UI on profile author page
 
+//Oct 9
+--refactor mainpage UI
+
+
 -John Frades

@@ -515,7 +515,7 @@ app.delete("/index/:id", checkUserOwnership, function(req, res){
 		} else {
 			selfie.remove();
 			console.log("Successfully deleted!");
-			res.redirect("back");
+			res.redirect("/index");
 		}
 	})
 })

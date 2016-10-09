@@ -3,12 +3,13 @@
 
 
 <div class="container" id="mainContainer">
+
   <div class="jumbotron text-center" id="jumbotronHeader">
-    <h1 id="theHeader" style="font-family: 'Carrois Gothic SC'">Snap a Selfie. <br> Share with the world.</h1>
+    <h1 id="theHeader" style="font-family: 'Carrois Gothic SC'">Snaps</h1>
     <% if(currentUser){ %>
     <button data-toggle="modal" data-target="#addModal" class="ui linkedin button massive" id="new-pic-button" >
 		  <i id="cameraIcon" class="fa fa-camera-retro " aria-hidden="true"></i>
-	     Share a selfie
+	     Snap a picture
 	</button>
 	<% } else { %>
 	
@@ -21,38 +22,41 @@
 
 
 
-<div class="row container">
-<ul class="nav nav-tabs" id="myNavs">
+<div class="row container" style="display: flex; flex-wrap: wrap">
+<!-- <ul class="nav nav-tabs" id="myNavs">
   <li class="freshNav" id="freshNav" role="presentation"><a href="#">Fresh</a></li>
   <li class="hotNav" role="presentation"><a href="#">Hot</a></li>
   <li class="leastNav" role="presentation"><a href="#">Least Comments</a></li>
-</ul>
+</ul> -->
 <% allUsers.forEach(function(newUsers){ %>
+<div class="col-md-12 snappImage text-center">
+ <div class="ui card">
 
-  <div class="col-lg-3 col-md-3 theDiv1 hvr-grow-shadow">
-
-  <div class="authorProfile">
-    <a href="/profile/<%= newUsers.author.id %>">
-      <img src="<%= newUsers.author.image%>" class="img-circle authorImage" >
-      <span class="authorName"><%= newUsers.author.username %></span>
-    </a>
-    <span class="date"><%= newUsers.date %></span>
+  <div class="image">
+    <img src="<%= newUsers.image %>">
   </div>
-  <a href="/index/<%= newUsers._id %>">
-  <div class="theDiv2">
-    <img src="<%= newUsers.image %>" class="thePictures">
-  </div>
-      <div class="theDiv3 text-center">
-        <span><strong><%= newUsers.name %></strong></span>
-      </div>
-    </a>
-  <span class="picDescription"><em><%= newUsers.description %></em></span>
-  <div class="theDivFooter">
-      <i class="fa fa-arrow-up upicon" style="font-size: 19px" aria-hidden="true"><strong>0</strong></i>
-      <i class="fa fa-arrow-down downicon" style="font-size: 19px" aria-hidden="true"><strong>0</strong></i>
-    <span class="commentFooter"><%= newUsers.comments.length %>  Comments</span>
+    <div class="content divContent">
+      <span class="right floated">
+        <a href="/index/<%= newUsers._id %>" class="ui medium basic blue button">View Snap</a>
+      </span>
+      <span class="left floated">
+        <button class="positive ui button">
+          <%= newUsers.comments.length %> Comments
+        </button>
+      </span>
+       <span class="authorImageName">
+        <img class="ui avatar image" src="<%= newUsers.author.image %>">
+        <%= newUsers.author.username %>
+       </span> 
+    </div>
   </div>
 </div>
+
+
+
+
+ 
+</div> 
 
 <% }); %>
 </div>
