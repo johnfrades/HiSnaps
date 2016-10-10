@@ -8,11 +8,18 @@ body {
 
 
 
-background-color:white;  
+background-color: aliceblue !important;  
 }
+
 
 .authorImageName {
 	font-size: 23px;
+}
+
+.authorName {
+	font-weight: 900;
+    font-variant: small-caps;
+    font-size: 30px;
 }
 
 
@@ -26,6 +33,7 @@ border-top: 0 !important;
 .ui.card {
 	width: 100% !important;
 	box-shadow: none !important;
+	background-color: aliceblue !important;
 } 
 
 .snappPhoto {
@@ -39,7 +47,7 @@ border-top: 0 !important;
 hr.style-four {
     height: 12px;
     border: 0;
-    box-shadow: inset 0 12px 12px -12px rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5);
 }
 
 .commentNumber {
@@ -63,7 +71,7 @@ hr.style-four {
 }
 
 .authorprofileInfo {
-	color: white !important;
+	color: black !important;
 
 }
 

@@ -83,7 +83,7 @@
       </div>
 
       <div class="actions">
-        <a class="replyBTN">Reply<i class="reply icon"></i></a>
+       
         <% if(currentUser && theComment.author.id.equals(currentUser._id)){ %>
 	        <a class="deleteBTN" href="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE">
 	        	Delete
