@@ -127,27 +127,31 @@ width: 1550px !important;
 }
 
 .media-object {
-	width: 50px;
-	height: 50px;
+	width: 40px;
+	height: 40px;
+}
+.media {
+	margin-top: 1.3em !important;
 }
 
-.navbar-default {
-	background-color: rgba(0, 0, 0, 1);
-}
 
-#navRow {
-	margin: 1em auto;
-	max-width: 50rem;
-	width: 100%;
-}
 
 #navUsername {
-	color: white;
+	color: black;
 }
 
 .navTxt {
-	color: white !important; 
-	font-size: 27px;
+	font-size: 30px;
+}
+
+#midNav {
+	margin-left: 25%;
+
+    margin-top: 0.5em;
+}
+
+#navLeft, .nav.navbar-right {
+	margin-top: -0.7em;
 }
 
 .navTxtProfile {
@@ -161,11 +165,13 @@ width: 1550px !important;
 }
 
 .navItemButton {
-	margin-left: 10px;
-	text-align: center;
-	color: white !important;
-
+	display: inline !important;
 }
+
+#loginButton, #joinButton {
+	margin-top: 20px;
+}
+
 
 .navItemProfile {
 	width: 170px;
@@ -177,7 +183,6 @@ width: 1550px !important;
 .navItem2 {
 	width: 150px;
 	text-align: center;
-	background-color: rgba(255, 255, 255, 0.5);
 }
 
 
@@ -193,6 +198,7 @@ width: 1550px !important;
 
 .navbar-default {
   border-color: transparent;
+  background-color: rgba(240, 248, 255, 0.5);
 }
 
 
@@ -277,10 +283,13 @@ width: 1550px !important;
 	margin-top: 100px;
 }
 
-#searchform {
-	margin-top: 22px;
-	margin-right: 14px;
+.searchform {
+	display: inline;
 
+}
+
+.ui.left.icon.input{
+	margin-top: 1.5em;
 }
 
 #searchProfile {

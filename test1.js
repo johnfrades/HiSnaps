@@ -210,7 +210,13 @@ app.get("/index", function(req, res){
 		if(err) {
 			console.log(err);
 		} else {
-			res.render("users", {allUsers: allUsers});
+			TestData.aggregate({ $sample: {size: allUsers.length}}, function(err, theUsers){
+				if(err){
+					console.log(err);
+				} else {
+					res.render("users", {allUsers: theUsers});
+				}
+			});
 		}
 	});
 });
@@ -369,7 +375,7 @@ app.post("/register", function(req, res){
 
 
 //Search function for users
-app.post("/searchresult", function(req, res){
+app.post("/searchuserresult", function(req, res){
 	var thename = req.body.thename;
 	console.log(req.body);
 	LoginUser.find({
