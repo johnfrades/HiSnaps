@@ -70,6 +70,7 @@ var testSchema = new mongoose.Schema({
 	likes: Number,
 	description: String,
 	date: String,
+	countComments: Number,
 	author: {
 		id: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -122,7 +123,6 @@ var Comment = mongoose.model("Comment", commentSchema);
 var LoginUser = mongoose.model("Loginuser", loginSchema);
 
 var nowDateAndTime = moment().format("l , LT")
-var picturesDateAndTime = moment().format('lll');
 var pictures2DateAndTime = moment().startOf('hour').fromNow();
 var joinDate = moment().format("LL");
 
@@ -204,8 +204,31 @@ app.get("/upload", function(req, res){
 });
 
 
-
 app.get("/index", function(req, res){
+	TestData.find({}, function(err, allUsers){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("users", {allUsers: allUsers, menu1:true, menu2:false });
+
+		}
+	});
+});
+
+app.get("/index/fresh", function(req, res){
+	TestData.find({}, function(err, allUsers){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("users", {allUsers: allUsers, menu1: false, menu2:true });
+		}
+	}).sort({date: -1});
+});
+
+
+
+
+app.get("/index/random", function(req, res){
 	TestData.find({}, function(err, allUsers){
 		if(err) {
 			console.log(err);
@@ -221,35 +244,28 @@ app.get("/index", function(req, res){
 	});
 });
 
-app.get("/indexascsort", function(req, res){
+
+app.get("/index/hot", function(req, res){
 	TestData.find({}, function(err, allUsers){
 		if(err) {
 			console.log(err);
 		} else {
 			res.render("users", {allUsers: allUsers});
 		}
-	}).sort({comments: 1});
+	}).sort({countComments: -1});
 });
 
-app.get("/indexdescsort", function(req, res){
+app.get("/index/cold", function(req, res){
 	TestData.find({}, function(err, allUsers){
 		if(err) {
 			console.log(err);
 		} else {
 			res.render("users", {allUsers: allUsers});
 		}
-	}).sort({comments: -1});
+	}).sort({countComments: 1});
 });
 
-app.get("/indexfresh", function(req, res){
-	TestData.find({}, function(err, allUsers){
-		if(err) {
-			console.log(err);
-		} else {
-			res.render("users", {allUsers: allUsers});
-		}
-	}).sort({date: 1});
-});
+
 
 
 
@@ -272,7 +288,6 @@ app.get("/profile/:id", function(req, res){
 			console.log(err);
 			res.redirect("back");
 		} else {
-
 			res.render("loginuserprofile", {userProfile: userProfile});
 		}
 	});	
@@ -407,7 +422,6 @@ app.post("/profile/:id", function(req, res){
 		var name = req.body.name;
 		var image = req.body.image;
 		var description = req.body.description;
-		var datetimeSubmitted = picturesDateAndTime;
 		var author = {
 			id: req.user._id,
 			username: req.user.username,
@@ -419,7 +433,8 @@ app.post("/profile/:id", function(req, res){
 		image: image,
 		author: author,
 		description: description,
-		date: datetimeSubmitted
+		countComments: 0,
+		date: new Date().toLocaleDateString() +' '+ new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
 	}
 
 
@@ -450,12 +465,13 @@ app.post("/index/:id/comments", function(req, res){
 				if (err) {
 					console.log(err);
 				} else {
-					theComment.date = nowDateAndTime;
+					theComment.date = new Date().toLocaleDateString() +' '+ new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 					theComment.author.id = req.user._id;
 					theComment.author.username = req.user.username;
 					theComment.author.image = req.user.image;
 					theComment.save();
 					foundUser.comments.push(theComment);
+					foundUser.countComments++;
 					foundUser.save();
 					res.redirect("/index/" + foundUser._id);
 					//res.redirect('/index');

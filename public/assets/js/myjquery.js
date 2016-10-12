@@ -20,10 +20,6 @@ function checkPass(){
 
 
 
-
-
-
-
 $( document ).ready(function() {
 
 $(".hotNav").on('click', function(){
@@ -188,6 +184,10 @@ $.ajax({
 
 $('#navUsername').popover();
 
+
+$('#homeNav').on('click', function(){
+  $('#homeNav').addClass('active');
+});
 
 });
 
