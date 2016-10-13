@@ -11,6 +11,16 @@ body {
 background-color: aliceblue !important;  
 }
 
+img {
+	width: 100%;
+	height: auto;
+}
+
+#iconSearch {
+	font-size: 20px;
+	color: black !important;
+}
+
 #authorPhotos {
 	display: flex;
 	flex-wrap: wrap ;
@@ -50,20 +60,12 @@ margin-left: 10px
     font-variant: small-caps;
     font-size: 30px;
 }
-
-
-
-div.content {
-padding: 0 !important;
-margin: 1.3em 0 0 0 !important;
-border-top: 0 !important;
-}
+	
 
 .ui.card {
 	width: 100% !important;
-	box-shadow: none !important;
-	background-color: aliceblue !important;
-} 
+	height: auto !important;
+}
 
 .snappPhoto {
 	margin: 0 auto !important;
@@ -133,11 +135,6 @@ ul.nav.nav-tabs li {
 	color:red !important;
 }
 
-.container {
-width: 1550px !important;
-
-}
-
 
 .media:first-child {
     margin-top: 1rem;
@@ -180,7 +177,7 @@ width: 1550px !important;
 	width: 100%;
 }
 
-#navLeft, .nav.navbar-right {
+.nav.navbar-right {
 	margin-top: -0.7em;
 }
 
@@ -555,11 +552,6 @@ padding: 8px !important;
 	font-size: 19px;
 }
 
-.authorImageOnProfile {
-
-	width: 50px;
-	margin: 10px 0px  0px 0px;
-}
 
 .authorUsername {
 	font-size: 20px;
@@ -567,10 +559,6 @@ padding: 8px !important;
 
 #profileName {
 	font-size: 30px;
-}
-
-#divAuthorUsername {
-	border-bottom: 1px dashed black;
 }
 
 #sidebarText {

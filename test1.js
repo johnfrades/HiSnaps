@@ -188,6 +188,11 @@ function updateNicknames() {
 
 //GET ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+app.get("/test", function(req, res){
+	res.render("test");
+});
+
+
 //Home page
 app.get("/", function(req, res){
 	res.render("index");
@@ -209,26 +214,44 @@ app.get("/index", function(req, res){
 		if(err) {
 			console.log(err);
 		} else {
-			res.render("users", {allUsers: allUsers, menu1:true, menu2:false });
-
+			res.render("homepage", {allUsers: allUsers});
 		}
 	});
 });
 
-app.get("/index/fresh", function(req, res){
+app.get("/fresh", function(req, res){
 	TestData.find({}, function(err, allUsers){
 		if(err) {
 			console.log(err);
 		} else {
-			res.render("users", {allUsers: allUsers, menu1: false, menu2:true });
+			res.render("homepage", {allUsers: allUsers});
 		}
 	}).sort({date: -1});
 });
 
 
+app.get("/hot", function(req, res){
+	TestData.find({}, function(err, allUsers){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("homepage", {allUsers: allUsers});
+		}
+	}).sort({countComments: -1});
+});
+
+app.get("/cold", function(req, res){
+	TestData.find({}, function(err, allUsers){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("homepage", {allUsers: allUsers});
+		}
+	}).sort({countComments: 1});
+});
 
 
-app.get("/index/random", function(req, res){
+app.get("/random", function(req, res){
 	TestData.find({}, function(err, allUsers){
 		if(err) {
 			console.log(err);
@@ -237,49 +260,12 @@ app.get("/index/random", function(req, res){
 				if(err){
 					console.log(err);
 				} else {
-					res.render("users", {allUsers: theUsers});
+					res.render("homepage", {allUsers: theUsers});
 				}
 			});
 		}
 	});
 });
-
-
-app.get("/index/hot", function(req, res){
-	TestData.find({}, function(err, allUsers){
-		if(err) {
-			console.log(err);
-		} else {
-			res.render("users", {allUsers: allUsers});
-		}
-	}).sort({countComments: -1});
-});
-
-app.get("/index/cold", function(req, res){
-	TestData.find({}, function(err, allUsers){
-		if(err) {
-			console.log(err);
-		} else {
-			res.render("users", {allUsers: allUsers});
-		}
-	}).sort({countComments: 1});
-});
-
-
-
-
-
-// app.get("/profile/:id", function(req, res){
-// 	LoginUser.findById(req.params.id).populate("authorSelfies").exec(function(err, userProfile){
-// 		if(err){
-// 			console.log(err);
-// 			res.redirect("back");
-// 		} else {
-
-// 			res.render("loginprofile", {userProfile: userProfile});
-// 		}
-// 	});	
-// });
 
 
 app.get("/profile/:id", function(req, res){
@@ -292,7 +278,6 @@ app.get("/profile/:id", function(req, res){
 		}
 	});	
 });
-
 
 
 
@@ -325,46 +310,6 @@ app.get("/chat", function(req, res){
 
 //POST ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-//upload file ~~~~~~~~~~~~~~~~~~~~~~~~
-
-app.post('/upload', function(req, res){
-
-  // create an incoming form object
-  var form = new formidable.IncomingForm();
-
-  // specify that we want to allow the user to upload multiple files in a single request
-  form.multiples = true;
-
-  // store all uploads in the /uploads directory
-  form.uploadDir = path.join(__dirname, '/public/uploads');
-
-  // every time a file has been uploaded successfully,
-  // rename it to it's orignal name
-  form.on('file', function(field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, file.name));
-    console.log(file.name);
-  });
-
-  // log any errors that occur
-  form.on('error', function(err) {
-    console.log('An error has occured: \n' + err);
-  });
-
-  // once all the files have been uploaded, send a response to the client
-  form.on('end', function() {
-    res.end('success');
-  });
-
-  // parse the incoming request containing the form data
-  form.parse(req);
-
-});
-
-
-
-//end here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 
 app.post("/register", function(req, res){
 
@@ -390,21 +335,35 @@ app.post("/register", function(req, res){
 
 
 //Search function for users
-app.post("/searchuserresult", function(req, res){
-	var thename = req.body.thename;
-	console.log(req.body);
+app.post("/searchuser", function(req, res){
+	var nameuser = req.body.nameuser;
 	LoginUser.find({
 		$or: [
 
-			{"firstname": {$regex: thename, $options: 'i'}},
-			{"lastname": {$regex: thename, $options: 'i'}}
+			{"firstname": {$regex: nameuser, $options: 'i'}},
+			{"lastname": {$regex: nameuser, $options: 'i'}}
 		]
 	}, function(err, searchedUser){
 		if(err){
 			console.log(err);
 			res.redirect("back");
 		} else {
-			res.render("searchprofile", {foundUser: searchedUser});
+			res.render("searchuser", {foundUser: searchedUser});
+		}
+	});
+});
+
+
+//Search photos result
+
+app.post('/searchphoto', function(req, res){
+	var namephoto = req.body.namephoto
+	TestData.find({name: {$regex: namephoto, $options: 'i'}}, function(err, searchedPhoto){
+		if(err){
+			console.log(err);
+			res.redirect('back');
+		} else {
+			res.render('searchphoto', {foundPhoto: searchedPhoto});
 		}
 	});
 });

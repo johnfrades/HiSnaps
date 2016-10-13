@@ -9,20 +9,15 @@
 
 		<div class="thumbnail">
 			<div class="text-center">
-				<span>
+				<span class="authorImageName">
 					<a href="/profile/<%= userID.author.id %>">
-						<img src="<%= userID.author.image %>" class="img-circle authorImageOnProfile">
+						<img class="ui avatar image" src="<%= userID.author.image %>">
+						<span class="authorName"><%= userID.author.username %></span>
 					</a>
 				</span>
-				<div id="divAuthorUsername">
-					<span id="authorUsername">
-						<a href="/profile/<%= userID.author.id %>">
-							<strong>
-								<%= userID.author.username %>
-							</strong>
-						</a>
-					</span>
-				</div>
+				<span class="right floated">
+					<h4><%= userID.date %></h4>
+				</span>	
 					<img src="<%= userID.image %>" id="profilePic">
 					<p id="profileName">
 						<em><strong><%= userID.name %></strong> </em>

@@ -1,0 +1,63 @@
+<% include partials/header %>
+
+
+
+
+<div class="container" id="searchProfile">	
+
+
+<% foundPhoto.forEach(function(thePhoto){ %>
+
+
+	<!-- <div class="ui card">
+  <div class="image">
+    <img src="<%= thePhoto.image %>">
+  </div>
+  <div class="content">
+    <a class="header text-center" href="/profile/<%= thePhoto._id%>">Hey</a> <br>
+    <div class="meta">
+      <span>Joined date:</span>
+    </div>
+    <div class="description">
+      
+    </div>
+  </div>
+  <div class="extra content">
+    <a href="/profile/<%= thePhoto._id %>">
+      <i class="user icon"></i>
+        Comments: <%= thePhoto.comments.length %>  
+    </a>
+  </div>
+</div>
+ -->
+
+<div class="ui card">
+  <a href="/index/<%= thePhoto._id %>">
+    <div class="image">
+      <img src="<%= thePhoto.image %>">
+    </div>
+  </a>
+    <div class="content text-center">
+      <span class="right floated">
+        <%= thePhoto.date %>
+      </span>
+      <span class="left floated"><i class="comment icon"></i>
+      <%= thePhoto.comments.length %> comments</span>
+      <a href="/profile/<%= thePhoto.author.id %>">
+        <img class="ui avatar image" src="<%= thePhoto.author.image %>"> 
+        <%= thePhoto.author.username %>
+      </a>
+    </div>
+  </div>
+
+<% }); %>
+
+
+
+</div>
+
+
+
+
+
+<% include partials/footer %>

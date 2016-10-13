@@ -54,7 +54,14 @@ Initial function and UI of the social networking project!
 --refactor mainpage UI
 
 
-//Oct 1
+//Oct 11
 --rework the header
+
+
+//Oct 13
+
+--reworked the header
+--reworked the mainpage
+
 
 -John Frades

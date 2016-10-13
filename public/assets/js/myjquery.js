@@ -184,6 +184,7 @@ $.ajax({
 
 $('#navUsername').popover();
 
+$('#iconSearch').popover();
 
 $('#homeNav').on('click', function(){
   $('#homeNav').addClass('active');

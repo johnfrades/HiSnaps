@@ -5,7 +5,7 @@
 <div class="container" id="mainContainer">
 
   <div class="jumbotron text-center" id="jumbotronHeader">
-    <h1 id="theHeader" style="font-family: 'Carrois Gothic SC'">Hi-Rez</h1>
+    <h1 id="theHeader" style="font-family: 'Carrois Gothic SC'">HiSnap</h1>
     <% if(currentUser){ %>
     <button data-toggle="modal" data-target="#addModal" class="ui linkedin button massive" id="new-pic-button" >
 		  <i id="cameraIcon" class="fa fa-camera-retro " aria-hidden="true"></i>
@@ -15,16 +15,12 @@
 	
 	  <% } %>
   </div>
+  </div>
 
 
-<div class="row container" style="display: flex; flex-wrap: wrap">
-<!-- <ul class="nav nav-tabs" id="myNavs">
-  <li class="freshNav" id="freshNav" role="presentation"><a href="#">Fresh</a></li>
-  <li class="hotNav" role="presentation"><a href="#">Hot</a></li>
-  <li class="leastNav" role="presentation"><a href="#">Least Comments</a></li>
-</ul> -->
+<div class="container">
 <% allUsers.forEach(function(newUsers){ %>
-<div class="col-md-12 snappImage text-center">
+<!-- <div class="snappImage text-center">
  <div class="ui card">
  <a href="/index/<%= newUsers._id %>">
     <h2 style="color: black"><%= newUsers.name %></h2>
@@ -47,17 +43,31 @@
        </span> 
     </div>
   </div>
-</div>
+</div> -->
 
 
-
-
- 
-
+  <div class="ui card">
+  <a href="/index/<%= newUsers._id %>">
+    <div class="image">
+      <img src="<%= newUsers.image %>">
+    </div>
+  </a>
+    <div class="content text-center">
+      <span class="right floated">
+        <%= newUsers.date %>
+      </span>
+      <span class="left floated"><i class="comment icon"></i>
+      <%= newUsers.comments.length %> comments</span>
+      <a href="/profile/<%= newUsers.author.id %>">
+        <img class="ui avatar image" src="<%= newUsers.author.image %>"> 
+        <%= newUsers.author.username %>
+      </a>
+    </div>
+  </div>
 
 <% }); %>
 </div> 
-</div>
+
 
 
 
