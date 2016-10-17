@@ -5,12 +5,14 @@
 <div class="container" id="mainContainer">
 
   <div class="jumbotron text-center" id="jumbotronHeader">
-    <h1 id="theHeader" style="font-family: 'Carrois Gothic SC'">HiSnap</h1>
+    <h1 id="theHeader">HiSnaps</h1>
     <% if(currentUser){ %>
-    <button data-toggle="modal" data-target="#addModal" class="ui linkedin button massive" id="new-pic-button" >
-		  <i id="cameraIcon" class="fa fa-camera-retro " aria-hidden="true"></i>
-	     Snap a picture
-	</button>
+    <button data-toggle="modal" data-target="#addModal" id="new-pic-button" >
+      <!-- <i id="cameraIcon" class="fa fa-camera-retro " aria-hidden="true"></i> -->
+		  <i id="cameraIcon" class="fa fa-camera hvr-hang" aria-hidden="true"></i>
+      </button>
+	     
+	
 	<% } else { %>
 	
 	  <% } %>

@@ -513,7 +513,7 @@
   backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
 }
-.hvr-hang:hover, .hvr-hang:focus, .hvr-hang:active {
+.hvr-hang, .hvr-hang:focus, .hvr-hang:active {
   -webkit-animation-name: hvr-hang-sink, hvr-hang;
   animation-name: hvr-hang-sink, hvr-hang;
   -webkit-animation-duration: .3s, 1.5s;

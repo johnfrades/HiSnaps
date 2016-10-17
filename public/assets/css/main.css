@@ -11,6 +11,11 @@ background-color: #f0f7f6 !important;
 	float: right;
 }
 
+#theHeader {
+	font-size: 7em;
+	font-family: 'Cinzel'
+}
+
 img {
 	width: 100%;
 	height: auto;
@@ -152,8 +157,8 @@ ul.nav.nav-tabs li {
 }
 
 .media-object {
-	width: 3%;
-	height: 2%;
+	width: 40px;
+	height: 40px;
 }
 .media {
 	margin-top: 1.3em !important;
@@ -384,9 +389,13 @@ ul.nav.nav-tabs li {
 }
 
 #new-pic-button {
-padding: 10px 15px 10px 13px;
-
+	padding: 10px 15px 10px 13px;
+  	background-color: transparent;
+  	border: none;
+    font-size: 3em;
+    color: maroon;
 }
+
 
 #new-pic-button:hover {
 

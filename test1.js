@@ -55,8 +55,8 @@ app.use( function( req, res, next ) {
 
 
 
-mongoose.connect("mongodb://localhost/HiSnaps");
-//mongoose.connect("mongodb://admin:admin@ds029426.mlab.com:29426/deploy1");
+// mongoose.connect("mongodb://localhost/HiSnaps");
+mongoose.connect("mongodb://admin:admin@ds029665.mlab.com:29665/hisnaps");
 var mongoosedb = mongoose.connection
 mongoosedb.on('error', console.error.bind(console, 'connection error: '));
 mongoosedb.once('open', function(){
