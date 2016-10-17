@@ -55,7 +55,7 @@ app.use( function( req, res, next ) {
 
 
 
-mongoose.connect("mongodb://localhost/userProfiles3");
+mongoose.connect("mongodb://localhost/HiSnaps");
 //mongoose.connect("mongodb://admin:admin@ds029426.mlab.com:29426/deploy1");
 var mongoosedb = mongoose.connection
 mongoosedb.on('error', console.error.bind(console, 'connection error: '));
@@ -64,10 +64,9 @@ mongoosedb.once('open', function(){
 });
 
 
-var testSchema = new mongoose.Schema({
+var snapSchema = new mongoose.Schema({
 	name: String,
 	image: String,
-	likes: Number,
 	description: String,
 	date: String,
 	countComments: Number,
@@ -87,6 +86,38 @@ var testSchema = new mongoose.Schema({
 	]
 });
 
+
+var loginSchema = new mongoose.Schema ({
+	username: String,
+	password: String,
+	firstname: String,
+	lastname: String,
+	description: String,
+	image: String,
+	dateJoined: String,
+	countTestimonials: Number,
+	testimonials: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Testimonial"
+		}
+	],
+	author: {
+		id: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Loginuser"
+		},
+			username: String,
+			image: String,
+	},
+	mySnaps: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Snap"
+		}
+	]
+});
+
 var commentSchema = new mongoose.Schema ({
 	author: {
 		id: {
@@ -100,27 +131,27 @@ var commentSchema = new mongoose.Schema ({
 	date: String
 });
 
-var loginSchema = new mongoose.Schema ({
-	username: String,
-	password: String,
-	firstname: String,
-	lastname: String,
-	description: String,
-	image: String,
-	dateJoined: String,
-	authorSelfies: [
-		{
+
+var testimonialSchema = new mongoose.Schema ({
+	author:{
+		id: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "User"
-		}
-	]
+			ref: "LoginUser"
+		},
+		username: String,
+		image: String
+	},
+	text: String,
+	date: String
 });
 
 loginSchema.plugin(passportLocalMongoose);
 
-var TestData = mongoose.model("User", testSchema);
+var SnapData = mongoose.model("Snap", snapSchema);
 var Comment = mongoose.model("Comment", commentSchema);
 var LoginUser = mongoose.model("Loginuser", loginSchema);
+var Testimonial = mongoose.model("Testimonial", testimonialSchema);
+
 
 var nowDateAndTime = moment().format("l , LT")
 var pictures2DateAndTime = moment().startOf('hour').fromNow();
@@ -195,72 +226,21 @@ app.get("/test", function(req, res){
 
 //Home page
 app.get("/", function(req, res){
-	res.render("index");
+	res.render("landingpage");
 });
 
 
-//About page
-app.get("/about", function(req, res){
-	res.render("about");
-});
-
-app.get("/upload", function(req, res){
-	res.render("upload");
-});
-
-
+//Home index
 app.get("/index", function(req, res){
-	TestData.find({}, function(err, allUsers){
+	SnapData.find({}, function(err, allUsers){
 		if(err) {
 			console.log(err);
 		} else {
-			res.render("homepage", {allUsers: allUsers});
-		}
-	});
-});
-
-app.get("/fresh", function(req, res){
-	TestData.find({}, function(err, allUsers){
-		if(err) {
-			console.log(err);
-		} else {
-			res.render("homepage", {allUsers: allUsers});
-		}
-	}).sort({date: -1});
-});
-
-
-app.get("/hot", function(req, res){
-	TestData.find({}, function(err, allUsers){
-		if(err) {
-			console.log(err);
-		} else {
-			res.render("homepage", {allUsers: allUsers});
-		}
-	}).sort({countComments: -1});
-});
-
-app.get("/cold", function(req, res){
-	TestData.find({}, function(err, allUsers){
-		if(err) {
-			console.log(err);
-		} else {
-			res.render("homepage", {allUsers: allUsers});
-		}
-	}).sort({countComments: 1});
-});
-
-
-app.get("/random", function(req, res){
-	TestData.find({}, function(err, allUsers){
-		if(err) {
-			console.log(err);
-		} else {
-			TestData.aggregate({ $sample: {size: allUsers.length}}, function(err, theUsers){
+			SnapData.aggregate({ $sample: {size: allUsers.length}}, function(err, theSnaps){
 				if(err){
 					console.log(err);
 				} else {
-					res.render("homepage", {allUsers: theUsers});
+					res.render("homepage", {allSnaps: theSnaps});
 				}
 			});
 		}
@@ -268,8 +248,66 @@ app.get("/random", function(req, res){
 });
 
 
+//Home index (OLD query)
+app.get("/old", function(req, res){
+	SnapData.find({}, function(err, theSnaps){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("homepage", {allSnaps: theSnaps});
+		}
+	}).sort({date: 1});
+});
+
+//Home index (FRESH query)
+app.get("/fresh", function(req, res){
+	SnapData.find({}, function(err, theSnaps){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("homepage", {allSnaps: theSnaps});
+		}
+	}).sort({date: -1});
+});
+
+//Home index (HOT query)
+app.get("/hot", function(req, res){
+	SnapData.find({}, function(err, theSnaps){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("homepage", {allSnaps: theSnaps});
+		}
+	}).sort({countComments: -1});
+});
+
+//Home index (COLD query)
+app.get("/cold", function(req, res){
+	SnapData.find({}, function(err, theSnaps){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("homepage", {allSnaps: theSnaps});
+		}
+	}).sort({countComments: 1});
+});
+
+
+//SHOW more info and comments
+app.get("/index/:id", function(req,res){
+	SnapData.findById(req.params.id).populate("comments").exec(function(err, userID){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("profile", {userID: userID, nowDateAndTime: nowDateAndTime});
+		}
+	});
+});
+
+
+//Shows loginuser profile
 app.get("/profile/:id", function(req, res){
-	LoginUser.findById(req.params.id).populate("authorSelfies").exec(function(err, userProfile){
+	LoginUser.findById(req.params.id).populate("mySnaps testimonials").exec(function(err, userProfile){
 		if(err){
 			console.log(err);
 			res.redirect("back");
@@ -280,45 +318,26 @@ app.get("/profile/:id", function(req, res){
 });
 
 
-
-//SHOW more info and comments
-app.get("/index/:id", function(req,res){
-	TestData.findById(req.params.id).populate("comments").exec(function(err, userID){
-		if(err) {
-			console.log(err);
-		} else {
-			res.render("profile", {userID: userID, nowDateAndTime: nowDateAndTime});
-		}
-	});
-});
-
-
-//SHOWS the logout form
+//Logout function
 app.get("/logout", function(req, res){
 	req.logout();
 	res.redirect("/index");
 })
 
 
-app.get("/chat", function(req, res){
-	res.render("chat");
-});
-
-
-
-
 
 //POST ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+//Register POST route
 app.post("/register", function(req, res){
-
 	var regUser = {
 		username: req.body.username,
 		firstname: req.body.firstname,
 		lastname: req.body.lastname,
 		image: req.body.image,
 		dateJoined: joinDate,
+		countTestimonials: 0,
 		description: req.body.description
 	}
 
@@ -358,7 +377,7 @@ app.post("/searchuser", function(req, res){
 
 app.post('/searchphoto', function(req, res){
 	var namephoto = req.body.namephoto
-	TestData.find({name: {$regex: namephoto, $options: 'i'}}, function(err, searchedPhoto){
+	SnapData.find({name: {$regex: namephoto, $options: 'i'}}, function(err, searchedPhoto){
 		if(err){
 			console.log(err);
 			res.redirect('back');
@@ -369,14 +388,8 @@ app.post('/searchphoto', function(req, res){
 });
 
 
-//Add likes to the database --pending--
 
-
-
-
-
-//Binds the newlycreated selfie to the Loginuser
-
+//Binds the newlycreated snap to the Loginuser
 app.post("/profile/:id", function(req, res){
 		var name = req.body.name;
 		var image = req.body.image;
@@ -401,22 +414,24 @@ app.post("/profile/:id", function(req, res){
 		if (err){
 			console.log(err);
 		} else {
-			TestData.create(userData, function(err, newSelfie){
+			SnapData.create(userData, function(err, newSnap){
 				if(err){
 					console.log(err);
 				} else {
-					newSelfie.save();
-					theLoginUser.authorSelfies.push(newSelfie);
+					newSnap.save();
+					theLoginUser.mySnaps.push(newSnap);
 					theLoginUser.save();
-					res.redirect("/index");
+					res.redirect("index");
 				}
 			});
 		}
 	});
 });
 
+
+//POST a comment and bind it to SnapData
 app.post("/index/:id/comments", function(req, res){
-	TestData.findById(req.params.id, function(err, foundUser){
+	SnapData.findById(req.params.id, function(err, foundUser){
 		if (err) {
 			console.log(err);
 		} else {
@@ -433,7 +448,6 @@ app.post("/index/:id/comments", function(req, res){
 					foundUser.countComments++;
 					foundUser.save();
 					res.redirect("/index/" + foundUser._id);
-					//res.redirect('/index');
 				}
 			});
 		}
@@ -441,22 +455,49 @@ app.post("/index/:id/comments", function(req, res){
 });
 
 
+//POST a testimonial on the loginuser
+app.post("/profile/:id/testimonials", function(req,res){
+	LoginUser.findById(req.params.id, function(err, foundLoginUser){
+		if(err){
+			console.log(err);
+			res.redirect('back');
+		} else {
+			Testimonial.create(req.body.testimonial, function(err, newTestimonial){
+				if(err){
+					console.log(err);
+					res.redirect("back")
+				} else {
+					newTestimonial.date = new Date().toLocaleDateString() +' '+ new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+					newTestimonial.author.id = req.user._id;
+					newTestimonial.author.username = req.user.username;
+					newTestimonial.author.image = req.user.image;
+					newTestimonial.save();
+					foundLoginUser.testimonials.push(newTestimonial);
+					foundLoginUser.countTestimonials++;
+					foundLoginUser.save();
+					res.redirect("/profile/" + foundLoginUser._id);
+				}
+			});
+		}
+	});
+});
 
-
+//POST request for login
 app.post("/login", passport.authenticate("local", {
 	successRedirect: "back",
 	failureRedirect: "back"
 }));
 
 
-app.get('/upload', function(req, res){
-	res.render("upload");
-});
+
+
+
+
+//EDIT REQUEST ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //EDIT route
-
 app.put("/index/:id", function(req, res){
-	TestData.findByIdAndUpdate(req.params.id, req.body.user, function(err, updateUser){
+	SnapData.findByIdAndUpdate(req.params.id, req.body.user, function(err, updateUser){
 		if(err){
 			console.log(err);
 		} else {
@@ -479,22 +520,26 @@ app.put("/index/:id/comments/:comment_id", function(req, res){
 });
 
 
-//pre-schema to remove also the selfie on the loginuser data to update the number of selfies by author
-testSchema.pre('remove', function (next) {
+
+
+//DELETE REQUEST ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//pre-schema to remove also the snap on the loginuser data to update the number of snaps by author
+snapSchema.pre('remove', function (next) {
   this.model('Loginuser').update(
-    { authorSelfies: this }, 
-    { $pull: { authorSelfies: this._id } }, 
+    { mySnaps: this }, 
+    { $pull: { mySnaps: this._id } }, 
     { multi: true }
   ).exec(next)
 });
 
 app.delete("/index/:id", checkUserOwnership, function(req, res){
-	TestData.findByIdAndRemove(req.params.id, function(err, selfie){
+	SnapData.findByIdAndRemove(req.params.id, function(err, snap){
 		if(err) {
 			console.log(err);
 			res.redirect("/index/" + req.params.id);
 		} else {
-			selfie.remove();
+			snap.remove();
 			console.log("Successfully deleted!");
 			res.redirect("/index");
 		}
@@ -504,10 +549,9 @@ app.delete("/index/:id", checkUserOwnership, function(req, res){
 
 
 
-
 //pre-schema where the comment will also remove on the testuser schema to update the comment count
 commentSchema.pre('remove', function (next) {
-  this.model('User').update(
+  this.model('Snap').update(
     { comments: this }, 
     { $pull: { comments: this._id } }, 
     { multi: true }
@@ -564,7 +608,7 @@ function checkCommentOwnership(req, res, next) {
 //Middleware function that checks if the author of the submitted user is the same on the one who logged in
 function checkUserOwnership(req, res, next) {
 	if(req.isAuthenticated()) {
-		TestData.findById(req.params.id, function(err, foundUserID){
+		SnapData.findById(req.params.id, function(err, foundUserID){
 			if(err){
 				res.redirect("back");
 			} else {
@@ -583,10 +627,6 @@ function checkUserOwnership(req, res, next) {
 
 
 
-server.listen(PORT, function(){
-	console.log("Server started! Listening on port 3000");
+app.listen(PORT, function(){
+	console.log("Server started! Listening on port " + PORT);
 });
-
-// server.listen(process.env.PORT, process.env.IP, function(){
-// 	console.log("Server started! Listening on port 3000");
-// });

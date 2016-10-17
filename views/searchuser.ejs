@@ -4,34 +4,34 @@
 
 
 <div class="container" id="searchProfile">	
-
 <div class="row">
 <% foundUser.forEach(function(theUser){ %>
-
 <div class="col-lg-4">
 	<div class="ui card">
-  <div class="image">
-    <img src="<%= theUser.image %>">
-  </div>
-  <div class="content">
-    <a class="header text-center" href="/profile/<%= theUser._id%>"><%= theUser.firstname %> <%= theUser.lastname %> </a> <br>
-    <div class="meta">
-      <span>Joined date: <%= theUser.dateJoined %></span>
+  <a href="/profile/<%= theUser._id %>">
+    <div class="image">
+      <img src="<%= theUser.image %>">
     </div>
-    <div class="description">
-      <%= theUser.description %>
+  </a>
+    <div class="content">
+      <a class="header text-center" href="/profile/<%= theUser._id%>"><%= theUser.firstname %> <%= theUser.lastname %> </a> <br>
+      <div class="meta">
+        <span>Joined date: <%= theUser.dateJoined %></span>
+      </div>
+      <div class="description">
+        <%= theUser.description %>
+      </div>
     </div>
-  </div>
-  <div class="extra content">
-    <a href="/profile/<%= theUser._id %>">
-      <i class="user icon"></i>
-        Selfies: <%= theUser.authorSelfies.length %> 
-
+    <div class="extra content">
+      <a href="/profile/<%= theUser._id %>" class="cameraIcon">
+        <i class="fa fa-camera" aria-hidden="true"></i> : <%= theUser.mySnaps.length %> 
+        <i class="fa fa-comments-o" aria-hidden="true" id="testimonialCount"> : <%= theUser.testimonials.length %> </i>
     
-    </a>
+      </a>
+    </div>
   </div>
 </div>
-</div>
+
 <% }); %>
 
 

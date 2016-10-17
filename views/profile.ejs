@@ -1,12 +1,10 @@
 <% include partials/header %>
-<script src="/javascripts/jquery-3.1.0.js"></script>
 
 
 
 
 
 <div class="container" id="profileShow">
-
 		<div class="thumbnail">
 			<div class="text-center">
 				<span class="authorImageName">
@@ -27,11 +25,11 @@
 
 			<div>
    		<% if(currentUser && userID.author.id.equals(currentUser._id)){ %>
-   			 <button class="ui brown button tiny" data-toggle="modal" data-target="#editModal">
+   			 <button class="ui brown button medium" data-toggle="modal" data-target="#editModal">
 		  			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 			 </button>
 			 <form action="/index/<%= userID._id%>?_method=DELETE" method="POST" id="profileForm">
-		   		<button class="negative ui button tiny">
+		   		<button class="negative ui button medium">
 				  	<i class="fa fa-minus" aria-hidden="true"></i>
 				</button>
 		<% } %>
@@ -58,7 +56,7 @@
         <span class="date"><%= theComment.date %>
       </div>
       <div class="text">
-         <h5 class='thetext'> <%= theComment.text %> </h5> 
+         <h5 class="thetext"> <%= theComment.text %> </h5> 
          <form action="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=PUT" method="POST" class="submitEditedComment">
          	<div class="ui mini action input">
 	  			<input type="text" class="theinput" name="comment[text]">
@@ -70,7 +68,6 @@
       </div>
 
       <div class="actions">
-       
         <% if(currentUser && theComment.author.id.equals(currentUser._id)){ %>
 	        <a class="deleteBTN" href="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE">
 	        	Delete
@@ -88,7 +85,6 @@
     </div>
   </div>
 </div>
-
 		<% }); %>
 
 
@@ -169,7 +165,5 @@
 
 
 
-<script src="../javascripts/jquery-3.1.0.js"></script>
-<script type="text/javascript" src="../javascripts/checkPass.js"></script>
-<script type="text/javascript" src="../javascripts/myjquery.js"></script>
+
 <% include partials/footer %>

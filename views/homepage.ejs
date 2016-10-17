@@ -19,48 +19,22 @@
 
 
 <div class="container">
-<% allUsers.forEach(function(newUsers){ %>
-<!-- <div class="snappImage text-center">
- <div class="ui card">
- <a href="/index/<%= newUsers._id %>">
-    <h2 style="color: black"><%= newUsers.name %></h2>
- </a>
-  <div class="image">
-    <img src="<%= newUsers.image %>">
-  </div>
-    <div class="content divContent">
-      <span class="right floated">
-       <h4><%= newUsers.date %></h4>
-      </span>
-      <span class="left floated">
-       <a href="/index/<%= newUsers._id %>" class="ui inverted violet button medium"><%= newUsers.comments.length %> Comments</a>
-      </span>
-       <span class="authorImageName">
-         <a href="/profile/<%= newUsers.author.id %>">
-          <img class="ui avatar image" src="<%= newUsers.author.image %>">
-          <span class="authorName"><%= newUsers.author.username %></span>
-         </a>
-       </span> 
-    </div>
-  </div>
-</div> -->
-
-
-  <div class="ui card">
-  <a href="/index/<%= newUsers._id %>">
+<% allSnaps.forEach(function(theSnaps){ %>
+  <div class="ui card theContent">
+  <a href="/index/<%= theSnaps._id %>">
     <div class="image">
-      <img src="<%= newUsers.image %>">
+      <img src="<%= theSnaps.image %>">
     </div>
   </a>
     <div class="content text-center">
       <span class="right floated">
-        <%= newUsers.date %>
+        <%= theSnaps.date %>
       </span>
       <span class="left floated"><i class="comment icon"></i>
-      <%= newUsers.comments.length %> comments</span>
-      <a href="/profile/<%= newUsers.author.id %>">
-        <img class="ui avatar image" src="<%= newUsers.author.image %>"> 
-        <%= newUsers.author.username %>
+      <%= theSnaps.comments.length %> comments</span>
+      <a href="/profile/<%= theSnaps.author.id %>">
+        <img class="ui avatar image" src="<%= theSnaps.author.image %>"> 
+        <%= theSnaps.author.username %>
       </a>
     </div>
   </div>

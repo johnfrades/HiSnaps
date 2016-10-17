@@ -20,43 +20,126 @@
 
 
 				<!-- Main -->
-					<section id="main">
+<section id="main">
 
-						<!-- Thumbnails -->
-							<div class="row" id="authorPhotos">
-							<% userProfile.authorSelfies.forEach(function(mySelfie){ %>
-									<div class="col-sm-6 col-md-4">
-										<div class="thumbnail">
-										<a href="/index/<%= mySelfie._id %>">
-											<h2 class="text-center" id="selfieName"><%= mySelfie.name %></h2>
-											<img src="<%= mySelfie.image %>">
-											<div class="caption">
-												<p id="selfieDescription"><%= mySelfie.description %></p>
-												<hr>
-												<p class="selfieComments"> <%= mySelfie.comments.length %> Comments</p>
-										</a>
-						<% if(currentUser && mySelfie.author.id.equals(currentUser._id)){ %>
-				          <form action="/index/<%= mySelfie._id %>?_method=DELETE" method="POST" id="profileForm">
-				            <button class="negative ui button tiny">
-				                <i class="fa fa-minus" aria-hidden="true"></i>
-				            </button>
-				          </form>
-				          <% }; %>
+<!-- Thumbnails -->
+	<div class="row" id="authorPhotos">
+		<% userProfile.mySnaps.forEach(function(userSnaps){ %>
+		<div class="col-sm-6 col-md-4">
+			<div class="thumbnail">
+			<a href="/index/<%= userSnaps._id %>">
+				<h2 class="text-center">
+					<%= userSnaps.name %>
+				</h2>
+				<img src="<%= userSnaps.image %>">
+				<div class="caption">
+				<p id="snapDescription"><%= userSnaps.description %></p>
+				<hr>
+				</div>
+				<div>
+				<p class="snapComments"><%= userSnaps.comments.length %> Comments</p>
+			</a>
+				</div>
+			
+			<% if(currentUser && userSnaps.author.id.equals(currentUser._id)){ %>
+			<form action="/index/<%= userSnaps._id %>?_method=DELETE" method="POST" id="profileForm">
+				<button class="negative ui button tiny">
+					<i class="fa fa-minus" aria-hidden="true"></i>
+				</button>
+			</form>
+			</div>
+		<% }; %>
+		</div>
 
-											</div>
-										</div>
-									</div>
-							<% }); %>
-							</div>
-								
-					</section>
+		<% }); %>
+	</div>	
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 					<hr class="style-four">
 				<!-- Footer -->
-					<footer id="footer">
-					<h1>text</h1>
-					</footer>
 
-			</div>
+
+					<footer id="footer">
+					<h1>Testimonials: <%= userProfile.testimonials.length %></h1>
+
+
+
+
+<div class="ui minimal comments">
+<% userProfile.testimonials.forEach(function(userTestimonials){ %>
+	<div class="comment">
+    <a class="avatar">
+      <img src="<%= userTestimonials.author.image %>">
+    </a>
+    <div class="content">
+      <a class="author"><%= userTestimonials.author.username %></a>
+      <div class="metadata">
+        <span class="date"><%= userTestimonials.date %></span>
+      </div>
+      <div class="text">
+        <%= userTestimonials.text %>
+      </div>
+    </div>
+  </div>
+<% }); %>
+ </div>
+
+
+
+
+
+<% if(currentUser){ %>
+	<% if(JSON.stringify(currentUser._id) !== JSON.stringify(userProfile._id)){ %>
+		<% console.log('they arent equal')%>
+		<form action="/profile/<%= userProfile._id %>/testimonials" method="POST">
+			<div class="ui fluid action input">
+				<input type="text" class="form-control" name="testimonial[text]" placeholder="Add comment..." >
+				<button class="btn btn-primary btn-xs">
+					<i class="send icon"></i>
+				</button>
+			</div>			      
+		</form>
+	<% } else { %>
+	<% console.log('they are equal')%>
+		<div class="alert alert-danger" role="alert">
+		<h1>You can't put a testimonial on yourself!</h1>
+		</div>
+	<% } %>
+<% } else { %>
+	<div class="alert alert-danger" role="alert">
+					<span>
+						<a href="#" data-toggle="modal" data-target="#loginModal">Login</a>
+					</span> / 
+					<span>
+						<a href="#" data-toggle="modal" data-target="#registerModal">Register</a>
+					</span> to submit a comment
+				</div>
+<% } %>
+
+
+
+	</footer>
+</div>
+
+
+
 
 
 <% include partials/footer %>
