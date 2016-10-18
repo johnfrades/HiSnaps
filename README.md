@@ -63,5 +63,10 @@ Initial function and UI of the social networking project!
 --reworked the header
 --reworked the mainpage
 
+//Oct 18
+-- Major fix on the UI
+-- Added some counts on comments
+-- Rework the 'searchphoto' and 'searchuser'
+
 
 -John Frades

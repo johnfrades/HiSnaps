@@ -42,7 +42,7 @@
 
 <div class="well well-sm clearfix">
 <div id="commentsDiv">
-	<h3 class="ui dividing header">Comments</h3>
+	<h3 class="ui dividing header">Comments: <%= userID.comments.length %></h3>
 </div>
 <% userID.comments.forEach(function(theComment){ %>
 <div class="ui comments">
@@ -70,11 +70,9 @@
       <div class="actions">
         <% if(currentUser && theComment.author.id.equals(currentUser._id)){ %>
 	        <a class="deleteBTN" href="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE">
-	        	Delete
 	        	<i class="trash outline icon"></i>
 	        </a>
 	        <a class="editBTN">
-		        Edit
 		        <i class="edit icon"></i>
 	        </a>
 	        <p class="userCommentId">

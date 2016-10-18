@@ -4,7 +4,16 @@ body {
 	background-size: cover !important;
 		background-position: top center !important;*/
 
-background-color: #f0f7f6 !important;  
+background-color: ghostwhite !important;
+
+}
+
+.hrLine {
+	margin: 0px !important;
+}
+
+.snapName {
+	color: black !important;
 }
 
 #testimonialCount {
@@ -13,7 +22,7 @@ background-color: #f0f7f6 !important;
 
 #theHeader {
 	font-size: 7em;
-	font-family: 'Cinzel'
+	font-family: 'Quicksand'
 }
 
 img {
@@ -92,6 +101,11 @@ hr.style-four {
 	color: black;
 }
 
+.myCaption {
+	margin-bottom: 0px !important;
+	margin-left: 8px;
+}
+
 
 #selfieName {
 	color: black;
@@ -126,7 +140,7 @@ hr.style-four {
 
 
 #myNavBar {
-	background-color: #f0f7f6;
+	background-color: inherit;
 }
 
 #myNavs{
@@ -406,6 +420,9 @@ ul.nav.nav-tabs li {
 	padding-left: 15px;
 }
 
+.date {
+	color:cornflowerblue !important;
+}
 
 .theinput {
 	display: none;
@@ -417,10 +434,14 @@ ul.nav.nav-tabs li {
 
 .deleteBTN {
 	color: red !important;
+	font-weight: bold;
+	font-size: 1.2em;
 }
 
 .editBTN {
 	color: blue !important;
+	font-weight: bold;
+	font-size: 1.2em;
 }
 
 .replyBTN {
@@ -676,7 +697,6 @@ padding: 8px !important;
 		#header .avatar {
 			border-radius: 100%;
 			display: inline-block;
-			margin: 0 0 2em 0;
 			padding: 0.5em;
 			border: solid 1px rgba(255, 255, 255, 0.25);
 			background-color: rgba(255, 255, 255, 0.075);
@@ -685,7 +705,7 @@ padding: 8px !important;
 			#header .avatar img {
 				border-radius: 100%;
 				display: block;
-				width: 10em;
+				width: 15em;
 			}
 
 		@media screen and (max-width: 1280px) {
@@ -907,4 +927,8 @@ padding: 8px !important;
 
 .metadata {
 	float:right !important;
+}
+
+.ui.fluid.transparent.icon.input {
+	font-size: 5em;
 }

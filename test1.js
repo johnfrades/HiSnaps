@@ -1,7 +1,5 @@
 var express = require("express");
 var app = express();
-var server = require("http").createServer(app);
-var io = require("socket.io").listen(server);
 var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 var moment = require("moment");
@@ -11,19 +9,7 @@ var methodOverride = require("method-override");
 var passportLocalMongoose = require("passport-local-mongoose");
 
 
-var path = require('path');
-var formidable = require('formidable');
-var fs = require('fs');
-
-
 var PORT = 3000 || process.env.PORT;
-
-
-
-//temporary to store names to the array
-var nicknames = [];
-
-
 
 
 app.set("view engine", "ejs");
@@ -184,39 +170,6 @@ app.use(function(req, res, next){
 
 
 
-io.sockets.on('connection', function(socket){
-	socket.on('new user', function(data){
-		console.log(socket);
-		console.log(data + " connected to chatroom");
-			socket.nickname = data;
-			nicknames.push(socket.nickname);
-			updateNicknames();
-	});
-
-
-	socket.on('send message', function(data){
-		io.sockets.emit("new message", {msg: data, nick: socket.nickname});
-		});
-
-	socket.on("disconnect", function(data){
-	if(!socket.nickname){
-		return;
-	} else {
-		nicknames.splice(nicknames.indexOf(socket.nickname), 1);
-		updateNicknames();
-	}
-	});
-
-//Socket.io function
-
-function updateNicknames() {
-	io.sockets.emit('usernames', nicknames);
-}
-
-});
-
-
-
 //GET ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 app.get("/test", function(req, res){
@@ -367,7 +320,7 @@ app.post("/searchuser", function(req, res){
 			console.log(err);
 			res.redirect("back");
 		} else {
-			res.render("searchuser", {foundUser: searchedUser});
+			res.render("searchuser", {foundUser: searchedUser, theKeywordName: nameuser});
 		}
 	});
 });
@@ -382,7 +335,7 @@ app.post('/searchphoto', function(req, res){
 			console.log(err);
 			res.redirect('back');
 		} else {
-			res.render('searchphoto', {foundPhoto: searchedPhoto});
+			res.render('searchphoto', {foundPhoto: searchedPhoto, theKeywordPhoto: namephoto});
 		}
 	});
 });
@@ -501,7 +454,6 @@ app.put("/index/:id", function(req, res){
 		if(err){
 			console.log(err);
 		} else {
-			console.log(updateUser);
 			res.redirect("/index/" + updateUser._id);
 		}
 	})
