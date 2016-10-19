@@ -10,7 +10,9 @@
 				<span class="authorImageName">
 					<a href="/profile/<%= userID.author.id %>">
 						<img class="ui avatar image" src="<%= userID.author.image %>">
-						<span class="authorName"><%= userID.author.username %></span>
+						<span class="authorName">
+							<%= userID.author.username %>
+						</span>
 					</a>
 				</span>
 				<span class="right floated">
@@ -18,22 +20,26 @@
 				</span>	
 					<img src="<%= userID.image %>" id="profilePic">
 					<p id="profileName">
-						<em><strong><%= userID.name %></strong> </em>
+						<em>
+							<strong>
+								<%= userID.name %>
+							</strong>
+						</em>
 					</p>
 					<%= userID.description %>
 			</div>
 
 			<div>
-   		<% if(currentUser && userID.author.id.equals(currentUser._id)){ %>
-   			 <button class="ui brown button medium" data-toggle="modal" data-target="#editModal">
-		  			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-			 </button>
-			 <form action="/index/<%= userID._id%>?_method=DELETE" method="POST" id="profileForm">
-		   		<button class="negative ui button medium">
-				  	<i class="fa fa-minus" aria-hidden="true"></i>
-				</button>
-		<% } %>
-			 </form>
+		   		<% if(currentUser && userID.author.id.equals(currentUser._id)){ %>
+		   			 <button class="ui brown button medium" data-toggle="modal" data-target="#editModal">
+				  			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					 </button>
+					 <form action="/index/<%= userID._id%>?_method=DELETE" method="POST" id="profileForm">
+				   		<button class="negative ui button medium">
+						  	<i class="fa fa-minus" aria-hidden="true"></i>
+						</button>
+				<% } %>
+					 </form>
 			</div>
 		</div>
 

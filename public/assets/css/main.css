@@ -32,6 +32,12 @@ img {
 
 .theContent {
 	margin: 7em 0em !important;
+	background-color: transparent !important;
+	box-shadow: none !important;
+}
+
+.content.text-center {
+	padding: 1em 0em !important;
 }
 
 #iconSearch {
@@ -41,7 +47,7 @@ img {
 
 #authorPhotos {
 	display: flex;
-	flex-wrap: wrap ;
+	flex-wrap: wrap;
 }
 
 

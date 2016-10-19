@@ -108,8 +108,8 @@ var commentSchema = new mongoose.Schema ({
 	author: {
 		id: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Loginuser"
-		},
+			 ref: "Loginuser"
+		}, 
 		username: String,
 		image: String
 	},
@@ -252,7 +252,7 @@ app.get("/index/:id", function(req,res){
 		if(err) {
 			console.log(err);
 		} else {
-			res.render("profile", {userID: userID, nowDateAndTime: nowDateAndTime});
+			res.render("snap_profile", {userID: userID, nowDateAndTime: nowDateAndTime});
 		}
 	});
 });
@@ -351,7 +351,7 @@ app.post("/profile/:id", function(req, res){
 			id: req.user._id,
 			username: req.user.username,
 			image: req.user.image
-					}
+		};
 
 		var userData = {
 		name: name,
@@ -360,7 +360,7 @@ app.post("/profile/:id", function(req, res){
 		description: description,
 		countComments: 0,
 		date: new Date().toLocaleDateString() +' '+ new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-	}
+		};
 
 
 	LoginUser.findById(req.params.id, function(err, theLoginUser){
@@ -476,7 +476,8 @@ app.put("/index/:id/comments/:comment_id", function(req, res){
 
 //DELETE REQUEST ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-//pre-schema to remove also the snap on the loginuser data to update the number of snaps by author
+//pre-schema to remove also the snap on the loginuser data to update the number of snaps by author.
+//Also removes the Comment ObjectID on the Comment Schema when you delete the whole snap
 snapSchema.pre('remove', function (next) {
   this.model('Loginuser').update(
     { mySnaps: this }, 
@@ -491,12 +492,20 @@ app.delete("/index/:id", checkUserOwnership, function(req, res){
 			console.log(err);
 			res.redirect("/index/" + req.params.id);
 		} else {
+			snap.comments.forEach(function(theComment){
+				Comment.findByIdAndRemove(theComment, function(err, delComment){
+					if(err){
+						console.log(err);
+					} else {
+						console.log("Data deleted!");
+					}
+				});
+			});
 			snap.remove();
-			console.log("Successfully deleted!");
 			res.redirect("/index");
 		}
-	})
-})
+	});
+});
 
 
 
@@ -514,16 +523,30 @@ app.delete("/index/:id/comments/:comment_id", checkCommentOwnership, function(re
 	Comment.findById(req.params.comment_id, function(err, comment){
 		if(err) {
 			console.log(err);
-			res.redirect("/index/");
+			res.redirect("index");
 		} else {
-			comment.remove();
-			console.log("Comment successfully deleted!");
-			res.redirect("back");
+			SnapData.findById(req.params.id, function(err, snap){
+				if(err){
+					console.log(err);
+					res.redirect(back)
+				} else {
+					snap.countComments--;
+					comment.remove();
+					console.log(snap);
+					console.log("Comment successfully deleted!");
+					res.redirect("back");
+				}
+			});
 		}
 	});
 });
 
 
+
+
+
+
+//Below are my FUNCTIONS
 
 
 //FUNCTION to check if the user is logged in to do specific actions such as Adding users, adding comments
