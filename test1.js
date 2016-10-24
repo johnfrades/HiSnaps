@@ -357,7 +357,7 @@ app.post("/profile/:id", function(req, res){
 		author: author,
 		description: description,
 		countComments: 0,
-		date: new Date().toLocaleDateString() +' '+ new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+		date: new Date().toLocaleDateString("nl",{year:"2-digit",month:"2-digit", day:"2-digit"})) +' '+ new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
 		};
 
 
