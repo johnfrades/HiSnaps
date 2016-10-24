@@ -643,12 +643,46 @@ padding: 8px !important;
 	color: #1da1f2;
 }
 
+.twitterInput {
+	margin: 1em 0;
+}
+
+#twitterInput {
+	background: transparent;
+	border: none;
+	color: aqua;
+	font-size: 1.5em;
+}
+
 #facebookIcon {
 	color: blue;
 }
 
+.facebookInput {
+	margin: 1em 0;
+}
+
+#facebookInput {
+	background: transparent;
+	border: none;
+	color: blue;
+	font-size: 1.5em;
+}
+
+
 #instagramIcon {
 	color: #ff3539;
+}
+
+.instagramInput {
+	margin: 1em 0;
+}
+
+#instagramInput {
+	background: transparent;
+	border: none;
+	color: red;
+	font-size: 1.5em;
 }
 
 #emailIcon {

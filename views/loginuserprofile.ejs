@@ -183,25 +183,6 @@
         <input type="text" name="profileEdit[description]" class="form-control" id="newImageForm" placeholder="description" value="<%= userProfile.description %>"autocomplete="off">
       </div>
     </div>
-    <!-- <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="control-label">Password</label>
-          <div>
-            <input type="password" name="password1" class="form-control" id="pass1" value="<%= userProfile.password1 %>" autocomplete="off" required>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-        <label class="control-label">Confirm Password</label>
-        <div>
-          <input type="password" name="password2" class="form-control" id="pass2" autocomplete="off" value="<%= userProfile.password2 %>" onkeyup="checkPass(); return false" required>
-          <span id="confirmMessage" class="confirmMessage"></span>
-        </div>
-        </div>
-      </div>
-    </div> -->
     <div class="form-group">
       <label class="control-label">Image URL:</label>
       <div>
@@ -211,28 +192,28 @@
     <hr>
     <h2>Social Network (Optional)</h2>
       <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label class="control-label">Facebook</label>
-            <div>
-              <input type="text" name="profileEdit[facebook]" class="form-control" value="<%= userProfile.facebook %>">
-            </div>
+        <div class="col-md-12 facebookInput">
+          <div class="input-group">
+            <span class="input-group-addon" id="facebookInput">
+              <i class="fa fa-facebook-square" aria-hidden="true"></i>
+            </span>
+              <input type="text" class="form-control" name="profileEdit[facebook]" value="<%= userProfile.facebook %>" placeholder="Facebook URL..." aria-describedby="basic-addon1">
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label class="control-label">Twitter</label>
-            <div>
-              <input type="text" name="profileEdit[twitter]" class="form-control" value="<%= userProfile.twitter %>">
-            </div>
+        <div class="col-md-12">
+          <div class="input-group twitterInput">
+            <span class="input-group-addon" id="twitterInput">
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+            </span>
+              <input type="text" class="form-control" name="profileEdit[twitter]" value="<%= userProfile.twitter %>" placeholder="Twitter URL..." aria-describedby="basic-addon1">
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label class="control-label">Instagram</label>
-            <div>
-              <input type="text" name="profileEdit[instagram]" class="form-control" value="<%= userProfile.instagram %>">
-            </div>
+        <div class="col-md-12">
+          <div class="input-group instagramInput">
+            <span class="input-group-addon" id="instagramInput">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </span>
+              <input type="text" class="form-control" name="profileEdit[instagram]" value="<%= userProfile.instagram %>" placeholder="Instagram URL..." aria-describedby="basic-addon1">
           </div>
         </div>
       </div>
