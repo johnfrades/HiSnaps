@@ -21,8 +21,8 @@ background-color: ghostwhite !important;
 }
 
 #theHeader {
-	font-size: 7em;
-	font-family: 'Quicksand'
+	font-size: 6em;
+	font-family: 'Arvo'
 }
 
 img {
@@ -413,7 +413,7 @@ ul.nav.nav-tabs li {
   	background-color: transparent;
   	border: none;
     font-size: 3em;
-    color: maroon;
+    color: crimson;
 }
 
 
@@ -738,15 +738,6 @@ padding: 8px !important;
 			display: block;
 			margin: 0 auto 3em auto;
 		}
-
-		@media screen and (max-width: 1280px) {
-
-			#footer {
-				padding: 2em 0 2em 0;
-			}
-
-		}
-
 
 /* Icon */
 

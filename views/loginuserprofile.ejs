@@ -1,7 +1,5 @@
 <% include partials/header %>
 
-
-
 		<!-- Wrapper -->
 			<div id="wrapper">
 
@@ -9,14 +7,43 @@
 					<header id="header">
 						<span class="avatar"><img src="<%= userProfile.image %>" alt="" /></span>
 						<h1 class="authorprofileInfo"><%= userProfile.firstname %> <%= userProfile.lastname %></h1>
+						<h3>"<%= userProfile.description %>"</h3>
 						<ul class="icons">
-							<li><a href="#" class="icon style2 fa-twitter" id="twitterIcon"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon style2 fa-facebook" id="facebookIcon"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon style2 fa-instagram" id="instagramIcon"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon style2 fa-envelope-o" id="emailIcon"><span class="label">Email</span></a></li>
+            <% if(userProfile.twitter.length !== 0 ){ %>
+                <li>
+                <a href="<%= userProfile.twitter %>" class="icon style2 fa-twitter" id="twitterIcon">
+                  <span class="label">
+                    Twitter
+                  </span>
+                </a>
+              </li>
+             <% } %>
+             <% if(userProfile.facebook.length !== 0 ){ %>
+                <li>
+                <a href="<%= userProfile.facebook %>" class="icon style2 fa-facebook" id="facebookIcon">
+                  <span class="label">
+                    Facebook
+                  </span>
+                </a>
+              </li>
+              <% } %>
+              <% if(userProfile.instagram.length !== 0 ){ %>
+                <li>
+                <a href="<%= userProfile.instagram %>" class="icon style2 fa-instagram" id="instagramIcon">
+                  <span class="label">
+                    Instagram
+                  </span>
+                </a>
+              </li>
+              <% } %>
+							<li><a href="#" class="icon style2 fa-envelope-o" id="emailIcon"><span class="label">Email</span></a>
+							</li>
 						</ul>
+						<% if(currentUser && userProfile._id.equals(currentUser._id)){ %>
+						<button data-toggle="modal" data-target="#editProfileModal" class="ui inverted blue button">Edit Profile</button>
+						<% } %>
 					</header>
-					<h1>Snaps: <%= userProfile.mySnaps.length %></h1>
+					<h1>Snaps: <%= userProfile.mySnaps.length %></h1> 
 					<hr class='style-four'>
 
 
@@ -25,7 +52,7 @@
 	<div class="row" id="authorPhotos">
 		<% userProfile.mySnaps.forEach(function(userSnaps){ %>
 		<div class="col-sm-6 col-md-4">
-		<a href="/index/<%= userSnaps._id %>">
+		<a href="/snaps/<%= userSnaps._id %>">
 			<div class="thumbnail">
 				<h2 class="text-center snapName">
 					<%= userSnaps.name %>
@@ -47,7 +74,7 @@
 					</li>
 					<li class="snapDeleteButton">
 						<% if(currentUser && userSnaps.author.id.equals(currentUser._id)){ %>
-					<form action="/index/<%= userSnaps._id %>?_method=DELETE" method="POST" class="profileForm">
+					<form action="/snaps/<%= userSnaps._id %>?_method=DELETE" method="POST" class="profileForm">
 						<button class="inverted red ui button tiny">
 							<i class="fa fa-minus" aria-hidden="true"></i>
 						</button>
@@ -63,27 +90,8 @@
 	</div>
 </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 					<hr class="style-four">
 				<!-- Footer -->
-
-
 					<footer id="footer">
 					<h1>Testimonials: <%= userProfile.testimonials.length %></h1>
 
@@ -134,12 +142,110 @@
 					</span> to submit a comment
 				</div>
 <% } %>
-
-
-
 	</footer>
 </div>
 
+
+
+
+
+<!-- EDIT profile -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edit Profile</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/profile/<%= userProfile._id %>?_method=PUT" method="POST">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="control-label">Firstname</label>
+            <div>
+              <input type="text" name="profileEdit[firstname]" class="form-control" id="newNameForm" autocomplete="off" value="<%= userProfile.firstname %>" required>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="control-label">Lastname</label>
+            <div>
+              <input type="text" name="profileEdit[lastname]" class="form-control" id="newNameForm" autocomplete="off" value="<%= userProfile.lastname %>" required>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label">Short Description</label>
+      <div>
+        <input type="text" name="profileEdit[description]" class="form-control" id="newImageForm" placeholder="description" value="<%= userProfile.description %>"autocomplete="off">
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="control-label">Password</label>
+          <div>
+            <input type="password" name="password1" class="form-control" id="pass1" value="<%= userProfile.password1 %>" autocomplete="off" required>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+        <label class="control-label">Confirm Password</label>
+        <div>
+          <input type="password" name="password2" class="form-control" id="pass2" autocomplete="off" value="<%= userProfile.password2 %>" onkeyup="checkPass(); return false" required>
+          <span id="confirmMessage" class="confirmMessage"></span>
+        </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="form-group">
+      <label class="control-label">Image URL:</label>
+      <div>
+        <input type="text" name="profileEdit[image]" class="form-control" id="newImageForm" value="<%= userProfile.image %>" autocomplete="off" required>
+      </div>
+    </div>
+    <hr>
+    <h2>Social Network (Optional)</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label">Facebook</label>
+            <div>
+              <input type="text" name="profileEdit[facebook]" class="form-control" value="<%= userProfile.facebook %>">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label">Twitter</label>
+            <div>
+              <input type="text" name="profileEdit[twitter]" class="form-control" value="<%= userProfile.twitter %>">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label">Instagram</label>
+            <div>
+              <input type="text" name="profileEdit[instagram]" class="form-control" value="<%= userProfile.instagram %>">
+            </div>
+          </div>
+        </div>
+      </div>
+    <hr>
+      </div>
+      <div class="modal-footer">
+        <button class="ui inverted green button" id="buttonSubmit">Edit</button>
+      </form>
+        <button class="ui inverted red button" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

@@ -34,7 +34,7 @@
 		   			 <button class="ui brown button medium" data-toggle="modal" data-target="#editModal">
 				  			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 					 </button>
-					 <form action="/index/<%= userID._id%>?_method=DELETE" method="POST" id="profileForm">
+					 <form action="/snaps/<%= userID._id%>?_method=DELETE" method="POST" id="profileForm">
 				   		<button class="negative ui button medium">
 						  	<i class="fa fa-minus" aria-hidden="true"></i>
 						</button>
@@ -63,7 +63,7 @@
       </div>
       <div class="text">
          <h5 class="thetext"> <%= theComment.text %> </h5> 
-         <form action="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=PUT" method="POST" class="submitEditedComment">
+         <form action="/snaps/<%= userID._id %>/comments/<%= theComment._id %>?_method=PUT" method="POST" class="submitEditedComment">
          	<div class="ui mini action input">
 	  			<input type="text" class="theinput" name="comment[text]">
 	  			<button class="ui icon blue button">
@@ -75,7 +75,7 @@
 
       <div class="actions">
         <% if(currentUser && theComment.author.id.equals(currentUser._id)){ %>
-	        <a class="deleteBTN" href="/index/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE">
+	        <a class="deleteBTN" href="/snaps/<%= userID._id %>/comments/<%= theComment._id %>?_method=DELETE">
 	        	<i class="trash outline icon"></i>
 	        </a>
 	        <a class="editBTN">
@@ -97,7 +97,7 @@
 
 
 <% if(currentUser){ %>
-	<form action="/index/<%= userID._id %>/comments" method="POST">
+	<form action="/snaps/<%= userID._id %>/comments" method="POST">
 		<div class="ui fluid action input">
 			<input type="text" class="form-control" name="comment[text]" placeholder="Add comment..." >
 			<button class="btn btn-primary btn-xs"><i class="send icon"></i>
@@ -138,7 +138,7 @@
       <div class="modal-body">
       <!--Modal text body starts here-->
         
-          <form action="/index/<%= userID._id %>?_method=PUT" method="POST">
+          <form action="/snaps/<%= userID._id %>?_method=PUT" method="POST">
 	          <label>Name</label>
 	          <input type="text" name="user[name]" class="form-control" id="newNameForm" value="<%= userID.name %>">
 	          <label>Image URL</label>

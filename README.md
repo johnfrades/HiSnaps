@@ -69,4 +69,11 @@ Initial function and UI of the social networking project!
 -- Rework the 'searchphoto' and 'searchuser'
 
 
+//Oct 24
+-- Major rework on the UI design
+-- added social network for login users
+-- added edit profile for login users
+-- Improved the responsiveness of Navigation header
+-- added connect-flash for flash messages
+
 -John Frades

@@ -4,7 +4,7 @@
 
 
 <div class="container" id="searchProfile">	
-
+<h1>Search Photo</h1>
 <form action='/searchphoto' method='POST'>
 <div class="ui fluid transparent icon input">
   <input type='text' name='namephoto' placeholder="Search photo..." value="<%= theKeywordPhoto %>">
@@ -12,13 +12,12 @@
 </form>
 </div>
 
+
+
+
 <% foundPhoto.forEach(function(thePhoto){ %>
-
-
-
-
 <div class="ui card theContent">
-  <a href="/index/<%= thePhoto._id %>">
+  <a href="/snaps/<%= thePhoto._id %>">
     <div class="image">
       <img src="<%= thePhoto.image %>">
     </div>
@@ -37,9 +36,6 @@
   </div>
 
 <% }); %>
-
-
-
 </div>
 
 

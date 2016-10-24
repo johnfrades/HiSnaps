@@ -7,6 +7,7 @@ var passport = require("passport");
 var passportLocal = require("passport-local");
 var methodOverride = require("method-override");
 var passportLocalMongoose = require("passport-local-mongoose");
+var flash = require("connect-flash");
 
 
 var PORT = 3000 || process.env.PORT;
@@ -16,6 +17,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
+app.use(flash());
 
 //This handles the DELETE method override on the "anchor tags"
 app.use( function( req, res, next ) {
@@ -41,8 +43,8 @@ app.use( function( req, res, next ) {
 
 
 
-// mongoose.connect("mongodb://localhost/HiSnaps");
-mongoose.connect("mongodb://admin:admin@ds029665.mlab.com:29665/hisnaps");
+mongoose.connect("mongodb://localhost/HiSnaps");
+// mongoose.connect("mongodb://admin:admin@ds029665.mlab.com:29665/hisnaps");
 var mongoosedb = mongoose.connection
 mongoosedb.on('error', console.error.bind(console, 'connection error: '));
 mongoosedb.once('open', function(){
@@ -81,6 +83,9 @@ var loginSchema = new mongoose.Schema ({
 	description: String,
 	image: String,
 	dateJoined: String,
+	facebook: String,
+	instagram: String,
+	twitter: String,
 	countTestimonials: Number,
 	testimonials: [
 		{
@@ -88,14 +93,6 @@ var loginSchema = new mongoose.Schema ({
 			ref: "Testimonial"
 		}
 	],
-	author: {
-		id: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Loginuser"
-		},
-			username: String,
-			image: String,
-	},
 	mySnaps: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
@@ -164,6 +161,8 @@ passport.deserializeUser(LoginUser.deserializeUser());
 //This will populate the variable "currentUser = req.user(which is the current logged-in user)" to all EJS files
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
+    res.locals.successFlash = req.flash("successFlash");
+    res.locals.errorFlash = req.flash("errorFlash");
     next();
 });
 
@@ -172,19 +171,13 @@ app.use(function(req, res, next){
 
 //GET ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 app.get("/test", function(req, res){
 	res.render("test");
 });
 
-
-//Home page
-app.get("/", function(req, res){
-	res.render("landingpage");
-});
-
-
 //Home index
-app.get("/index", function(req, res){
+app.get("/", function(req, res){
 	SnapData.find({}, function(err, allUsers){
 		if(err) {
 			console.log(err);
@@ -247,7 +240,7 @@ app.get("/cold", function(req, res){
 
 
 //SHOW more info and comments
-app.get("/index/:id", function(req,res){
+app.get("/snaps/:id", function(req,res){
 	SnapData.findById(req.params.id).populate("comments").exec(function(err, userID){
 		if(err) {
 			console.log(err);
@@ -274,7 +267,8 @@ app.get("/profile/:id", function(req, res){
 //Logout function
 app.get("/logout", function(req, res){
 	req.logout();
-	res.redirect("/index");
+	req.flash("successFlash", "Successfully Logged-out");
+	res.redirect("/");
 })
 
 
@@ -291,7 +285,10 @@ app.post("/register", function(req, res){
 		image: req.body.image,
 		dateJoined: joinDate,
 		countTestimonials: 0,
-		description: req.body.description
+		description: req.body.description,
+		facebook: req.body.facebook,
+		twitter: req.body.twitter,
+		instagram: req.body.instagram
 	}
 
 	var newUser = new LoginUser(regUser);
@@ -299,7 +296,8 @@ app.post("/register", function(req, res){
 		if (err) {
 			return res.render("register");
 		} else {
-			res.redirect("/index");
+			req.flash("successFlash", "Signed up successfully. Please Login");
+			res.redirect("/");
 		}
 	});
 });
@@ -374,7 +372,7 @@ app.post("/profile/:id", function(req, res){
 					newSnap.save();
 					theLoginUser.mySnaps.push(newSnap);
 					theLoginUser.save();
-					res.redirect("index");
+					res.redirect("/");
 				}
 			});
 		}
@@ -383,7 +381,7 @@ app.post("/profile/:id", function(req, res){
 
 
 //POST a comment and bind it to SnapData
-app.post("/index/:id/comments", function(req, res){
+app.post("/snaps/:id/comments", isLoggedIn, function(req, res){
 	SnapData.findById(req.params.id, function(err, foundUser){
 		if (err) {
 			console.log(err);
@@ -400,7 +398,7 @@ app.post("/index/:id/comments", function(req, res){
 					foundUser.comments.push(theComment);
 					foundUser.countComments++;
 					foundUser.save();
-					res.redirect("/index/" + foundUser._id);
+					res.redirect("/snaps/" + foundUser._id);
 				}
 			});
 		}
@@ -409,7 +407,7 @@ app.post("/index/:id/comments", function(req, res){
 
 
 //POST a testimonial on the loginuser
-app.post("/profile/:id/testimonials", function(req,res){
+app.post("/profile/:id/testimonials", isLoggedIn, function(req,res){
 	LoginUser.findById(req.params.id, function(err, foundLoginUser){
 		if(err){
 			console.log(err);
@@ -449,24 +447,38 @@ app.post("/login", passport.authenticate("local", {
 //EDIT REQUEST ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //EDIT route
-app.put("/index/:id", function(req, res){
+app.put("/snaps/:id", checkUserOwnership, function(req, res){
 	SnapData.findByIdAndUpdate(req.params.id, req.body.user, function(err, updateUser){
 		if(err){
 			console.log(err);
 		} else {
-			res.redirect("/index/" + updateUser._id);
+			res.redirect("/snaps/" + updateUser._id);
 		}
 	})
 })
 
 //EDIT comment
-app.put("/index/:id/comments/:comment_id", function(req, res){
+app.put("/snaps/:id/comments/:comment_id", checkCommentOwnership, function(req, res){
 	Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updateComment){
 		if(err) {
 			console.log(err);
 			res.redirect("back");
 		} else {
 			res.redirect("back");
+		}
+	});
+});
+
+
+//EDIT Profile
+app.put("/profile/:id", verifyLoginUser, function(req, res){
+	LoginUser.findByIdAndUpdate(req.params.id, req.body.profileEdit, function(err, editedProfile){
+		if(err){
+			req.flash("errorFlash", "Update profile error, try again!");
+			res.redirect("back");
+		} else {
+			req.flash("successFlash", "Profile updated successfully");
+			res.redirect("/profile/" + editedProfile._id);
 		}
 	});
 });
@@ -486,11 +498,11 @@ snapSchema.pre('remove', function (next) {
   ).exec(next)
 });
 
-app.delete("/index/:id", checkUserOwnership, function(req, res){
+app.delete("/snaps/:id", checkUserOwnership, function(req, res){
 	SnapData.findByIdAndRemove(req.params.id, function(err, snap){
 		if(err) {
 			console.log(err);
-			res.redirect("/index/" + req.params.id);
+			res.redirect("/snaps/" + req.params.id);
 		} else {
 			snap.comments.forEach(function(theComment){
 				Comment.findByIdAndRemove(theComment, function(err, delComment){
@@ -502,7 +514,8 @@ app.delete("/index/:id", checkUserOwnership, function(req, res){
 				});
 			});
 			snap.remove();
-			res.redirect("/index");
+			req.flash("errorFlash", "Snap successfully deleted!");
+			res.redirect("/");
 		}
 	});
 });
@@ -519,7 +532,7 @@ commentSchema.pre('remove', function (next) {
   ).exec(next)
 });
 
-app.delete("/index/:id/comments/:comment_id", checkCommentOwnership, function(req, res){
+app.delete("/snaps/:id/comments/:comment_id", checkCommentOwnership, function(req, res){
 	Comment.findById(req.params.comment_id, function(err, comment){
 		if(err) {
 			console.log(err);
@@ -532,8 +545,7 @@ app.delete("/index/:id/comments/:comment_id", checkCommentOwnership, function(re
 				} else {
 					snap.countComments--;
 					comment.remove();
-					console.log(snap);
-					console.log("Comment successfully deleted!");
+					req.flash("errorFlash", "Comment successfully deleted!");
 					res.redirect("back");
 				}
 			});
@@ -554,7 +566,7 @@ function isLoggedIn(req, res, next){
 	if(req.isAuthenticated()){
 		return next();
 	} else {
-		res.redirect("/login");
+		res.redirect("/");
 	}
 }
 
@@ -600,6 +612,25 @@ function checkUserOwnership(req, res, next) {
 	}
 }
 
+//Middleware function to check if the current login user is the same as the currently viewed profile of loginuser
+function verifyLoginUser(req, res, next){
+	if(req.isAuthenticated()){
+		LoginUser.findById(req.params.id, function(err, foundLoginUser){
+			if(err){
+				res.redirect("back");
+			} else {
+				if(foundLoginUser._id.equals(req.user._id)){
+					next();
+				} else {
+					console.log("You are not you!");
+					res.redirect("back");
+				}
+			}
+		});
+	} else {
+		res.redirect("back")
+	}
+}
 
 
 app.listen(PORT, function(){

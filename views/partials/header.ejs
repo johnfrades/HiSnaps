@@ -4,13 +4,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>website testing #1</title>
+	<title>HiSnaps</title>
 	<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="/assets/css/main.css">
   <link rel="stylesheet" type="text/css" href="/assets/css/semantic.css">
   <link rel="stylesheet" type="text/css" href="/assets/css/hover-min.css">
   <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
 
 </head>
 <body>
@@ -19,17 +19,18 @@
 <nav class="navbar navbar-default navbar-fixed-top navbar-static-top" id="myNavBar">
   <div class="container-fluid">
 
-    <% if(!currentUser) { %>
-        <ul class="nav navbar-right">
+<ul class="nav navbar-nav navbar-right">
+         <% if(!currentUser) { %>
+
           <li class="navItemButton">
             <button data-toggle="modal" data-target="#loginModal" class="ui green small button" id="loginButton">Login</button>
           </li>
           <li class="navItemButton">
             <a data-toggle="modal" data-target="#registerModal" class="ui black small button" id="joinButton">Join</a>
           </li>    
-        </ul>
+
       <% } else { %>
-      <ul class="nav navbar-right">
+
       <li>
           <div class="media" id="myUsername">
             <div class="media-left">
@@ -38,57 +39,80 @@
               </a>
             </div>
             <div class="media-body">
-
               <a id="navUsername" type="button" data-toggle="popover" tabindex="0" role="button" data-trigger="focus" data-original-title="<%= currentUser.username %>" data-html="true" data-placement="bottom" data-content="<a href='/profile/<%= currentUser._id %>'>Profile</a> <br> <a href='/logout'>Logout</a>"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
             </div>
           </div>
         </li>
-    </ul>
       <% } %>
+       
+      </ul>
 
-        
-    <div class="collapse navbar-collapse">
-    <ul class="nav navbar-left" id="navLeft">
-          <a id="iconSearch" type="button" data-toggle="popover" tabindex="0" role="button" data-trigger="click" data-html="true" data-placement="bottom" 
 
-          data-content="
-          <form action='/searchuser' method='POST'>
-            <div class='ui left icon input'>
-              <input class='inputForm input-sm' type='text' name='nameuser' class='form-control' placeholder='Search users...'>
-              <i class='users icon'></i>
-            </div>
-          </form>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
 
-          <form action='/searchphoto' method='POST'>
-            <div class='ui left icon input'>
-              <input class='inputForm input-sm' type='text' name='namephoto' class='form-control' placeholder='Search photos...'>
-              <i class='photo icon'></i>
-            </div>
-          </form>
-          "><i class="fa fa-search"  aria-hidden="true"></i></a>
-          
-      </ul> 
-         <ul class="nav navbar-nav">
-         <li> 
-           <a href="/index" class="hvr-underline-from-left">Home</a>
-         </li>
-         <li>
+   
+
+
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+      <ul class="nav navbar-left" id="navLeft">
+        </ul>
+        <li style="display: inline-flex"> 
+           <a href="/" class="hvr-underline-from-left">Home</a>
            <a href="/old" class="hvr-underline-from-left">Old</a>
-         </li>
-         <li>
            <a href="/fresh" class="hvr-underline-from-left">Fresh </a>
-         </li>
-         <li>
            <a href="/hot" class="hvr-underline-from-left">Hot</a>
-         </li>
-          <li>
            <a href="/cold" class="hvr-underline-from-left">Cold</a>
          </li>
-          </ul>
-    </div>
+      </ul>
+      <ul class="navbar-form navbar-left">
+       <a id="iconSearch" type="button" data-toggle="popover" tabindex="0" role="button" data-trigger="click" data-html="true" data-placement="bottom" 
 
+            data-content="
+            <form action='/searchuser' method='POST'>
+              <div class='ui left icon input'>
+                <input class='inputForm input-sm' type='text' name='nameuser' class='form-control' placeholder='Search users...'>
+                <i class='users icon'></i>
+              </div>
+            </form>
 
+            <form action='/searchphoto' method='POST'>
+              <div class='ui left icon input'>
+                <input class='inputForm input-sm' type='text' name='namephoto' class='form-control' placeholder='Search photos...'>
+                <i class='photo icon'></i>
+              </div>
+            </form>
+            "><i class="fa fa-search"  aria-hidden="true"></i>
+            </a> 
+      </ul>
+</div><!-- /.navbar-collapse -->
 </nav>
+</div>
+
+<div class="container">
+  <% if(successFlash && successFlash.length > 0){ %>
+      <div class="alert alert-success" style="margin-top:5em" role="alert"><%= successFlash %></div>
+  <% } %>
+  <% if(errorFlash && errorFlash.length > 0){ %>
+      <div class="alert alert-danger" style="margin-top:5em" role="alert"><%= errorFlash %></div>
+  <% } %>
+</div>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -157,6 +181,35 @@
         <input type="text" name="image" class="form-control" id="newImageForm" autocomplete="off" required>
       </div>
     </div>
+    <hr>
+    <h2>Social Network (Optional)</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label">Facebook</label>
+            <div>
+              <input type="text" name="facebook" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label">Twitter</label>
+            <div>
+              <input type="text" name="twitter" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label">Instagram</label>
+            <div>
+              <input type="text" name="instagram" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+    <hr>
       </div>
       <div class="modal-footer">
         <button class="ui inverted green button" id="buttonSubmit">Register</button>
