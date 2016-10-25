@@ -10,7 +10,7 @@ var passportLocalMongoose = require("passport-local-mongoose");
 var flash = require("connect-flash");
 
 
-var PORT = 3000 || process.env.PORT;
+var PORT = process.env.PORT;
 
 
 app.set("view engine", "ejs");
