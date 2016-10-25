@@ -13,6 +13,8 @@ var flash = require("connect-flash");
 var PORT = 3000 || process.env.PORT;
 
 
+//Sample here!
+
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
