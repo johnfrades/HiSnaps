@@ -10,7 +10,7 @@ var passportLocalMongoose = require("passport-local-mongoose");
 var flash = require("connect-flash");
 
 
-var PORT = process.env.PORT;
+var PORT = 3000 || process.env.PORT;
 
 
 app.set("view engine", "ejs");
@@ -390,7 +390,8 @@ app.post("/snaps/:id/comments", isLoggedIn, function(req, res){
 				if (err) {
 					console.log(err);
 				} else {
-					theComment.date = new Date().toLocaleDateString() +' '+ new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+					theComment.date = new nowDateAndTime;
+					//theComment.date = new Date().toLocaleDateString() +' '+ new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 					theComment.author.id = req.user._id;
 					theComment.author.username = req.user.username;
 					theComment.author.image = req.user.image;
