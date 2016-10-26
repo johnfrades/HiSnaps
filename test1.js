@@ -359,7 +359,7 @@ app.post("/profile/:id", function(req, res){
 		author: author,
 		description: description,
 		countComments: 0,
-		date: new Date().toLocaleDateString() +' '+ new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+		date: new moment().format("l , LT")
 		};
 
 
@@ -392,7 +392,7 @@ app.post("/snaps/:id/comments", isLoggedIn, function(req, res){
 				if (err) {
 					console.log(err);
 				} else {
-					theComment.date = new nowDateAndTime;
+					theComment.date = new moment().format("l , LT");
 					//theComment.date = new Date().toLocaleDateString() +' '+ new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 					theComment.author.id = req.user._id;
 					theComment.author.username = req.user.username;
@@ -421,7 +421,8 @@ app.post("/profile/:id/testimonials", isLoggedIn, function(req,res){
 					console.log(err);
 					res.redirect("back")
 				} else {
-					newTestimonial.date = new Date().toLocaleDateString() +' '+ new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+					newTestimonial.date = new moment().format("l , LT");
+					//newTestimonial.date = new Date().toLocaleDateString() +' '+ new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 					newTestimonial.author.id = req.user._id;
 					newTestimonial.author.username = req.user.username;
 					newTestimonial.author.image = req.user.image;
