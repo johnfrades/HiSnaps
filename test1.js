@@ -10,7 +10,7 @@ var passportLocalMongoose = require("passport-local-mongoose");
 var flash = require("connect-flash");
 
 
-var PORT = 3000 || process.env.PORT;
+var PORT = process.env.PORT || 3000;
 
 
 //Sample here!
@@ -21,17 +21,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.use(flash());
 
-//This handles the DELETE method override on the "anchor tags"
+//This handles the DELETE & POST method override on the "anchor tags"
 app.use( function( req, res, next ) {
-    // this middleware will call for each requested
-    // and we checked for the requested query properties
-    // if _method was existed
-    // then we know, clients need to call DELETE request instead
     if ( req.query._method == 'DELETE' ) {
-        // change the original METHOD
-        // into DELETE method
         req.method = 'DELETE';
-        // and set requested url to /user/12
         req.url = req.path;
     } else {
     	if(req.query._method == 'POST'){
@@ -215,7 +208,7 @@ app.get("/fresh", function(req, res){
 		} else {
 			res.render("homepage", {allSnaps: theSnaps});
 		}
-	}).sort({date: -1});
+	}).sort({date: -1});	
 });
 
 //Home index (HOT query)
@@ -384,7 +377,7 @@ app.post("/profile/:id", function(req, res){
 
 //POST a comment and bind it to SnapData
 app.post("/snaps/:id/comments", isLoggedIn, function(req, res){
-	SnapData.findById(req.params.id, function(err, foundUser){
+	SnapData.findById(req.params.id, function(err, foundSnap){
 		if (err) {
 			console.log(err);
 		} else {
@@ -398,10 +391,10 @@ app.post("/snaps/:id/comments", isLoggedIn, function(req, res){
 					theComment.author.username = req.user.username;
 					theComment.author.image = req.user.image;
 					theComment.save();
-					foundUser.comments.push(theComment);
-					foundUser.countComments++;
-					foundUser.save();
-					res.redirect("/snaps/" + foundUser._id);
+					foundSnap.comments.push(theComment);
+					foundSnap.countComments++;
+					foundSnap.save();
+					res.redirect("/snaps/" + foundSnap._id);
 				}
 			});
 		}
@@ -458,8 +451,8 @@ app.put("/snaps/:id", checkUserOwnership, function(req, res){
 		} else {
 			res.redirect("/snaps/" + updateUser._id);
 		}
-	})
-})
+	});
+});
 
 //EDIT comment
 app.put("/snaps/:id/comments/:comment_id", checkCommentOwnership, function(req, res){
@@ -596,7 +589,7 @@ function checkCommentOwnership(req, res, next) {
 }
 
 
-//Middleware function that checks if the author of the submitted user is the same on the one who logged in
+//Middleware function that checks if the author of the submitted photo is the same on the one who logged in
 function checkUserOwnership(req, res, next) {
 	if(req.isAuthenticated()) {
 		SnapData.findById(req.params.id, function(err, foundUserID){
